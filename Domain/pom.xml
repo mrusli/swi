@@ -1,0 +1,246 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.pyramix.swi</groupId>
+		<artifactId>Application</artifactId>
+		<version>2.0.0</version>
+	</parent>
+  
+	<groupId>com.pyramix.swi.domain</groupId>
+	<artifactId>Domain</artifactId>
+	<version>3.0.0</version>
+	<name>Domain</name>
+	<url>http://maven.apache.org</url>
+	
+	<properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- 
+			to support creating bean 'sessionFactory' defined in class path resource [CommonContext-Config.xml]: 
+				Invocation of init method failed; 
+				nested exception is java.lang.NoClassDefFoundError: 
+					org/hibernate/internal/CoreMessageLogger 
+		-->
+		<!-- https://mvnrepository.com/artifact/org.jboss.logging/jboss-logging -->
+		<dependency>
+		    <groupId>org.jboss.logging</groupId>
+		    <artifactId>jboss-logging</artifactId>
+		    <version>${jboss-logging.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.jboss.logging/jboss-logging-annotations -->
+		<dependency>
+		    <groupId>org.jboss.logging</groupId>
+		    <artifactId>jboss-logging-annotations</artifactId>
+		    <version>${jboss-logging-annotations.version}</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.hibernate.common/hibernate-commons-annotations -->
+		<dependency>
+		    <groupId>org.hibernate.common</groupId>
+		    <artifactId>hibernate-commons-annotations</artifactId>
+		    <version>${hibernate-commons-annotations.version}</version>
+		    <exclusions>
+		    	<exclusion>
+				    <groupId>org.jboss.logging</groupId>
+				    <artifactId>jboss-logging</artifactId>    		
+		    	</exclusion>
+		    	<exclusion>
+				    <groupId>org.jboss.logging</groupId>
+				    <artifactId>jboss-logging-annotations</artifactId>    	
+		    	</exclusion>    	
+		    </exclusions>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
+		<dependency>
+		    <groupId>org.javassist</groupId>
+		    <artifactId>javassist</artifactId>
+		    <version>${javassist.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>${hibernate-core.version}</version>
+		    <exclusions>
+		    	<exclusion>
+		    		<groupId>org.jboss.logging</groupId>
+		    		<artifactId>jboss-logging</artifactId>
+		    	</exclusion>
+		    	<exclusion>
+		    		<groupId>org.hibernate.common</groupId>
+		    		<artifactId>hibernate-commons-annotations</artifactId>
+		    	</exclusion>
+		    	<exclusion>
+				    <groupId>org.javassist</groupId>
+				    <artifactId>javassist</artifactId>
+		    	</exclusion>
+		    </exclusions>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-core -->
+		<dependency>
+		    <groupId>org.apache.lucene</groupId>
+		    <artifactId>lucene-core</artifactId>
+		    <version>${apache-lucene.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-analyzers-common -->
+		<dependency>
+		    <groupId>org.apache.lucene</groupId>
+		    <artifactId>lucene-analyzers-common</artifactId>
+		    <version>${apache-lucene.version}</version>
+		    <exclusions>
+		    	<exclusion>
+				    <groupId>org.apache.lucene</groupId>
+				    <artifactId>lucene-core</artifactId>		    	
+		    	</exclusion>
+		    </exclusions>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-queries -->
+		<dependency>
+		    <groupId>org.apache.lucene</groupId>
+		    <artifactId>lucene-queries</artifactId>
+		    <version>${apache-lucene.version}</version>
+		    <exclusions>
+		    	<exclusion>
+				    <groupId>org.apache.lucene</groupId>
+				    <artifactId>lucene-core</artifactId>		    	
+		    	</exclusion>
+		    </exclusions>
+		</dependency>		
+		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-facet -->
+		<dependency>
+		    <groupId>org.apache.lucene</groupId>
+		    <artifactId>lucene-facet</artifactId>
+		    <version>${apache-lucene.version}</version>
+		    <exclusions>
+		    	<exclusion>
+				    <groupId>org.apache.lucene</groupId>
+				    <artifactId>lucene-core</artifactId>		    	
+		    	</exclusion>
+		    	<exclusion>
+		    		<groupId>org.apache.lucene</groupId>
+		    		<artifactId>lucene-queries</artifactId>
+		    	</exclusion>
+		    </exclusions>		    
+		</dependency>
+						
+		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-queryparser -->
+		<dependency>
+		    <groupId>org.apache.lucene</groupId>
+		    <artifactId>lucene-queryparser</artifactId>
+		    <version>${apache-lucene.version}</version>
+		    <exclusions>
+		    	<exclusion>
+		    		<groupId>org.apache.lucene</groupId>
+		    		<artifactId>lucene-core</artifactId>
+		    	</exclusion>
+		    	<exclusion>
+		    		<groupId>org.apache.lucene</groupId>
+		    		<artifactId>lucene-queries</artifactId>
+		    	</exclusion>
+		    </exclusions>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-backward-codecs -->
+		<!-- 
+			 RUNTIME Error: Could not load codec 'Lucene54'. Did you forget to add lucene-backward-codecs.jar?
+		 -->
+		<dependency>
+		    <groupId>org.apache.lucene</groupId>
+		    <artifactId>lucene-backward-codecs</artifactId>
+		    <version>5.5.5</version>
+		</dependency>
+				
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-engine -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-search-engine</artifactId>
+		    <version>${hibernate-search.version}</version>
+		    <exclusions>
+		    	<exclusion>
+		    		<groupId>org.hibernate.common</groupId>
+		    		<artifactId>hibernate-commons-annotations</artifactId>		    		
+		    	</exclusion>
+		    	<exclusion>
+				    <groupId>org.apache.lucene</groupId>
+				    <artifactId>lucene-core</artifactId>		    	
+		    	</exclusion>
+		    	<exclusion>
+				    <groupId>org.apache.lucene</groupId>
+				    <artifactId>lucene-analyzers-common</artifactId>		    	
+		    	</exclusion>
+		    	<exclusion>
+				    <groupId>org.apache.lucene</groupId>
+				    <artifactId>lucene-facet</artifactId>		    	
+		    	</exclusion>
+		    	<exclusion>
+		    		<groupId>org.apache.lucene</groupId>
+		    		<artifactId>lucene-queryparser</artifactId>
+		    	</exclusion>
+		    	<exclusion>
+		    		<groupId>org.jboss.logging</groupId>
+		    		<artifactId>jboss-logging</artifactId>		    	
+		    	</exclusion>		    	
+		    
+		    </exclusions>
+		</dependency>				
+		
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-search-orm</artifactId>
+		    <version>${hibernate-search.version}</version>
+			<exclusions>
+		    	<exclusion>
+		    		<groupId>org.hibernate</groupId>
+		    		<artifactId>hibernate-search-engine</artifactId>
+		    	</exclusion>
+		    	<exclusion>
+		    		<groupId>org.hibernate</groupId>
+		    		<artifactId>hibernate-core</artifactId>
+		    	</exclusion>			
+			</exclusions>		    
+		</dependency>
+		
+		<!-- 
+			https://mvnrepository.com/artifact/net.sourceforge.jtds/jtds 
+			
+			for: 		connecting to mysql server 2000
+			because:	current microsoft driver does not support mysql server 2000
+		-->
+		<dependency>
+		    <groupId>net.sourceforge.jtds</groupId>
+		    <artifactId>jtds</artifactId>
+		    <version>${jtds.version}</version>
+		</dependency>
+		
+	</dependencies>
+</project>
