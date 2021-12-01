@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<zk>
-	<system-config>
-		<ui-factory-class>org.zkoss.zk.ui.http.SerializableUiFactory</ui-factory-class>
-	</system-config>
-	<session-config>
-		<session-timeout>-1</session-timeout> <!-- A negative time indicates the session should never timeout -->
-	</session-config>	
-</zk>
