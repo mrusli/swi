@@ -19,7 +19,8 @@
 			<hlayout style="padding: 10px;" valign="middle">
 				<label id="infoResultlabel" value="Total: 12 items - 45MT" style="font-weight: bold;"></label>
 				<label value=" - Packing:"></label>
-				<combobox id="packingCombobox" width="140px" readonly="true"></combobox>			
+				<combobox id="packingCombobox" width="140px" readonly="true"></combobox>
+				<label></label>			
 			</hlayout>	
 			<listbox id="inventoryListbox" mold="paging" pageSize="15" height="540px">
 				<listhead>
