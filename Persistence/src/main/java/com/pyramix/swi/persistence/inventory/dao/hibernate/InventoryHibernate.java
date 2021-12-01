@@ -526,6 +526,34 @@ public class InventoryHibernate extends DaoHibernate implements InventoryDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Inventory> findAllInventoryByInventoryCodePacking(InventoryStatus status, InventoryCode inventoryCode,
+			InventoryPacking packingType) {
+
+		Session session = super.getSessionFactory().openSession();
+		
+		Criteria criteria = session.createCriteria(Inventory.class);
+		criteria.add(Restrictions.eq("inventoryPacking", packingType));
+		criteria.add(Restrictions.eq("inventoryCode", inventoryCode));
+		criteria.add(Restrictions.eq("inventoryStatus", status));
+		criteria.addOrder(Order.asc("thickness"));
+		criteria.addOrder(Order.asc("width"));
+		criteria.addOrder(Order.asc("length"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+		try {
+			
+			return criteria.list();
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			session.close();
+		}
+	}
+	
+	
 	@Override
 	public InventoryType findInventoryTypeById(Long id) throws Exception {
 		Session session = super.getSessionFactory().openSession();
@@ -681,6 +709,29 @@ public class InventoryHibernate extends DaoHibernate implements InventoryDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Inventory> findAllInventoryByInventoryCode(InventoryCode inventoryCode, InventoryStatus status) throws Exception {
+		Session session = super.getSessionFactory().openSession();
+		
+		Criteria criteria = session.createCriteria(Inventory.class);
+		criteria.add(Restrictions.eq("inventoryCode", inventoryCode));
+		criteria.add(Restrictions.eq("inventoryStatus", InventoryStatus.ready));
+		criteria.addOrder(Order.asc("thickness"));
+		criteria.addOrder(Order.asc("width"));
+		criteria.addOrder(Order.asc("length"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+		try {
+			return criteria.list();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			session.close();
+		}
+		
+	}	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Inventory> filterInventory(InventoryStatus status, InventoryCode code, 
@@ -880,6 +931,5 @@ public class InventoryHibernate extends DaoHibernate implements InventoryDao {
 			
 		}
 	}
-
 
 }

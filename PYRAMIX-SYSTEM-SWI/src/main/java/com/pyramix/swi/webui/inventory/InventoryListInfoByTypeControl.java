@@ -4,11 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.zkoss.zk.ui.Executions;
@@ -17,6 +14,8 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -26,14 +25,12 @@ import org.zkoss.zul.ListitemRenderer;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabs;
-import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.pyramix.swi.domain.inventory.Inventory;
 import com.pyramix.swi.domain.inventory.InventoryCode;
 import com.pyramix.swi.domain.inventory.InventoryPacking;
 import com.pyramix.swi.domain.inventory.InventoryStatus;
-import com.pyramix.swi.domain.inventory.InventoryType;
 import com.pyramix.swi.domain.inventory.transfer.InventoryTransferStatus;
 import com.pyramix.swi.persistence.inventory.dao.InventoryDao;
 import com.pyramix.swi.webui.common.GFCBaseController;
@@ -49,11 +46,13 @@ public class InventoryListInfoByTypeControl extends GFCBaseController {
 	
 	private Label formTitleLabel, infoResultlabel;
 	private Listbox inventoryListbox;
-	private Textbox searchTextbox;
+	// private Textbox searchTextbox;
 	private Tabbox inventoryTypeTabbox;
+	private Combobox packingCombobox;
 	
 	private List<Inventory> inventoryList, inventoryFilterList;
-	private List<InventoryType> sortedInventoryTypeList;
+	// collect only inventoryCode with weight > 0
+	private List<InventoryWeight> sortedInventoryWeightList;
 	// controlled by the tab (coil, etc.)
 	// private InventoryPacking[] selectedPackingType = { };
 
@@ -68,7 +67,10 @@ public class InventoryListInfoByTypeControl extends GFCBaseController {
 		// inventory listbox -- if empty
 		inventoryListbox.setEmptyMessage("Tidak ada - Kosong");
         
-		// setupInventoryTypeTabs();
+		setupInventoryTypeTabs();
+		
+		// setup packing selection
+		setupPackingSelection();
 		
 		// init filter list
 		setInventoryFilterList(new ArrayList<Inventory>());
@@ -89,12 +91,11 @@ public class InventoryListInfoByTypeControl extends GFCBaseController {
 		// making textbox responds to "Enter" key
 		setSearchTextboxEventListener();
 
-		// testing only
-		sortedInventoryTypeList = getInventoryTypeFromInventory();
-
+		InventoryCode selInventoryCode = 
+				(InventoryCode) inventoryTypeTabbox.getSelectedTab().getAttribute("inventoryCode");
 		
 		// load and display
-		loadAllInventory();
+		loadAllInventory(selInventoryCode);
 		
 	}
 
@@ -124,18 +125,21 @@ public class InventoryListInfoByTypeControl extends GFCBaseController {
 		});
 		tab.setParent(tabs);
 */		
-		sortedInventoryTypeList = getInventoryTypeFromInventory();
+		sortedInventoryWeightList = getInventoryWeightFromInventory();
 		
-		for (InventoryType inventoryType : sortedInventoryTypeList) {
+		for (InventoryWeight inventoryWeight : sortedInventoryWeightList) {
 			// log.info(inventoryType.toString());
 			
-			tab = new Tab(inventoryType.getProductType());
+			tab = new Tab(inventoryWeight.getInventoryCode().getProductCode());
+			tab.setAttribute("inventoryCode", inventoryWeight.getInventoryCode());
 			tab.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
 				@Override
 				public void onEvent(Event event) throws Exception {
+					packingCombobox.setSelectedIndex(0);
+					
 					setInventoryList(
-						getInventoryDao().findInventoryByProductType(inventoryType, InventoryStatus.ready));
+						getInventoryDao().findAllInventoryByInventoryCode(inventoryWeight.getInventoryCode(), InventoryStatus.ready));
 
 					// set the model
 					inventoryListbox.setModel(
@@ -152,40 +156,85 @@ public class InventoryListInfoByTypeControl extends GFCBaseController {
 		}
 		
 		tabs.setParent(inventoryTypeTabbox);
-	}
-
-	private List<InventoryType> getInventoryTypeFromInventory() throws Exception {
+	}	
+	
+	private List<InventoryWeight> getInventoryWeightFromInventory() throws Exception {
 		// distinct inventoryCode in inventory list
-        List<InventoryCode> inventoryCodeList = inventoryDao.findDistinctInventoryCode();
-        inventoryCodeList.forEach(invtCode -> log.info(invtCode.toString()));
+        List<InventoryCode> inventoryCodeList = getInventoryDao().findDistinctInventoryCode();
+        // inventoryCodeList.forEach(invtCode -> log.info(invtCode.toString()));
         
+        List<InventoryWeight> inventoryWeights = new ArrayList<InventoryWeight>();
         
-        Set<InventoryType> inventoryTypeSet = new HashSet<InventoryType>();
-
-        // use each inventoryCode to get the inventoryType
-        for (InventoryCode inventoryCode : inventoryCodeList) {
-        	// log.info(inventoryCode.getId()+"-"+inventoryCode.getInventoryType());
-        	
-        	inventoryTypeSet.add(inventoryCode.getInventoryType());
-        }
+       	for (InventoryCode inventoryCode : inventoryCodeList) {
+           	List<Inventory> inventoryListByCode =
+           			getInventoryDao().findAllInventoryByInventoryCode(inventoryCode, InventoryStatus.ready);
+			
+           	BigDecimal invtWeightTotal = BigDecimal.ZERO;
+           	for (Inventory inventory : inventoryListByCode) {
+           		invtWeightTotal = invtWeightTotal.add(inventory.getWeightQuantity());
+           	}
+           	
+           	if (invtWeightTotal.compareTo(BigDecimal.ZERO)==0) {
+           		// do nothing
+			} else {
+				// String weightTotalString = toLocalFormatWithDecimal(invtWeightTotal, 3, "###.###.###,000");
+				// log.info("Total Weight for: "+inventoryCode.getProductCode()+" is: "+weightTotalString);
+				
+				InventoryWeight inventoryWeight = new InventoryWeight();
+				inventoryWeight.setInventoryCode(inventoryCode);
+				inventoryWeight.setTotalWeight(invtWeightTotal);
+				
+				inventoryWeights.add(inventoryWeight);
+			}
+		}       	
+       	
+       	inventoryWeights.sort((o1, o2) -> {
+       		return o2.getTotalWeight().compareTo(o1.getTotalWeight());
+       	});
+       	    	
+       	inventoryWeights.forEach(inventoryWeight -> log.info(inventoryWeight.toString()));
         
-        // https://studiofreya.com/java/how-to-sort-a-set-in-java-example/
-        List<InventoryType> sortedType = inventoryTypeSet.stream().collect(Collectors.toList());
-        Collections.sort(sortedType, 
-        		(invtType01, invtType02) -> invtType01.getProductType().compareTo(invtType02.getProductType()));
-        
-        return sortedType;
+        return inventoryWeights;
 	}
 
-	private void loadAllInventory() throws Exception {
+	private void setupPackingSelection() {
+		Comboitem comboitem;
+		
+		// all - semua
+		comboitem = new Comboitem();
+		comboitem.setLabel("Semua");
+		comboitem.setValue(null);
+		comboitem.setParent(packingCombobox);	
+		
+		for (InventoryPacking inventoryPacking : InventoryPacking.values()) {
+			comboitem = new Comboitem();
+			comboitem.setLabel(inventoryPacking.name());
+			comboitem.setValue(inventoryPacking);
+			comboitem.setParent(packingCombobox);				
+		}
+		
+		packingCombobox.setSelectedIndex(0);
+	}
+
+	public void onSelect$packingCombobox(Event event) throws Exception {
+		InventoryPacking selInventoryPacking = packingCombobox.getSelectedItem().getValue();
+		InventoryCode selInventoryCode = 
+				(InventoryCode) inventoryTypeTabbox.getSelectedTab().getAttribute("inventoryCode");
+		
+		if (selInventoryPacking == null) {
+			loadAllInventory(selInventoryCode);
+		} else {
+			loadAllInventoryByInventoryPacking(selInventoryCode, selInventoryPacking);
+		}	
+	}
+	
+	private void loadAllInventory(InventoryCode inventoryCode) throws Exception {
 		// clear search text
-		searchTextbox.setValue("");
+		// searchTextbox.setValue("");
 		
 		// load all inventory
 		setInventoryList(
-				getInventoryDao().findAllInventoryByStatus(InventoryStatus.ready));
-		
-		
+				getInventoryDao().findAllInventoryByInventoryCode(inventoryCode, InventoryStatus.ready));
 		
 		// set the model
 		inventoryListbox.setModel(
@@ -196,16 +245,35 @@ public class InventoryListInfoByTypeControl extends GFCBaseController {
 		// info result
 		displayInfoResult(getInventoryList());
 	}
+	
+	private void loadAllInventoryByInventoryPacking(InventoryCode inventoryCode, InventoryPacking inventoryPacking) throws Exception {
+		// clear search text
+		// searchTextbox.setValue("");
+		
+		// load all inventory
+		setInventoryList(
+				getInventoryDao().findAllInventoryByInventoryCodePacking(InventoryStatus.ready, inventoryCode, inventoryPacking));
+		
+		// set the model
+		inventoryListbox.setModel(
+				new ListModelList<Inventory>(getInventoryList()));
+		// render
+		inventoryListbox.setItemRenderer(getInventoryListitemRenderer());
+		
+		// info result
+		displayInfoResult(getInventoryList());
+		
+	}
 		
 	private void setSearchTextboxEventListener() {
-		
-		searchTextbox.addEventListener(Events.ON_OK, new EventListener<Event>() {
 
-			@Override
-			public void onEvent(Event arg0) throws Exception {
-				searchInventory();
-			}
-		});		
+		// when user press 'Enter' key
+		// searchTextbox.addEventListener(Events.ON_OK, new EventListener<Event>() {
+
+		//	public void onEvent(Event arg0) throws Exception {
+		//		searchInventory();
+		//	}
+		// });		
 	}
 
 	public void onClick$searchButton(Event event) throws Exception {
@@ -213,35 +281,30 @@ public class InventoryListInfoByTypeControl extends GFCBaseController {
 	}
 	
 	private void searchInventory() throws WrongValueException, Exception {
+		// InventoryCode selInventoryCode = 
+		//		(InventoryCode) inventoryTypeTabbox.getSelectedTab().getAttribute("inventoryCode");
 		
-		if (searchTextbox.getValue().isEmpty()) { 
-			loadAllInventory();
+		// if (searchTextbox.getValue().isEmpty()) { 
+		//	loadAllInventory(selInventoryCode);
 				
-			return; 
-		}
+		//	return; 
+		// }
 
-		InventoryPacking[] selectedPackingType = { };
+		// InventoryPacking[] selectedPackingType = { };
 			
 		// search
-		setInventoryList(
-				getInventoryDao().searchInventory(searchTextbox.getValue(), selectedPackingType));
+		// setInventoryList(
+		//		getInventoryDao().searchInventory(selInventoryCode.getProductCode()+" "+searchTextbox.getValue(), selectedPackingType));
 		
 		// set the model
-		inventoryListbox.setModel(
-				new ListModelList<Inventory>(getInventoryList()));
+		// inventoryListbox.setModel(
+		//		new ListModelList<Inventory>(getInventoryList()));
 		// render
-		inventoryListbox.setItemRenderer(getInventoryListitemRenderer());
+		// inventoryListbox.setItemRenderer(getInventoryListitemRenderer());
 			
 		// info result
-		displayInfoResult(getInventoryList());		
+		// displayInfoResult(getInventoryList());		
 
-/*		try {
-			
-		} catch (Exception e) {
-			Messagebox.show("Pencarian Inventory mengalami kesalahan (error). "+e.getMessage(), 
-					"Error", Messagebox.OK,  Messagebox.ERROR);	
-		}
-*/	
 	}
 	
 	private ListitemRenderer<Inventory> getInventoryListitemRenderer() {
@@ -455,11 +518,13 @@ public class InventoryListInfoByTypeControl extends GFCBaseController {
 			totalKg = totalKg.add(qtyKg);
 			totalItem = totalItem + 1;
 		}
-		
-		BigDecimal roundTotal = totalKg.divide(new BigDecimal(1000), 0, RoundingMode.HALF_UP);
+						
+		BigDecimal totalMT = totalKg.divide(new BigDecimal(1000), 3, RoundingMode.CEILING);
+		log.info("Total: "+totalMT+" MT");
 		
 		infoResultlabel.setValue("Total: "+String.valueOf(totalItem)+" item - "+
-				getFormatedInteger(roundTotal)+"MT");
+				toLocalFormatWithDecimal(totalMT, 3, "###.###.###,000")+"MT");
+		
 	}
 	
 	public InventoryDao getInventoryDao() {
@@ -484,5 +549,35 @@ public class InventoryListInfoByTypeControl extends GFCBaseController {
 
 	public void setInventoryFilterList(List<Inventory> inventoryFilterList) {
 		this.inventoryFilterList = inventoryFilterList;
+	}
+}
+
+class InventoryWeight {
+	private InventoryCode inventoryCode;
+	private InventoryPacking inventoryPacking;
+	private BigDecimal totalWeight;
+	
+	@Override
+	public String toString() {
+		return "InventoryWeight [inventoryCode=" + inventoryCode.getProductCode() + ", inventoryPacking=" + inventoryPacking
+				+ ", totalWeight=" + totalWeight + "]";
+	}
+	public InventoryCode getInventoryCode() {
+		return inventoryCode;
+	}
+	public void setInventoryCode(InventoryCode inventoryCode) {
+		this.inventoryCode = inventoryCode;
+	}
+	public InventoryPacking getInventoryPacking() {
+		return inventoryPacking;
+	}
+	public void setInventoryPacking(InventoryPacking inventoryPacking) {
+		this.inventoryPacking = inventoryPacking;
+	}
+	public BigDecimal getTotalWeight() {
+		return totalWeight;
+	}
+	public void setTotalWeight(BigDecimal totalWeight) {
+		this.totalWeight = totalWeight;
 	}
 }

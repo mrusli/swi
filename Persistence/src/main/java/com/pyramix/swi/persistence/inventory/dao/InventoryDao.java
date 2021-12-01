@@ -81,5 +81,10 @@ public interface InventoryDao {
 	 * @throws Exception
 	 */
 	public void saveOrUpdate(List<Inventory> inventoryList) throws Exception;
+
+	public List<Inventory> findAllInventoryByInventoryCode(InventoryCode inventoryCode, InventoryStatus status) throws Exception;
+
+	public List<Inventory> findAllInventoryByInventoryCodePacking(InventoryStatus status, InventoryCode inventoryCode,
+			InventoryPacking packing);
 	
 }
