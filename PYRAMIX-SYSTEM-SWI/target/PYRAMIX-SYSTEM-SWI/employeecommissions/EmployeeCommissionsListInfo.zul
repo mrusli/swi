@@ -1,0 +1,40 @@
+<?page title="Commissions" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<zk>
+<borderlayout width="1360px" height="690px" id="employeeCommissionsListInfoWin" 
+	apply="${employeeCommissionsListInfoControl}">
+	<north border="none">
+		<vlayout>			
+			<hlayout valign="middle" style="padding: 5px 0px">
+				<label id="formTitleLabel" sclass="headTitle"></label>
+			</hlayout>
+		</vlayout>
+	</north>
+	<center border="none">
+		<div>
+			<tabbox id="employeeCommissionsTabbox">		
+			</tabbox>
+			<hlayout style="padding: 10px;" valign="middle">
+				<!-- Total: Rp.22,399,200.- Jumlah Komisisi -->
+				<label id="infoResultlabel" value="" style="color: silver;"></label>
+				<button id="addButton" label="Tambah" sclass="modButton" disabled="true"></button>			
+			</hlayout>
+			<listbox id="employeeCommissionsListbox" mold="paging" pageSize="15" height="540px">
+				<listhead>
+					<listheader label="Nama Karyawan" width="120px"></listheader>
+					<listheader label="No.Order" width="120px"></listheader>
+					<listheader label="Tgl." width="140px"></listheader>
+					<listheader label="Customer" width="220px"/>
+					<listheader label="Total Order (Rp.)" width="120px" align="right"/>
+					<listheader label="Komisi (%)" width="100px" align="right"/>
+					<listheader label="Komisi (Rp.)" width="100px" align="right"/>
+					<listheader />
+				</listhead>
+			</listbox>
+		</div>		
+	</center>	
+</borderlayout>
+</zk>

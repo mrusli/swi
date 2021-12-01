@@ -1,0 +1,41 @@
+<?page title="Customer Order" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="1150px" height="640px" border="normal"
+	id="reportSalesCustomerOrderDialogWin" apply="${reportSalesCustomerOrderDialogControl}">
+	<tabbox id="customerOrderTabbox" height="540px">
+		<tabs>
+			<tab label="Surat Jalan"></tab>
+			<tab id="deliveryOrderTab" label="D/O"></tab>
+			<tab label="Faktur"></tab>
+			<tab label="Voucher Sales"></tab>
+			<tab label="Customer Order"></tab>
+		</tabs>
+		<tabpanels>
+			<tabpanel>
+				<!-- surat jalan -->
+				<include id="suratJalanInclude" vflex="1" hflex="1"></include>
+			</tabpanel>
+			<tabpanel>
+				<!-- D/O -->
+				<include id="deliveryOrderInclude" vflex="1" hflex="1"></include>
+			</tabpanel>
+			<tabpanel>
+				<!-- Faktur -->
+				<include id="fakturInclude" vflex="1" hflex="1"></include>
+			</tabpanel>
+			<tabpanel>
+				<!-- Voucher Sales -->
+				<include id="voucherSalesInclude" vflex="1" hflex="1"></include>
+			</tabpanel>
+			<tabpanel>
+				<!-- Customer Order -->
+				<include id="customerOrderInclude" vflex="1" hflex="1"></include>
+			</tabpanel>
+		</tabpanels>
+	</tabbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="closeButton" label="Tutup"></button>	
+	</hlayout>		
+	
+</window>
+</zk>

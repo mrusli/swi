@@ -1,0 +1,124 @@
+<?page title="Customer Order" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="680px" title="Customer Order" border="normal"
+	id="customerOrderDialogWin" apply="${customerOrderDialogControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="10%">
+						No.Order:
+					</cell>
+					<cell width="15%">
+						<textbox id="orderNoTextbox" width="125px" readonly="true"></textbox>
+					</cell>
+					<cell width="10%">
+						Tgl.Order:	
+					</cell>
+					<cell width="20%">
+						<datebox id="orderDatebox" width="200px"></datebox>
+					</cell>
+					<cell width="10%">
+						Customer:
+					</cell>
+					<cell>
+						<textbox id="customerTextbox" width="235px" readonly="true"/>
+						<button id="customerButton" width="25px" label="..." sclass="selectButton"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Pembayaran:					
+					</cell>
+					<cell>
+						<combobox id="pembayaranCombobox" width="125px"/>
+					</cell>
+					<cell>
+						Jumlah Hari:
+					</cell>
+					<cell>
+						<intbox id="jumlahHariIntbox" value = "0" width="45px" disabled="true"></intbox>						
+					</cell>
+					<cell>
+						PPN:						
+					</cell>
+					<cell>
+						<checkbox id="usePpn" checked="true"></checkbox>						
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Total Order:
+					</cell>
+					<cell>
+						<textbox id="totalOrderTextbox" width="110px" style="text-align: right;" disabled="true"/>
+						<button id="totalOrderButton" width="25px" label="..." sclass="selectButton" disabled="true"/>
+					</cell>
+					<cell>
+						Catatan:
+					</cell>
+					<cell>
+						<textbox id="noteTextbox" width="205px"></textbox>
+					</cell>
+					<cell>
+						Sales:
+					</cell>
+					<cell>
+						<combobox id="salesPersonCombobox" width="260px"></combobox>
+					</cell>	
+				</row>
+			</rows>
+		</grid>
+		<hlayout style="padding: 10px;" valign="middle">
+			<label id="infoOrderlabel" value="Pembelian: 0 items" style="color: silver;"></label>
+			<button id="addInventoryButton" label="Tambah" sclass="modButton"></button>			
+			<button id="removeInventoryButton" label="Hapus" sclass="modButton" disabled="true"></button>			
+		</hlayout>
+		<listbox id="productListbox" height="250px">
+			<listhead>
+				<listheader label="No.Coil" width="100px"/>
+				<listheader label="Kode" width="120px"/>
+				<listheader label="Spesifikasi" width="200px"/>
+				<listheader label="Packing" width="80px"/>
+				<listheader label="Qty (Kg)" align="right" width="80px"/>
+				<listheader label="Qty (Sht/Line)" align="right" width="100px"/>
+				<listheader label="Unit" width="80px" align="center"/>
+				<listheader label="Harga (Rp.)" width="120px" align="right"/>
+				<listheader label="SubTotal (Rp.)" width="120px" align="right"/>
+				<listheader width="70px"/>
+			</listhead>
+		</listbox>
+		<grid>
+			<rows>
+				<row>
+					<cell></cell>
+					<cell></cell>
+					<cell></cell>
+					<cell width="15%">SubTotal (Rp.)</cell>
+					<cell><textbox id="subTotalTextbox" value="0,-" width="150px"  readonly="true" style="text-align: right;"></textbox></cell>			
+				</row>
+				<row>
+					<cell></cell>
+					<cell></cell>
+					<cell></cell>
+					<cell>PPN (Rp.)</cell>
+					<cell><textbox id="ppnTextbox" value="0,-" width="150px" readonly="true" style="text-align: right;"></textbox></cell>			
+				</row>
+				<row>
+					<cell></cell>
+					<cell></cell>
+					<cell></cell>
+					<cell>Total (Rp.)</cell>
+					<cell><textbox id="totalTextbox" value="0,-" width="150px" readonly="true" style="text-align: right;"></textbox></cell>			
+				</row>
+			</rows>
+		</grid>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="checkButton" label="Check"></button>
+		<button id="saveButton" label="Save" disabled="true"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>	
+</window>
+</zk>

@@ -1,0 +1,65 @@
+<?page title="Inventory" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<zk>
+<borderlayout width="1450px" height="690px" id="inventoryListInfoWin" apply="${inventoryListInfoControl}">
+	<north border="none">
+		<vlayout>			
+			<hlayout valign="middle" style="padding: 5px 0px">
+				<label id="formTitleLabel" sclass="headTitle"></label>
+				<label sclass="headTitle" value=" - Search : "></label>
+				<textbox id="searchTextbox" width="420px"></textbox>
+				<button id="searchButton" label="Cari"></button>
+			</hlayout>
+		</vlayout>
+	</north>
+	<center border="none">
+		<div>
+			<tabbox id="packingTabbox">
+				<tabs>
+					<tab id="allTab" 		label="Semua"></tab>
+					<tab id="coilTab" 		label="Coil"></tab>
+					<tab id="petianTab"	 	label="Petian"></tab>
+					<tab id="lembaranTab" 	label="Lembaran"></tab>
+				</tabs>
+			</tabbox>
+			<hlayout style="padding: 10px;" valign="middle">
+				<label id="infoResultlabel" value="Total: 12 items - 45MT" style="font-weight: bold;"></label>
+				<button id="newButton" label="Tambah" sclass="modButton"></button>
+				<!-- status -->
+				<label id="statusLabel" value="Status:"></label>
+				<combobox id="statusCombobox" width="110px" readonly="true"></combobox>
+				<!-- kode -->
+				<label id="kodeLabel" value="Kode:"></label>
+				<combobox id="kodeCombobox" width="110px" readonly="true"></combobox>
+				<!-- thickness -->
+				<label id="thicknessLabel" value="Ketebalan:"></label>
+				<combobox id="thicknessCombobox" width="110px" readonly="true"></combobox>
+				<!-- location -->
+				<label id="locationLabel" value="Lokasi:"></label>
+				<combobox id="locationCombobox" width="110px" readonly="true"></combobox>
+				<button id="filterButton" label="Filter" sclass="modButton"></button>
+				<button id="resetButton" label="Reset" sclass="modButton"></button>
+			</hlayout>	
+			<listbox id="inventoryListbox" mold="paging" pageSize="15" height="540px">
+				<listhead>
+					<listheader label="Status" width="95px"/>
+					<listheader label="Kode" width="120px"/>
+					<listheader label="Spesifikasi" width="200px"/>
+					<listheader label="Qty" align="right" width="60px"/>
+					<listheader label="Qty (Kg)" align="right" width="80px"/>
+					<listheader label="Packing" width="80px"/>
+					<listheader label="Lokasi" width="80px"/>
+					<listheader label="No.Coil" width="100px"/>
+					<listheader label="No.Kontrak" width="150px"/>
+					<listheader label="Tgl.Penerimaan" width="140px"/>
+					<listheader label="Catatan" width="220px"/>
+					<listheader width="35px"/>
+				</listhead>
+			</listbox>	
+		</div>
+	</center>
+</borderlayout>
+</zk>

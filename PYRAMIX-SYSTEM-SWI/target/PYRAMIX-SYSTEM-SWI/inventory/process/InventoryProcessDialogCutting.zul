@@ -1,0 +1,167 @@
+<?page title="Cutting" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="1100px" height="590px" title="Menambah (Add) Proses" border="normal"
+	id="inventoryProcessDialogCuttingWin" apply="${inventoryProcessDialogCuttingControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="10%">
+						No.Coil:
+					</cell>
+					<cell width="20%">
+						<textbox id="coilNumberTextbox" width="180px" disabled="true"/>
+					</cell>
+					<cell width="10%">
+						Kode:
+					</cell>
+					<cell width="20%">
+						<textbox id="inventoryCodeTextbox" width="180px" disabled="true"></textbox>
+					</cell>
+					<cell width="10%">
+						Spesifikasi:
+					</cell>
+					<cell>
+						<textbox id="specificationTextbox" width="180px" disabled="true"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Tipe Proses:					
+					</cell>
+					<cell>
+						<combobox id="processTypeCombobox" width="180px"></combobox>
+					</cell>
+					<cell>
+						Sisa (Kg):
+					</cell>
+					<cell>
+						<textbox id="remainQtyTextbox" width="160px" disabled="true"/>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<tabbox id="processTypeTabbox">
+			<tabs visible="false">
+				<tab></tab>
+				<tab></tab>
+			</tabs>
+			<tabpanels height="350px">
+				<tabpanel>
+					<!-- SHEARING -->
+					<hlayout style="padding: 5px;">
+						<label value="Shearing" style="font-weight: bold;"></label>
+					</hlayout>
+					<grid>
+						<rows>
+							<row>
+								<cell width="10%">
+									Ketebalan:								
+								</cell>
+								<cell width="20%">
+									<textbox id="shearingThicknessTextbox" width="80px" disabled="true"></textbox>
+								</cell>
+								<cell width="10%">
+									Lebar:
+								</cell>
+								<cell width="15%">
+									<textbox id="shearingWidthTextbox" width="80px" disabled="true"></textbox>
+								</cell>
+								<cell width="10%">
+								
+								</cell>
+								<cell width="15%">
+								
+								</cell>
+								<cell>
+								
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Panjang:
+								</cell>
+								<cell>
+									<decimalbox id="shearingLengthDecimalbox" width="80px"/>
+									<checkbox id="recoilCheckbox" label="Re-Coil" checked="false"></checkbox>
+								</cell>
+								<cell>
+									Qty (Sht):								
+								</cell>
+								<cell>
+									<intbox id="shearingQtyIntbox" width="80px"></intbox>
+									<button id="shearingQtyShtToKgButton" label=">>" sclass="selectButton"></button>
+								</cell>
+								<cell>
+									Qty (Kg):
+								</cell>
+								<cell>
+									<decimalbox id="shearingQtyWeightDecimalbox" width="80px"></decimalbox>
+									<button id="shearingQtyKgToShtButton" label=">>" sclass="selectButton"></button>
+								</cell>
+								<cell>
+									<checkbox id="packingCheckbox" checked="true" label="Packing" disabled="true"></checkbox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Customer:								
+								</cell>
+								<cell colspan="2">
+									<textbox id="customerTextbox" width="210px" disabled="true"/>
+									<button id="selectCustomerButton" label="..." sclass="selectButton"/>
+								</cell>
+								<cell>
+									<checkbox id="forSWICheckbox" label="SWI" checked="false"></checkbox>
+								</cell>
+								<cell>
+								
+								</cell>
+								<cell>
+								
+								</cell>
+								<cell>
+								
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+				<tabpanel>
+					<hlayout style="padding: 5px;">
+						<label value="Slitting" style="font-weight: bold;"></label>
+					</hlayout>
+					<hlayout style="padding: 5px;" valign="middle">
+						Qty (Kg):
+						<decimalbox id="slittingQtyWeightDecimalbox" width="80px"></decimalbox>
+						<button id="distributeQtyButton" label="Distribute Qty" sclass="selectButton" disabled="true"></button>
+					</hlayout>
+					<listbox id="slittingSizeListbox" height="220px">
+						<listhead>
+							<listheader label="Lebar (mm)" width="110px"/>
+							<listheader label="Line" width="150px"/>
+							<listheader label="Qty(Kg)" width="140px"/>
+							<listheader label="Customer" width="340px"/>
+							<listheader/>
+						</listhead>
+					</listbox>
+					<hbox style="padding: 5px">
+						<button id="addRowButton" label="+" sclass="modButton" width="30px"></button>
+						<button id="removeRowButton" label="-" sclass="modButton" width="30px"></button>
+					</hbox>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="addButton" label="Tambah"></button>
+		<button id="cancelButton" label="Batal"></button>	
+	</hlayout>	
+</window>
+</zk>

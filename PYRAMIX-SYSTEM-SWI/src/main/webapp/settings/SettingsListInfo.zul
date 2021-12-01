@@ -1,0 +1,81 @@
+<?page title="Settings" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<zk>
+<borderlayout width="1360px" height="690px" id="settingsListInfoWin" apply="${settingsListInfoControl}">
+	<north border="none">
+		<vlayout>			
+			<hlayout valign="middle" style="padding: 5px 0px">
+				<label id="formTitleLabel" sclass="headTitle"></label>
+			</hlayout>
+		</vlayout>
+	</north>
+	<center border="none">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="15%">
+						Selected Company:
+					</cell>
+					<cell width="50%">
+						<combobox id="organizationLegalNameCombobox" width="350px"></combobox>					
+					</cell>
+					<cell width="15%">
+							
+					</cell>
+					<cell>
+						
+					</cell>
+				</row>
+				<row>
+					<cell>
+						PPN Transaksi Bank:
+					</cell>
+					<cell>
+						<combobox id="bankAccountPpnCombobox" width="510px"></combobox>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Non-PPN Transaksi Bank:
+					</cell>
+					<cell>
+						<combobox id="bankAccountNonPpnCombobox" width="510px"></combobox>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hlayout style="padding-top: 5px;">
+			<button id="saveButton" label="Save"></button>
+		</hlayout>
+	</vbox>
+	</center>
+</borderlayout>
+</zk>

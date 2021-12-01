@@ -1,0 +1,156 @@
+<?page title="Voucher Sales" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="680px" title="Voucher Sales" border="normal"
+	id="voucherSalesDialogWin" apply="${voucherSalesDialogControl}">
+	<vbox>
+		<grid id="createFromGrid">
+			<rows>
+				<row>
+					<cell>
+						<checkbox id="createFromCheckbox" checked="true"></checkbox>
+						<label id="customerOrderLabel" value="Membuat Sales Voucher Dari Customer Order: "></label>
+						<combobox id="customerOrderCombobox"></combobox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<label id="idLabel" style="font-size:1em;"/>
+		<grid>
+			<rows>
+				<row>
+					<cell width="11%">
+						No Voucher:
+					</cell>
+					<cell width="15%">
+						<textbox id="voucherNoCompTextbox" width="140px" readonly="true"></textbox>
+					</cell>
+					<cell width="10%">
+						No Posting:	
+					</cell>
+					<cell width="20%">
+						<textbox id="voucherNoPostTextbox" width="140px" readonly="true"></textbox>
+					</cell>
+					<cell width="15%">
+						Tgl Voucher:
+					</cell>
+					<cell>
+						<datebox id="transactionDatebox" width="230px"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Pembayaran:
+					</cell>
+					<cell>
+						<combobox id="pembayaranCombobox" width="125px"/>
+					</cell>
+					<cell>
+						Jumlah Hari:
+					</cell>
+					<cell>
+						<intbox id="jumlahHariIntbox" value = "0" width="45px"></intbox>
+					</cell>
+					<cell>
+						
+					</cell>
+					<cell>
+						
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Tipe Voucher:
+					</cell>
+					<cell>
+						<label id="voucherTypeLabel"/>
+					</cell>
+					<cell>
+						Status:
+					</cell>
+					<cell>
+						<combobox id="voucherStatusCombobox" width="180px" disabled="true"/>
+					</cell>
+					<cell>
+						Customer:
+					</cell>
+					<cell>
+						<textbox id="customerTextbox" width="230px" readonly="true"/>
+						<button id="customerButton" width="25px" label="..." sclass="selectButton"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Jumlah (Rp.):
+					</cell>
+					<cell>
+						<textbox id="theSumOfTextbox" width="110px" style="text-align: right;" readonly="true"/>
+						<button id="totalOrderButton" width="25px" label="..." sclass="selectButton"/>
+					</cell>
+					<cell>
+						PPN:
+					</cell>
+					<cell>
+						<checkbox id="usePpnCheckbox" checked="true"/>
+					</cell>
+					<cell>
+						Jumlah PPN (Rp.):
+					</cell>
+					<cell>
+						<textbox id="ppnAmountTextbox" width="110px" style="text-align: right;" readonly="true"></textbox>
+						<button id="ppnAmountButton" width="25px" label="..." sclass="selectButton"/>
+					</cell>					
+				</row>
+				<row>
+					<cell>
+						Referensi :
+					</cell>
+					<cell>
+						<textbox id="referenceTextbox" width="150px"></textbox>
+					</cell>
+					<cell>
+						Penjelasan :
+					</cell>
+					<cell>
+						<textbox id="descriptionTextbox" width="200px"></textbox>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hlayout id="dbcrControl" style="padding: 10px;" valign="middle">
+			<label id="infoDebitCreditlabel" value="Debit/Kredit: 0 items" style="color: silver;"></label>
+			<button id="addDebitCreditButton" label="Debit/Kredit" sclass="modButton"></button>			
+			<button id="removeDebitCreditButton" label="Hapus" sclass="modButton"></button>			
+		</hlayout>		
+		<listbox id="voucherDbcrListbox" height="240px">
+			<listhead>
+				<listheader label="No Akun" width="175px"/>
+				<listheader label="Nama Akun" width="240px"/>
+				<listheader label="Keterangan" width="240px"/>
+				<listheader label="Debit" width="160px" align="right"/>
+				<listheader label="Kredit" width="160px" align="right"/>
+			</listhead>
+			<listfoot>
+				<listfooter></listfooter>
+				<listfooter></listfooter>
+				<listfooter label="Total:"></listfooter>
+				<listfooter id="totalDebitListfooter">
+				</listfooter>
+				<listfooter id="totalCreditListfooter">
+				</listfooter>
+			</listfoot>		
+		</listbox>			
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>		
+</window>
+	
+</zk>

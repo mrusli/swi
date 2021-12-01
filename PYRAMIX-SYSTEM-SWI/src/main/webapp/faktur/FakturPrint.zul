@@ -1,0 +1,161 @@
+<?page title="Print Faktur" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window title="Print-Faktur" border="normal" closable="true" 
+	id="fakturPrintWin" apply="${fakturPrintWinControl}"
+	visible="true" width="1150px" height="650px" 
+	contentStyle="overflow:auto;">	
+	<hbox style="padding-top:5px; padding-bottom:5px; padding-left:70px; background-color: #f9fcff" width="100%">
+		<button id="printButton" label="Print"/>
+	</hbox>
+	<vbox id="printVbox" width="1020px" style="padding-left:0px; padding-top:110px">
+		<grid sclass="pre-print-grid">
+			<rows>
+				<row>
+					<cell width="52%">
+						<label value="Kepada YTH.," sclass="pre-print-label"></label>
+					</cell>
+					<cell width="2%">
+					
+					</cell>
+					<cell>
+						<label id="fakturDateLabel" sclass="pre-print-label"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="customerNameLabel" sclass="pre-print-label" style="font-weight: bold;"/>						
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+						<label id="fakturNumberLabel" sclass="pre-print-label" style="font-weight: bold;"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="customerAddress01Label" sclass="pre-print-label" style="white-space: nowrap;"/>	
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="customerAddress02Label" sclass="pre-print-label" style="white-space: nowrap;"/>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="customerCityLabel" sclass="pre-print-label"/>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+						<label id="customerPaymentLabel" sclass="pre-print-label"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<hlayout>
+							<label id="customerTelephoneLabel" sclass="pre-print-label"/>
+							<label id="customerFaxLabel" sclass="pre-print-label"/>						
+						</hlayout>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+						<label id="customerPurchaseOrderLabel" sclass="pre-print-label"/>
+					</cell>
+				</row>
+			</rows>		
+		</grid>		
+		<grid id="fakturProductGrid" oddRowSclass="none" sclass="pre-print-grid" height="190px">
+			<columns>
+				<column label="No." width="50px"></column>
+				<column label="Nama Barang / Jasa Kena Pajak" width="320px"></column>
+				<column label="Kuantum" width="120px" align="right"></column>
+				<column label="Harga Satuan (Rp.)" width="180px" align="right"></column>
+				<column label="Harga Jual (Rp.)" width="180px" align="right"></column>
+				<column></column>
+			</columns>
+		</grid>
+		<grid sclass="pre-print-grid">
+			<rows>
+				<row>
+					<cell width="25%">
+						<label value="Jumlah Harga Jual" sclass="pre-print-label"></label>		
+					</cell>
+					<cell align="right" width="30%">
+						<label id="subTotalLabel" value="0,-" sclass="pre-print-label"></label>
+					</cell>
+					<cell width="11%">
+					
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="PPN = 10%" sclass="pre-print-label"></label>		
+					</cell>
+					<cell align="right">
+						<label id="ppnTotalLabel" value="0,-" sclass="pre-print-label"></label>
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="Jumlah Harga Jual Termasuk PPN" sclass="pre-print-label"></label>		
+					</cell>
+					<cell align="right">
+						<label id="fakturTotalLabel" value="0,-" sclass="pre-print-label"></label>					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hlayout>
+			<label id="suratJalanNumberLabel" value="Sesuai Menurut SuratJalan No.: " sclass="pre-print-label" style="padding-right: 40px"></label>
+			<label id="suratJalanDateLabel" value="Tgl:" sclass="pre-print-label"></label>
+		</hlayout>
+		<grid sclass="pre-print-grid">
+			<rows>
+				<row>
+					<cell width="70%">
+						<vlayout>
+							<label value="GIRO HARAP MENCANTUMKAN" sclass="pre-print-label" style="font-weight: bold;"/>
+							<label id="bankAccountlabel" value="PT.SINARWAJA INDAH - A/C 001 305 1817 - BANK BCA CAB ASEMKA" sclass="pre-print-label"/>
+						</vlayout>						
+					</cell>
+					<cell align="center" width="30%">
+						<vlayout>
+							<label value="Hormat Kami," sclass="pre-print-label" style="font-weight: bold;"/>
+							<label id="companyLabel" sclass="pre-print-label"/>
+						</vlayout>
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		
+	</vbox>
+	
+</window>
+</zk>

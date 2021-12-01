@@ -1,0 +1,11 @@
+<?page title="Display PDF" contentType="text/html;charset=UTF-8"?>
+<?script type="text/javascript" src="/js/pdf.js"?>
+<?script type="text/javascript" src="/js/pdf.worker.js"?>
+<?script type="text/javascript" src="/js/pdf.display.js"?>
+<zk>
+<window id="displayPdfWin" title="Display PDF" border="normal" apply="${displayPdfControl}">
+	<html>
+		<canvas id="the-canvas"></canvas>
+	</html>
+</window>
+</zk>

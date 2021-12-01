@@ -1,0 +1,74 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee" 	
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+		http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" id="WebApp_9" version="2.4">
+
+	<display-name>Pyramix-SWI Application</display-name>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+ 			classpath:ApplicationContext-GuiController.xml
+ 			classpath:ApplicationContext-Security.xml
+		</param-value>
+	</context-param>
+	
+	<!-- Spring Loader -->
+	
+	<listener>
+		<display-name>Spring Context Loader</display-name>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- Spring Security -->
+
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
+ 	<!-- ZK -->
+         
+	<servlet>
+	    <description>The ZK loader for ZUML pages</description>
+	    <servlet-name>zkLoader</servlet-name>
+	    <servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
+	    <init-param>
+			<param-name>update-uri</param-name>
+			<param-value>/zkau</param-value>
+	    </init-param>
+	    <load-on-startup>1</load-on-startup>		
+	</servlet>
+	<servlet>
+		<description>The asynchronous update engine for ZK</description>
+		<servlet-name>auEngine</servlet-name>
+		<servlet-class>org.zkoss.zk.au.http.DHtmlUpdateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>zkLoader</servlet-name>
+		<url-pattern>*.zul</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>auEngine</servlet-name>
+		<url-pattern>/zkau/*</url-pattern>
+	</servlet-mapping>
+
+	<listener>
+		<description>Used to cleanup when a session is destroyed</description>
+		<display-name>ZK Session Cleaner</display-name>
+		<listener-class>org.zkoss.zk.ui.http.HttpSessionListener</listener-class>
+	</listener>	
+	
+	<session-config>  
+		<session-timeout>-1</session-timeout> <!-- session never expires -->
+	</session-config>
+
+	<welcome-file-list>
+		<welcome-file>login.zul</welcome-file>
+	</welcome-file-list>		
+</web-app>

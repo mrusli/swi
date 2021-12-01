@@ -1,0 +1,77 @@
+<?page title="GiroDialog" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="1150px" height="240px" title="Giro Dialog" border="normal"
+	id="giroDialogWin" apply="${giroDialogControl}">
+	<vbox>
+		<label id="idLabel" style="font-size:1em;"/>
+		<grid>
+			<rows>
+				<row>
+					<cell width="10%">
+						Giro No:
+					</cell>
+					<cell width="20%">
+						<textbox id="giroNoTextbox" width="210px"/>
+					</cell>
+					<cell width="10%">
+						Giro Bank:
+					</cell>
+					<cell width="20%">
+						<textbox id="giroBankTextbox" width="200px"></textbox>
+					</cell>
+					<cell width="12%">
+						Tgl Penc.Giro:
+					</cell>
+					<cell>
+						<datebox id="giroDateDatebox" width="250px"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Tgl.Terima:
+					</cell>
+					<cell>
+						<datebox id="giroReceivedDatebox" width="210px"></datebox>
+					</cell>
+					<cell>
+						Jumlah:
+					</cell>
+					<cell>
+						<decimalbox id="giroAmountDecimalbox" width="200px"></decimalbox>						
+					</cell>
+					<cell>
+						Customer:					
+					</cell>
+					<cell>
+						<textbox id="customerTextbox" width="250px" readonly="true"/>					
+					</cell>
+				</row>
+				<row>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+				</row>
+			</rows>
+		</grid>	
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>			
+</window>
+</zk>

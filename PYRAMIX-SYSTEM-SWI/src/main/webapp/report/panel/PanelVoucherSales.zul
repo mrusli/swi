@@ -1,0 +1,134 @@
+<?page title="VoucherSales" contentType="text/html;charset=UTF-8"?>
+<div id="panelVoucherSalesDiv" apply="${panelVoucherSalesControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="11%">
+						No Voucher:
+					</cell>
+					<cell width="15%">
+						<textbox id="voucherNoCompTextbox" width="140px" readonly="true"></textbox>
+					</cell>
+					<cell width="10%">
+						No Posting:	
+					</cell>
+					<cell width="20%">
+						<textbox id="voucherNoPostTextbox" width="140px" readonly="true"></textbox>
+					</cell>
+					<cell width="15%">
+						Tgl Voucher:
+					</cell>
+					<cell>
+						<datebox id="transactionDatebox" width="230px" disabled="true"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Pembayaran:
+					</cell>
+					<cell>
+						<combobox id="pembayaranCombobox" width="125px" disabled="true"/>
+					</cell>
+					<cell>
+						Jumlah Hari:
+					</cell>
+					<cell>
+						<intbox id="jumlahHariIntbox" value = "0" width="45px" readonly="true"></intbox>
+					</cell>
+					<cell>
+						
+					</cell>
+					<cell>
+						
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Tipe Voucher:
+					</cell>
+					<cell>
+						<label id="voucherTypeLabel"/>
+					</cell>
+					<cell>
+						Status:
+					</cell>
+					<cell>
+						<combobox id="voucherStatusCombobox" width="180px" disabled="true"/>
+					</cell>
+					<cell>
+						Customer:
+					</cell>
+					<cell>
+						<textbox id="customerTextbox" width="230px" readonly="true"/>
+						<button id="customerButton" width="25px" label="..." sclass="selectButton" disabled="true"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Jumlah (Rp.):
+					</cell>
+					<cell>
+						<textbox id="theSumOfTextbox" width="110px" style="text-align: right;" readonly="true"/>
+						<button id="totalOrderButton" width="25px" label="..." sclass="selectButton" disabled="true"/>
+					</cell>
+					<cell>
+						PPN:
+					</cell>
+					<cell>
+						<checkbox id="usePpnCheckbox" checked="true" disabled="true"/>
+					</cell>
+					<cell>
+						Jumlah PPN (Rp.):
+					</cell>
+					<cell>
+						<textbox id="ppnAmountTextbox" width="110px" style="text-align: right;" readonly="true"></textbox>
+						<button id="ppnAmountButton" width="25px" label="..." sclass="selectButton" disabled="true"/>
+					</cell>					
+				</row>
+				<row>
+					<cell>
+						Referensi :
+					</cell>
+					<cell>
+						<textbox id="referenceTextbox" width="150px" readonly="true"></textbox>
+					</cell>
+					<cell>
+						Penjelasan :
+					</cell>
+					<cell>
+						<textbox id="descriptionTextbox" width="200px" readonly="true"></textbox>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hlayout id="dbcrControl" style="padding: 10px;" valign="middle">
+			<label id="infoDebitCreditlabel" value="Debit/Kredit: 0 items" style="color: silver;"></label>
+		</hlayout>		
+		<listbox id="voucherDbcrListbox" height="240px">
+			<listhead>
+				<listheader label="No Akun" width="95px"/>
+				<listheader label="Nama Akun" width="240px"/>
+				<listheader label="Keterangan" width="300px"/>
+				<listheader label="Debit" width="160px" align="right"/>
+				<listheader label="Kredit" width="160px" align="right"/>
+			</listhead>
+			<listfoot>
+				<listfooter></listfooter>
+				<listfooter></listfooter>
+				<listfooter label="Total:"></listfooter>
+				<listfooter id="totalDebitListfooter">
+				</listfooter>
+				<listfooter id="totalCreditListfooter">
+				</listfooter>
+			</listfoot>		
+		</listbox>			
+	</vbox>
+
+</div>

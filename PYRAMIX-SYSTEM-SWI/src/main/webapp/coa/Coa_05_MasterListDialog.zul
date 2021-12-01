@@ -1,0 +1,28 @@
+<?page title="COA Master" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="680px" height="500px" title="Pilih COA Master" border="normal"
+	id="coa_05_MasterListDialogWin" apply="${coa_05_MasterListDialogWin}">
+	<tabbox id="coaSelectionTabbox">
+		<tabs>
+			<tab label="Semua"/>
+			<tab label="Aktifa"/>
+			<tab label="Liabilities"/>
+			<tab label="Equity"/>
+			<tab label="Revenue"/>
+			<tab label="Expenses"/>
+		</tabs>
+	</tabbox>
+	<space orient="vertical" height="15px"></space>
+	<listbox id="coa_05_MasterListbox" height="280px">
+		<listhead>
+			<listheader label="No.COA" width="140px"/>
+			<listheader label="Nama" width="220px"/>
+		</listhead>
+	</listbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="selectButton" label="Pilih"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>
+</window>
+</zk>

@@ -1,0 +1,59 @@
+<?page title="Ending Balance" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="240px" title="Tambah (Add) Voucher Umum dan PettyCash" border="normal"
+	id="endingBalanceDialogWin" apply="${endingBalanceDialogControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="15%">
+						No Akun:
+					</cell>
+					<cell width="20%">
+						<textbox id="coaMasterTextbox" width="140px" readonly="true"></textbox>
+						<button id="selectCoaMasterButton" width="25px" label="..." sclass="selectButton"/>
+					</cell>
+					<cell width="10%">
+						Nama Akun:	
+					</cell>
+					<cell width="20%">
+						<textbox id="coaMasterNameTextbox" width="180px" readonly="true"></textbox>
+					</cell>
+					<cell width="5%">
+						Tgl:
+					</cell>
+					<cell>
+						<datebox id="endingDatebox" width="230px"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Jumlah (Rp.):
+					</cell>
+					<cell>
+						<textbox id="endingAmountTextbox" width="140px" style="text-align: right;" readonly="true"/>
+						<button id="editAmountButton" width="25px" label="..." sclass="selectButton"/>
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>					
+				</row>
+			</rows>
+		</grid>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>			
+</window>
+</zk>

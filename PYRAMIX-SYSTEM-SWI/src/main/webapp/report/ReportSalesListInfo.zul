@@ -1,0 +1,156 @@
+<?page title="Laporan Penjualan" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<zk>
+<borderlayout width="1360px" height="690px" id="reportSalesListInfoWin" apply="${reportSalesListInfoControl}">
+	<north border="none">
+		<vlayout>			
+			<hlayout valign="middle" style="padding: 5px 0px">
+				<label id="formTitleLabel" sclass="headTitle"></label>
+			</hlayout>
+			<tabbox id="reportSalesPeriodTabbox">
+				<tabs>
+					<tab label="Hari-Ini"/>
+					<tab label="Minggu-Ini"/>
+					<tab label="Pilih-Tanggal"/>
+				</tabs>
+				<tabpanels>
+					<tabpanel>
+						<grid>
+							<rows>
+								<row>
+									<cell width="10%">
+										Hari Ini:
+									</cell>
+									<cell width="20%">
+										<datebox id="todayDatebox" width="220px"></datebox>
+									</cell>
+									<cell width="10%" align="center">
+										<button id="executeTodayButton" label="Tampilkan" sclass="modButton"></button>
+									</cell>
+									<cell width="10%" align="center">
+										<button id="printTodayButton" label="Print" sclass="modButton" visible="false" style="padding-left:15px; padding-right:15px"></button>
+									</cell>
+									<cell>
+										
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</tabpanel>
+					<tabpanel>
+						<tabbox id="reportSalesWeekPeriodTabbox">
+							<tabs>
+								<tab id="allTab" 		label="Semua"></tab>
+								<tab id="mondayTab" 	label="Senin"></tab>
+								<tab id="tuesdayTab" 	label="Selasa"></tab>
+								<tab id="wednesdayTab" 	label="Rabu"></tab>
+								<tab id="thursdayTab" 	label="Kamis"></tab>
+								<tab id="fridayTab" 	label="Jumat"></tab>
+								<tab id="saturdayTab" 	label="Sabtu"></tab>
+							</tabs>
+						</tabbox>
+					</tabpanel>
+					<tabpanel>
+						<grid>
+							<rows>
+								<row>
+									<cell width="13%">
+										Pilih-Tanggal - Dari:
+									</cell>
+									<cell width="15%">
+										<datebox id="startDatebox" width="180px"></datebox>
+									</cell>
+									<cell width="5%" align="center">
+										S/D:
+									</cell>
+									<cell width="15%">
+										<datebox id="endDatebox" width="180px"></datebox>
+									</cell>
+									<cell width="5%" align="center">
+										Sales:
+									</cell>
+									<cell width="15%">
+										<combobox id="employeeCommissionedCombobox" width="180px"></combobox>
+									</cell>
+									<cell width="10%">
+										<button id="executeChooseDateButton" label="Tampilkan" sclass="modButton"></button>
+									</cell>
+									<cell width="10%">
+										<button id="printDateRangeButton" label="Print" sclass="modButton" visible="false" style="padding-left:15px; padding-right:15px"></button>										
+									</cell>
+									<cell>
+										
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</tabpanel>
+				</tabpanels>			
+			</tabbox>			
+		</vlayout>
+	</north>
+	<west width="380px" border="none">
+		<div>
+			<grid sclass="summaryGrid" height="400px">
+				<rows>
+					<row>
+						<cell width="50%">
+							Total Penjualan Tunai:					
+						</cell>
+						<cell  width="40%" align="right">
+							<label id="totalPenjualanTunaiLabel" sclass="totalLabel"></label>	
+						</cell>
+						<cell>
+						
+						</cell>
+					</row>
+					<row>
+						<cell>
+							Total Penjualan Kredit:					
+						</cell>
+						<cell align="right">
+							<label id="totalPenjualanKreditLabel" sclass="totalLabel"></label>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							Total Penjualan:						
+						</cell>
+						<cell align="right">
+							<label id="totalPenjualanLabel" sclass="totalLabel"></label>
+						</cell>
+						<cell>
+						
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<vlayout style="padding-top: 5px;">
+				<label id="timezoneLocaleLabel"></label>
+			</vlayout>			
+		</div>
+	</west>
+	<center border="none">
+		<div>
+			<hlayout style="padding: 10px;" valign="middle">
+				<label id="infoResultlabel" value="Dari Tanggal: 05 - 10 Februari 2018" style="color: silver;"></label>			
+			</hlayout>
+			<listbox id="reportSalesListbox" mold="paging" pageSize="13" height="480px">
+				<listhead>
+					<listheader label="Customer Order No." width="120px"/>
+					<listheader label="Tgl." width="140px"/>
+					<listheader label="Nama Langganan" width="220px"/>
+					<listheader label="Nama Sales" width="120px"/>
+					<listheader label="Pembayaran" width="110px"/>
+					<listheader label="PPN (Rp.)" width="100px" align="right"></listheader>
+					<listheader label="Nominal (Rp.)" width="100px" align="right"></listheader>
+					<listheader/>
+				</listhead>
+			</listbox>
+		</div>		
+	</center>	
+</borderlayout>
+</zk>

@@ -1,0 +1,139 @@
+<?page title="Transfer" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window title="Print-Transfer" border="normal" closable="true"
+	id="inventoryTransferPrintWin" apply="${inventoryTransferPrintControl}" 
+	visible="true" width="1150px" height="550px" 
+	contentStyle="overflow:auto;">
+	<vlayout>	
+		<hlayout style="padding-top:5px; padding-left:20px; background-color: #8187b1" valign="middle" height="45px">
+			<label value="Supir:" style="color: #ffffff;"/><combobox id="supirCombobox" style="padding-top:3px;" width="150px"/>
+			<label value="Kendaraan:" style="color: #ffffff;"/><label id="kendaraanLabel" style="color: #ff0000;"/><space width="520px"></space>
+			<button id="updateButton" label="Update"></button>
+			<button id="printButton" label="Print"/>
+		</hlayout>
+	</vlayout>
+	<vbox id="printVbox" width="1020px" style="padding-left:0px; padding-top:110px">
+		<grid sclass="pre-print-grid">
+			<rows>
+				<row>
+					<cell width="52%">
+						<label value="Kepada YTH.," sclass="pre-print-label"></label>
+					</cell>
+					<cell width="2%">
+					
+					</cell>
+					<cell>
+						<label id="transferDateLabel" sclass="pre-print-label"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="companyNameLabel" sclass="pre-print-label" style="font-weight: bold;"/>						
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+						<label id="transferNumberLabel" sclass="pre-print-label" style="font-weight: bold;"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="companyAddress01Label" sclass="pre-print-label" style="white-space: nowrap;"/>	
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+						<label value="Dari: " sclass="pre-print-label"/><label id="fromWarehouseLabel" sclass="pre-print-label" style="padding-left: 25px;"></label>		
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="companyAddress02Label" sclass="pre-print-label" style="white-space: nowrap;"/>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+						<label value="Tujuan: " sclass="pre-print-label"/><label id="toWarehouseLabel" sclass="pre-print-label" style="padding-left: 25px;"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="companyCityLabel" sclass="pre-print-label"/>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>				
+						<label value="Supir: " sclass="pre-print-label"/><label id="selectedSupirLabel" sclass="pre-print-label" style="padding-left: 25px;"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="Tel:" sclass="pre-print-label"/><label id="companyTelephoneLabel" sclass="pre-print-label" style="padding-left: 25px;"/>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+						<label value="Kendaraan: " sclass="pre-print-label"/><label id="selectedKendaraanLabel" sclass="pre-print-label" style="padding-left: 25px;"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="Fax:" sclass="pre-print-label"/><label id="companyFaxLabel" sclass="pre-print-label" style="padding-left: 25px;"/>						
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+			</rows>		
+		</grid>		
+		<grid id="transferMaterialGrid" oddRowSclass="none" sclass="pre-print-grid" height="190px">
+			<columns>
+				<column label="No." width="90px"></column>
+				<column label="Qty(Sht)" width="90px" align="right"></column>
+				<column label="Qty(Kg)" width="120px" align="right"></column>
+				<column label="Tipe" width="160px"></column>
+				<column label="Deskripsi" width="220px"></column>
+				<column label="Coil No." width="120px"></column>
+				<column></column>
+			</columns>
+		</grid>
+		<hlayout>
+			<label id="noteLabel" sclass="pre-print-label"></label>
+		</hlayout>
+		<grid sclass="pre-print-grid">
+			<rows>
+				<row>
+					<cell width="50%">
+						
+					</cell>
+					<cell width="5%">
+
+					</cell>
+					<cell width="5%">
+					
+					</cell>
+					<cell align="center" width="20%">
+						<vlayout>
+							<label value="Hormat Kami," sclass="pre-print-label" style="font-weight: bold;"/>
+							<label value="PT.Sinarwaja Indah" sclass="pre-print-label"/>
+						</vlayout>
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		
+	</vbox>
+</window>
+</zk>

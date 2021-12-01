@@ -1,0 +1,13 @@
+<?page title="Settlement-Batal" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="680px" title="Settlement - Batal" border="normal"
+	id="settlementDialogBatalWin" apply="${settlementDialogBatalControl}">
+	<tabbox id="documentBatalTabbox" height="520px">
+	</tabbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Batal" disabled="false"></button>
+		<button id="cancelButton" label="Tutup"></button>	
+	</hlayout>		
+</window>
+</zk>

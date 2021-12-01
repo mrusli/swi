@@ -1,0 +1,40 @@
+<?page title="User" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<zk>
+<borderlayout width="1360px" height="690px" id="userListInfoWin" apply="${userListInfoControl}">
+	<north border="none">
+		<vlayout>			
+			<hlayout valign="middle" style="padding: 5px 0px">
+				<label id="formTitleLabel" sclass="headTitle"></label>
+			</hlayout>
+		</vlayout>
+	</north>
+	<center border="none">
+		<div>
+			<tabbox id="userTypeTabbox">
+				<tabs>
+					<tab label="Semua"></tab>
+				</tabs>
+			</tabbox>
+			<hlayout style="padding: 10px;" valign="middle">
+				<label id="infoResultlabel" value="Total: 8 Users" style="color: silver;"></label>
+				<button id="addButton" label="Tambah" sclass="modButton" disabled="false"></button>			
+			</hlayout>
+			<listbox id="userListbox" mold="paging" pageSize="15" height="540px">
+				<listhead>
+					<listheader label="Nama-Login" width="160px"/>
+					<listheader label="Aktif" width="100px"/>
+					<listheader label="Nama" width="260px"/>
+					<listheader label="Email" width="280px"/>
+					<listheader label="Tgl.Dibuat" width="180px"/>
+					<listheader label="Tgl.Perubahan" width="180px"/>
+					<listheader/>
+				</listhead>
+			</listbox>
+		</div>
+	</center>
+</borderlayout>
+</zk>

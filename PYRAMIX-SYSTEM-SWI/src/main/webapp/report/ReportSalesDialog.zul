@@ -1,0 +1,29 @@
+<?page title="Laporan Penjualan" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="380px" title="Customer Order Details" border="normal"
+	id="reportSalesDialogWin" apply="${reportSalesDialogControl}">
+	<vbox>
+		<listbox id="reportSalesListbox" mold="paging" pageSize="5" height="200px">
+			<listhead>
+				<listheader label="Quantity / Unit" width="120px"></listheader>
+				<listheader label="Kode" width="120px"></listheader>
+				<listheader label="Spesifikasi" width="200px"></listheader>
+				<listheader label="Harga (Rp.)" width="120px" align="right"></listheader>
+				<listheader label="SubTotal (Rp.)" width="120px" align="right"></listheader>
+			</listhead>
+			<listfoot>
+				<listfooter></listfooter>
+				<listfooter></listfooter>
+				<listfooter></listfooter>				
+				<listfooter label="SubTotal"></listfooter>
+				<listfooter id="subTotalListfooter" align="right"></listfooter>
+			</listfoot>
+		</listbox>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save" visible="false"></button>
+		<button id="cancelButton" label="Tutup"></button>	
+	</hlayout>			
+</window>
+</zk>

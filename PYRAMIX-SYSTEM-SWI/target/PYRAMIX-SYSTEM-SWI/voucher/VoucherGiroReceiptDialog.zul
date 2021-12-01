@@ -1,0 +1,135 @@
+<?page title="Voucher Giro Receipt" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="680px" title="Voucher Giro Receipt" border="normal"
+	id="voucherGiroReceiptDialogWin" apply="${voucherGiroReceiptDialogControl}">
+	<vbox>
+		<grid id="createFromGrid">
+			<rows>
+				<row>
+					<cell>
+						<label id="voucherSalesLabel" value="Membuat Voucher Giro Receipt Dari Settlement No: "></label>
+						<textbox id="voucherSalesInfoTextbox" width="280px" readonly="true"/>
+						<space width="5px"/>
+						<button id="voucherSalesSelectButton" label="Pilih" sclass="modButton" />
+					</cell>
+				</row>
+			</rows>
+		</grid>	
+		<label id="idLabel" style="font-size:1em;"/>
+		<grid>
+			<rows>
+				<row>
+					<cell width="11%">
+						No Voucher:
+					</cell>
+					<cell width="15%">
+						<textbox id="voucherNoCompTextbox" width="140px" readonly="true"></textbox>
+					</cell>
+					<cell width="10%">
+						No Posting:	
+					</cell>
+					<cell width="20%">
+						<textbox id="voucherNoPostTextbox" width="140px" readonly="true"></textbox>
+					</cell>
+					<cell width="10%">
+						Tgl Voucher:
+					</cell>
+					<cell>
+						<datebox id="transactionDatebox" width="230px"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Tipe Voucher:
+					</cell>
+					<cell>
+						<label id="voucherTypeLabel"/>
+					</cell>
+					<cell>
+						Status:
+					</cell>
+					<cell>
+						<combobox id="voucherStatusCombobox" width="200px" disabled="true"/>
+					</cell>
+					<cell>
+						Customer:
+					</cell>
+					<cell>
+						<textbox id="customerTextbox" width="230px" readonly="true"/>
+						<button id="customerButton" width="25px" label="..." sclass="selectButton" disabled="true"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						No.Giro:
+					</cell>
+					<cell>
+						<textbox id="noGiroTextbox" width="140px" placeholder="isi nomor giro"/>
+					</cell>
+					<cell>
+						Bank:
+					</cell>
+					<cell>
+						<textbox id="giroBankTextbox" width="200px" placeholder="isi nama bank"/>
+					</cell>
+					<cell>
+						Tgl.Giro:
+					</cell>
+					<cell>
+						<datebox id="giroDateDatebox" width="230px" placeholder="tentukan tanggal giro cair"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Jumlah (Rp.):
+					</cell>
+					<cell>
+						<textbox id="theSumOfTextbox" width="110px" style="text-align: right;" readonly="true"/>
+						<button id="totalOrderButton" width="25px" label="..." sclass="selectButton"/>
+					</cell>
+					<cell>
+						Penjelasan :
+					</cell>
+					<cell>
+						<textbox id="descriptionTextbox" width="200px"></textbox>
+					</cell>
+					<cell>
+						Referensi :
+					</cell>
+					<cell>
+						<textbox id="referenceTextbox" width="150px"></textbox>
+					</cell>					
+				</row>
+			</rows>
+		</grid>
+		<hlayout id="dbcrControl" style="padding: 10px;" valign="middle">
+			<label id="infoDebitCreditlabel" value="Debit/Kredit: 2 items" style="color: silver;"></label>
+			<button id="addDebitCreditButton" label="Debit/Kredit" sclass="modButton"></button>			
+			<button id="removeDebitCreditButton" label="Hapus" sclass="modButton"></button>			
+		</hlayout>		
+		<listbox id="voucherDbcrListbox" height="280px">
+			<listhead>
+				<listheader label="No Akun" width="175px"/>
+				<listheader label="Nama Akun" width="240px"/>
+				<listheader label="Keterangan" width="320px"/>
+				<listheader label="Debit" width="120px" align="right"/>
+				<listheader label="Kredit" width="120px" align="right"/>
+			</listhead>
+			<listfoot>
+				<listfooter></listfooter>
+				<listfooter></listfooter>
+				<listfooter label="Total:"></listfooter>
+				<listfooter id="totalDebitListfooter" align="right">
+				</listfooter>
+				<listfooter id="totalCreditListfooter" align="right">
+				</listfooter>
+			</listfoot>		
+		</listbox>			
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>			
+</window>
+</zk>

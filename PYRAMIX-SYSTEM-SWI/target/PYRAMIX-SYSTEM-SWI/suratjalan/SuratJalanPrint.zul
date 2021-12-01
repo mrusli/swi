@@ -1,0 +1,138 @@
+<?page title="SuratJalan" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window title="Print-SuratJalan" border="normal" closable="true" 
+	id="suratJalanPrintWin" apply="${suratJalanPrintWinControl}"
+	visible="true" width="1150px" height="550px" 
+	contentStyle="overflow:auto;">	
+	<hbox style="padding-top:5px; padding-bottom:5px; padding-left:5px; background-color: #f9fcff" width="100%" align="center">
+		<hbox>
+			<radiogroup id="printOptionRadioGroup">
+				<radio label="Qty(Sheet) + Qty(Kg)" selected="true"></radio>
+				<radio label="Qty(Sheet)"></radio>
+				<radio label="Qty(Kg)"></radio>
+			</radiogroup>
+		</hbox>
+		<hbox style="padding-left:20px;">
+			<button id="printButton" label="Print"/>		
+		</hbox>
+	</hbox>
+	<vbox id="printVbox" width="1020px" style="padding-left:0px; padding-top:110px">
+		<grid sclass="pre-print-grid">
+			<rows>
+				<row>
+					<cell width="52%">
+						<label value="Kepada YTH.," sclass="pre-print-label"></label>
+					</cell>
+					<cell width="2%">
+					
+					</cell>
+					<cell>
+						<label id="suratJalanDateLabel" sclass="pre-print-label"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="customerNameLabel" sclass="pre-print-label" style="font-weight: bold;"/>						
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+						<label id="suratJalanNumberLabel" sclass="pre-print-label" style="font-weight: bold;"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="customerAddress01Label" sclass="pre-print-label" style="white-space: nowrap;"/>	
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+						<label id="deliveryDateLabel" sclass="pre-print-label"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="customerAddress02Label" sclass="pre-print-label" style="white-space: nowrap;"/>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label id="customerCityLabel" sclass="pre-print-label"/>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+						<label id="customerPaymentLabel" sclass="pre-print-label"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<hlayout>
+							<label id="customerTelephoneLabel" sclass="pre-print-label"/>
+							<label id="customerFaxLabel" sclass="pre-print-label"/>						
+						</hlayout>
+					</cell>
+					<cell>
+						
+					</cell>
+					<cell>
+						<label id="customerPurchaseOrderLabel" sclass="pre-print-label"/>
+					</cell>
+				</row>
+			</rows>		
+		</grid>		
+		<grid id="suratJalanProductGrid" oddRowSclass="none" sclass="pre-print-grid" height="190px">
+			<columns>
+				<column label="No." width="90px"></column>
+				<column id="qtyShtColumn" label="Qty(Sht)" width="120px" align="right"></column>
+				<column id="qtyKgColumn" label="Qty(Kg)" width="160px" align="right"></column>
+				<column label="Tipe" width="180px"></column>
+				<column label="Deskripsi" width="260px"></column>
+				<column></column>
+			</columns>
+		</grid>
+		<hlayout>
+			<label value="Bersama ini kami kirimkan barang-barang tersebut diatas dengan kendaraan no: " sclass="pre-print-label" style="padding-right: 70px"></label>
+			<label id="deliveryOrderNumberLabel" value="DO No:" sclass="pre-print-label"></label>
+		</hlayout>
+		<grid sclass="pre-print-grid">
+			<rows>
+				<row>
+					<cell width="25%" align="center">
+						<label value="Barang-Barang diterima dalam kondisi baik" sclass="pre-print-label"/>
+					</cell>
+					<cell width="30%">
+						<vlayout>
+							<label value="Perhatian !!!" sclass="pre-print-label" style="font-weight: bold;"/>
+							<label value="Barang-Barang yang sudah dibeli tidak dapat ditukarkan / dikembalikan" sclass="pre-print-label"/>
+						</vlayout>
+					</cell>
+					<cell width="5%">
+					
+					</cell>
+					<cell align="center" width="30%">
+						<vlayout>
+							<label value="Hormat Kami," sclass="pre-print-label" style="font-weight: bold;"/>
+							<label id="companyLabel" value="PT.Sinarwaja Indah" sclass="pre-print-label"/>
+						</vlayout>
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		
+	</vbox>
+</window>
+</zk>

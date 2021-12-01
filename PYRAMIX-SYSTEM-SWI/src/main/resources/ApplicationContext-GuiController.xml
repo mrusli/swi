@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="CommonContext-Dao.xml"/>
+
+	<bean id="basisController" class="com.pyramix.swi.webui.common.GFCBaseController" abstract="true" scope="prototype">
+	
+	</bean>	
+
+	<!-- Main -->
+	
+	<bean id="mainWindowControl" class="com.pyramix.swi.webui.security.MainWindowControl" scope="prototype" parent="basisController">
+		<property name="userRoleDao" ref="userRoleDao"></property>	
+	</bean>
+	
+	<bean id="main02Control" class="com.pyramix.swi.webui.security.Main02Control" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<!-- Profile -->
+
+	<bean id="profileListInfoControl" class="com.pyramix.swi.webui.settings.ProfileListInfoControl" scope="prototype" parent="basisController">
+		<property name="userDao" ref="userDao"></property>
+	
+	</bean>
+
+	<!-- Settings -->
+	
+	<bean id="settingsListInfoControl" class="com.pyramix.swi.webui.settings.SettingsListInfoControl" scope="prototype" parent="basisController">
+		<property name="settingsDao" ref="settingsDao"></property>
+		<property name="companyDao" ref="companyDao"></property>
+		<property name="bankDao" ref="bankDao"></property>
+	</bean>
+	
+	<!-- Security -->
+	
+	<bean id="userDetailsControl" class="com.pyramix.swi.webui.security.UserSecurityControl" scope="prototype" parent="basisController">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+
+	<!-- User -->
+
+	<bean id="userListInfoControl" class="com.pyramix.swi.webui.user.UserListInfoControl" scope="prototype" parent="basisController">
+		<property name="userDao" ref="userDao"></property>
+		<property name="settingsDao" ref="settingsDao"></property>
+	</bean>
+	
+	<bean id="userDialogControl" class="com.pyramix.swi.webui.user.UserDialogControl" scope="prototype" parent="basisController">
+		<property name="userRoleDao" ref="userRoleDao"></property>
+	</bean>
+
+	<bean id="passwordDialogControl" class="com.pyramix.swi.webui.user.PasswordDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<bean id="profileWindowControl" class="com.pyramix.swi.webui.user.ProfileWindowControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<!-- utility -->
+
+	<bean id="utilityListInfoControl" class="com.pyramix.swi.webui.utility.UtilityListInfoControl" scope="prototype" parent="basisController">
+		<property name="sqlUtilityDao" ref="sqlUtilityDao"></property>
+	</bean>
+	
+	<bean id="databaseInfoControl" class="com.pyramix.swi.webui.utility.DatabaseInfoControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<!-- common -->
+
+	<bean id="serialNumberGenerator" class="com.pyramix.swi.webui.common.SerialNumberGenerator" scope="prototype" parent="basisController">
+		<property name="documentSerialNumberDao" ref="documentSerialNumberDao"></property>
+		<property name="voucherSerialNumberDao" ref="voucherSerialNumberDao"></property>	
+	</bean>
+
+	<bean id="totalOrderDialogControl" class="com.pyramix.swi.webui.common.dialogs.TotalOrderDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<!-- MySql Inventory -->
+	
+	<bean id="mySqlInventoryListInfoControl" class="com.pyramix.swi.webui.inventory.mysql.MySqlInventoryControl" scope="prototype" parent="basisController">
+		<property name="sqlUtilityDao" ref="sqlUtilityDao"></property>
+		<property name="inventoryDao" ref="inventoryDao"></property>		
+	</bean>
+
+	<!-- SqlServer Inventory -->
+
+	<bean id="sqlServerInventoryListInfoControl" class="com.pyramix.swi.webui.inventory.sqlserver.SqlServerInventoryControl" scope="prototype" parent="basisController">
+		<property name="sqlUtilityDao" ref="sqlUtilityDao"></property>
+		<property name="inventoryDao" ref="inventoryDao"></property>	
+	</bean>
+
+	<!-- Inventory -->
+
+	<bean id="inventoryListInfoControl" class="com.pyramix.swi.webui.inventory.InventoryListInfoControl" scope="prototype" parent="basisController">
+		<property name="inventoryDao" ref="inventoryDao"></property>
+	</bean>
+
+	<bean id="inventoryListInfoDialogControl" class="com.pyramix.swi.webui.inventory.InventoryListInfoDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryDao" ref="inventoryDao"></property>	
+	</bean>
+
+	<bean id="inventoryListInfoByTypeControl" class="com.pyramix.swi.webui.inventory.InventoryListInfoByTypeControl" scope="prototype" parent="basisController">
+		<property name="inventoryDao" ref="inventoryDao"></property>
+	</bean>
+
+	<bean id="inventoryEditDialogControl" class="com.pyramix.swi.webui.inventory.InventoryEditDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryDao" ref="inventoryDao"></property>	
+	</bean>
+
+	<bean id="inventoryAddDialogControl" class="com.pyramix.swi.webui.inventory.InventoryAddDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryDao" ref="inventoryDao"></property>	
+	</bean>
+	
+	<bean id="inventoryCodeDialogControl" class="com.pyramix.swi.webui.inventory.InventoryCodeDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryDao" ref="inventoryDao"></property>
+	</bean>
+
+	<bean id="inventoryTypeListInfoControl" class="com.pyramix.swi.webui.inventory.InventoryTypeListInfoControl" scope="prototype" parent="basisController">
+		<property name="inventoryTypeDao" ref="inventoryTypeDao"></property>
+	</bean>
+
+	<bean id="inventoryTypeDialogTypeControl" class="com.pyramix.swi.webui.inventory.InventoryTypeDialogTypeControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<bean id="inventoryTypeDialogCodeControl" class="com.pyramix.swi.webui.inventory.InventoryTypeDialogCodeControl" scope="prototype" parent="basisController">
+		<property name="inventoryCodeDao" ref="inventoryCodeDao"></property>
+	</bean>
+
+	<!-- Inventory Process -->
+
+	<bean id="inventoryProcessListInfoControl" class="com.pyramix.swi.webui.inventory.process.InventoryProcessListInfoControl" scope="prototype" parent="basisController">
+		<property name="inventoryProcessDao" ref="inventoryProcessDao"></property>
+		<property name="inventoryDao" ref="inventoryDao"></property>
+	</bean>
+
+	<bean id="inventoryProcessDialogControl" class="com.pyramix.swi.webui.inventory.process.InventoryProcessDialogControl" scope="prototype" parent="basisController">
+		<property name="companyDao" ref="companyDao"></property>
+		<property name="inventoryProcessDao" ref="inventoryProcessDao"></property>
+		<property name="inventoryDao" ref="inventoryDao"></property>
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+	</bean>
+
+	<bean id="inventoryProcessEditDialogControl" class="com.pyramix.swi.webui.inventory.process.InventoryProcessEditDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryProcessDao" ref="inventoryProcessDao"></property>	
+	</bean>
+
+	<bean id="inventoryProcessDialogCuttingControl" class="com.pyramix.swi.webui.inventory.process.InventoryProcessDialogCuttingControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<bean id="inventoryProcessProductEditDialogControl" class="com.pyramix.swi.webui.inventory.process.InventoryProcessProductEditDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+	
+	<bean id="inventoryProcessViewDialogControl" class="com.pyramix.swi.webui.inventory.process.InventoryProcessViewDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryProcessDao" ref="inventoryProcessDao"></property>
+	</bean>
+
+	<bean id="cuttingOrderPrintControl" class="com.pyramix.swi.webui.inventory.process.print.CuttingOrderPrintControl" scope="prototype" parent="basisController">
+		<property name="inventoryProcessDao" ref="inventoryProcessDao"></property>
+	
+	</bean>
+	
+	<bean id="processCompletedDialogControl" class="com.pyramix.swi.webui.inventory.process.ProcessCompletedDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryProcessDao" ref="inventoryProcessDao"></property>
+			
+	</bean>
+
+	<!-- Inventory - bukapeti -->
+
+	<bean id="inventoryBukapetiListInfoControl" class="com.pyramix.swi.webui.inventory.bukapeti.InventoryBukaPetiListInfoControl" scope="prototype" parent="basisController">
+		<property name="inventoryBukapetiDao" ref="inventoryBukapetiDao"></property>
+		<property name="inventoryDao" ref="inventoryDao"></property>	
+	</bean>
+
+	<bean id="inventoryBukapetiDialogControl" class="com.pyramix.swi.webui.inventory.bukapeti.InventoryBukaPetiDialogControl" scope="prototype" parent="basisController">
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+		<property name="inventoryDao" ref="inventoryDao"></property>	
+	</bean>
+	
+	<bean id="inventoryBukapetiEditDialogControl" class="com.pyramix.swi.webui.inventory.bukapeti.InventoryBukaPetiEditDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryBukapetiDao" ref="inventoryBukapetiDao"></property>	
+	</bean>
+
+	<bean id="inventoryBukapetiViewDialogControl" class="com.pyramix.swi.webui.inventory.bukapeti.InventoryBukaPetiViewDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryBukapetiDao" ref="inventoryBukapetiDao"></property>		
+	</bean>
+
+	<bean id="inventoryBukapetiPrintControl" class="com.pyramix.swi.webui.inventory.bukapeti.print.InventoryBukaPetiOrderPrintControl" scope="prototype" parent="basisController">
+		<property name="inventoryBukapetiDao" ref="inventoryBukapetiDao"></property>	
+	</bean>
+
+	<bean id="bukapetiCompletedDialogControl" class="com.pyramix.swi.webui.inventory.bukapeti.BukaPetiCompletedDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryBukapetiDao" ref="inventoryBukapetiDao"></property>	
+	</bean>
+
+	<bean id="inventoryBukaPetiEndProductEditDialogControl" class="com.pyramix.swi.webui.inventory.bukapeti.InventoryBukaPetiEditEndProductDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+	
+	<!-- Inventory - transfer -->
+	
+	<bean id="inventoryTransferListInfoControl" class="com.pyramix.swi.webui.inventory.transfer.InventoryTransferListInfoControl" scope="prototype" parent="basisController">
+		<property name="inventoryTransferDao" ref="inventoryTransferDao"></property>
+		<property name="inventoryDao" ref="inventoryDao"></property>
+	</bean>
+
+	<bean id="inventoryTransferDialogControl" class="com.pyramix.swi.webui.inventory.transfer.InventoryTransferDialogControl" scope="prototype" parent="basisController">
+		<property name="companyDao" ref="companyDao"></property>
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>	
+		<property name="inventoryDao" ref="inventoryDao"></property>
+	</bean>
+
+	<bean id="inventoryTransferEditDialogControl" class="com.pyramix.swi.webui.inventory.transfer.InventoryTransferEditDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryTransferDao" ref="inventoryTransferDao"></property>
+	</bean>
+
+	<bean id="inventoryTransferEndProductEditDialogControl" class="com.pyramix.swi.webui.inventory.transfer.InventoryTransferEndProductEditDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<bean id="inventoryTransferPrintControl" class="com.pyramix.swi.webui.inventory.transfer.print.InventoryTransferPrintControl" scope="prototype" parent="basisController">
+		<property name="inventoryTransferDao" ref="inventoryTransferDao"></property>	
+		<property name="employeeDao" ref="employeeDao"></property>
+	</bean>
+
+	<bean id="transferCompletedDialogControl" class="com.pyramix.swi.webui.inventory.transfer.TransferCompletedDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryTransferDao" ref="inventoryTransferDao"></property>	
+	</bean>
+	
+	<bean id="inventoryTransferViewDialogControl" class="com.pyramix.swi.webui.inventory.transfer.InventoryTransferViewDialogControl" scope="prototype" parent="basisController">
+		<property name="inventoryTransferDao" ref="inventoryTransferDao"></property>
+	</bean>
+	
+	<!-- customer -->
+
+	<bean id="customerListInfoControl" class="com.pyramix.swi.webui.customer.CustomerListInfoControl" scope="prototype" parent="basisController">
+		<property name="customerDao" ref="customerDao"></property>
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+	</bean>
+	
+	<bean id="customerDialogControl" class="com.pyramix.swi.webui.customer.CustomerDialogControl" scope="prototype" parent="basisController">
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+		<property name="customerDao" ref="customerDao"></property>	
+	</bean>
+
+	<bean id="customerListDialogControl" class="com.pyramix.swi.webui.customer.CustomerListDialogControl" scope="prototype" parent="basisController">
+		<property name="customerDao" ref="customerDao"></property>
+	</bean>
+
+	<!-- Customer Order -->
+
+	<bean id="customerOrderListInfoControl" class="com.pyramix.swi.webui.customerorder.CustomerOrderListInfoControl" scope="prototype" parent="basisController">
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+		<property name="voucherSalesDao" ref="voucherSalesDao"></property>
+		<property name="companyDao" ref="companyDao"></property>
+		<property name="suratJalanDao" ref="suratJalanDao"></property>
+		<property name="customerDao" ref="customerDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="customerOrderProductDao" ref="customerOrderProductDao"></property>
+	</bean>
+
+	<bean id="customerOrderDialogControl" class="com.pyramix.swi.webui.customerorder.CustomerOrderDialogControl" scope="prototype" parent="basisController">
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+		<property name="employeeDao" ref="employeeDao"></property>
+		<property name="customerOrderProductDao" ref="customerOrderProductDao"></property>
+	</bean>
+
+	<bean id="customerOrderProductDialogControl" class="com.pyramix.swi.webui.customerorder.CustomerOrderProductDialogControl" scope="prototype" parent="basisController">
+		<property name="customerOrderProductDao" ref="customerOrderProductDao"></property>
+		<property name="inventoryDao" ref="inventoryDao"></property>
+	</bean>
+
+	<bean id="customerOrderListDialogControl" class="com.pyramix.swi.webui.customerorder.CustomerOrderListDialogControl" scope="prototype" parent="basisController">
+		<property name="customerOrderDao" ref="customerOrderDao"></property>	
+	</bean>
+
+	<bean id="customerOrderDialogBatalControl" class="com.pyramix.swi.webui.customerorder.CustomerOrderDialogBatalControl" scope="prototype" parent="basisController">
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+		<property name="employeeCommissionsDao" ref="employeeCommissionsDao"></property>
+		<property name="suratJalanDao" ref="suratJalanDao"></property>
+		<property name="voucherSalesDao" ref="voucherSalesDao"></property>
+		<property name="customerReceivableDao" ref="customerReceivableDao"></property>
+		<property name="customerReceivableActivityDao" ref="customerReceivableActivityDao"></property>
+		<property name="generalLedgerDao" ref="generalLedgerDao"></property>
+	</bean>
+
+	<bean id="customerOrderDialogBatalReceivableControl" class="com.pyramix.swi.webui.customerorder.CustomerOrderDialogBatalReceivableControl" scope="prototype" parent="basisController">
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+	</bean>
+
+	<!-- Serial Number -->
+
+	<bean id="documentSerialNumberListInfoControl" class="com.pyramix.swi.webui.serial.DocumentSerialNumberListInfoControl" scope="prototype" parent="basisController">
+		<property name="documentSerialNumberDao" ref="documentSerialNumberDao"></property>	
+	</bean>
+
+	<bean id="documentSerialNumberDialogControl" class="com.pyramix.swi.webui.serial.DocumentSerialNumberDialogControl" scope="prototype" parent="basisController">
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>	
+	</bean>
+
+	<!-- suratjalan -->
+
+	<bean id="suratJalanListInfoControl" class="com.pyramix.swi.webui.suratjalan.SuratJalanListInfoControl" scope="prototype" parent="basisController">
+		<property name="suratJalanDao" ref="suratJalanDao"></property>
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+
+	<bean id="suratJalanDialogControl" class="com.pyramix.swi.webui.suratjalan.SuratJalanDialogControl" scope="prototype" parent="basisController">
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+		<property name="customerOrderProductDao" ref="customerOrderProductDao"></property>
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+		<property name="suratJalanDao" ref="suratJalanDao"></property>
+		<property name="employeeDao" ref="employeeDao"></property>		
+	</bean>
+	
+	<bean id="suratJalanPrintWinControl" class="com.pyramix.swi.webui.suratjalan.SuratJalanPrintController" scope="prototype" parent="basisController">
+		<property name="suratJalanDao" ref="suratJalanDao"></property>
+		<property name="settingsDao" ref="settingsDao"></property>	
+	</bean>
+
+	<!-- deliveryorder -->
+
+	<bean id="deliveryOrderPrintWinControl" class="com.pyramix.swi.webui.inventory.deliveryorder.DeliveryOrderPrintControl" scope="prototype" parent="basisController">
+		<property name="deliveryOrderDao" ref="deliveryOrderDao"></property>	
+		<property name="settingsDao" ref="settingsDao"></property>	
+	</bean>
+	
+	<bean id="deliveryOrderListInfoControl" class="com.pyramix.swi.webui.inventory.deliveryorder.DeliveryOrderListInfoControl" scope="prototype" parent="basisController">
+		<property name="deliveryOrderDao" ref="deliveryOrderDao"></property>
+		<property name="companyDao" ref="companyDao"></property>
+		<property name="userDao" ref="userDao"></property>		
+	</bean>
+	
+	<bean id="deliveryOrderDialogControl" class="com.pyramix.swi.webui.inventory.deliveryorder.DeliveryOrderDialogControl" scope="prototype" parent="basisController">
+		<property name="deliveryOrderDao" ref="deliveryOrderDao"></property>
+		<property name="companyDao" ref="companyDao"></property>
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+	</bean>
+
+	<!-- Faktur -->
+	
+	<bean id="fakturPrintWinControl" class="com.pyramix.swi.webui.faktur.FakturPrintControl" scope="prototype" parent="basisController">
+		<property name="fakturDao" ref="fakturDao"></property>
+		<property name="settingsDao" ref="settingsDao"></property>		
+	</bean>
+
+	<bean id="fakturListInfoControl" class="com.pyramix.swi.webui.faktur.FakturListInfoControl" scope="prototype" parent="basisController">
+		<property name="fakturDao" ref="fakturDao"></property>	
+		<property name="userDao" ref="userDao"></property>		
+	</bean>
+	
+	<bean id="fakturDialogControl" class="com.pyramix.swi.webui.faktur.FakturDialogControl" scope="prototype" parent="basisController">
+		<property name="fakturDao" ref="fakturDao"></property>
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+	</bean>
+
+	<!-- Company -->
+
+	<bean id="companyListInfoControl" class="com.pyramix.swi.webui.company.CompanyListInfoControl" scope="prototype" parent="basisController">
+		<property name="companyDao" ref="companyDao"></property>
+	</bean>
+	
+	<bean id="companyDialogControl" class="com.pyramix.swi.webui.company.CompanyDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<!-- Employee -->
+
+	<bean id="employeeListInfoControl" class="com.pyramix.swi.webui.employee.EmployeeListInfoControl" scope="prototype" parent="basisController">
+		<property name="employeeDao" ref="employeeDao"></property>
+		<property name="settingsDao" ref="settingsDao"></property>
+	</bean>
+	
+	<bean id="employeeDialogControl" class="com.pyramix.swi.webui.employee.EmployeeDialogControl" scope="prototype" parent="basisController">
+		<property name="employeeDao" ref="employeeDao"></property>
+		<property name="companyDao" ref="companyDao"></property>
+		<property name="kendaraanDao" ref="kendaraanDao"></property>
+	</bean>
+	
+	<bean id="employeeListDialogControl" class="com.pyramix.swi.webui.employee.EmployeeListDialogControl" scope="prototype" parent="basisController">
+		<property name="employeeDao" ref="employeeDao"></property>	
+	</bean>
+
+	<!-- EmployeeCommissions -->
+	
+	<bean id="employeeCommissionsListInfoControl" class="com.pyramix.swi.webui.employeecommissions.EmployeeCommissionsListInfoControl" scope="prototype" parent="basisController">
+		<property name="employeeCommissionsDao" ref="employeeCommissionsDao"></property>
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+		<property name="employeeDao" ref="employeeDao"></property>
+	</bean>
+
+	<bean id="employeeCommissionsDialogControl" class="com.pyramix.swi.webui.employeecommissions.EmployeeCommissionsDialogControl" scope="prototype" parent="basisController">
+		
+	</bean>
+
+	<!-- Kendaraan -->
+	
+	<bean id="kendaraanListInfoControl" class="com.pyramix.swi.webui.kendaraan.KendaraanListInfoControl" scope="prototype" parent="basisController">
+		<property name="kendaraanDao" ref="kendaraanDao"></property>	
+	</bean>
+
+	<bean id="kendaraanDialogControl" class="com.pyramix.swi.webui.kendaraan.KendaraanDialogControl" scope="prototype" parent="basisController">
+		<property name="kendaraanGolonganDao" ref="kendaraanGolonganDao"></property>
+	</bean>
+
+	<bean id="kendaraanGolonganListInfoControl" class="com.pyramix.swi.webui.kendaraan.KendaraanGolonganListInfoControl" scope="prototype" parent="basisController">
+		<property name="kendaraanGolonganDao" ref="kendaraanGolonganDao"></property>
+	</bean>
+
+	<bean id="kendaraanGolonganDialogControl" class="com.pyramix.swi.webui.kendaraan.KendaraanGolonganDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<!-- coa -->
+
+	<bean id="coa_01_AccountTypeListInfoControl" class="com.pyramix.swi.webui.coa.Coa_01_AccountTypeListInfoControl" scope="prototype" parent="basisController">
+		<property name="coa_01_AccountTypeDao" ref="coa_01_AccountTypeDao"></property>	
+	</bean>
+
+	<bean id="coa_02_AccountGroupListInfoControl" class="com.pyramix.swi.webui.coa.Coa_02_AccountGroupListInfoControl" scope="prototype" parent="basisController">
+		<property name="coa_01_AccountTypeDao" ref="coa_01_AccountTypeDao"></property>
+		<property name="coa_02_AccountGroupDao" ref="coa_02_AccountGroupDao"></property>	
+	</bean>
+
+	<bean id="coa_03_SubAccount01ListInfoControl" class="com.pyramix.swi.webui.coa.Coa_03_SubAccount01ListInfoControl" scope="prototype" parent="basisController">
+		<property name="coa_01_AccountTypeDao" ref="coa_01_AccountTypeDao"></property>
+		<property name="coa_02_AccountGroupDao" ref="coa_02_AccountGroupDao"></property>
+		<property name="coa_03_SubAccount01Dao" ref="coa_03_SubAccount01Dao"></property>	
+	</bean>
+
+	<bean id="coa_04_SubAccount02ListInfoControl" class="com.pyramix.swi.webui.coa.Coa_04_SubAccount02ListInfoControl" scope="prototype" parent="basisController">
+		<property name="coa_01_AccountTypeDao" ref="coa_01_AccountTypeDao"></property>
+		<property name="coa_02_AccountGroupDao" ref="coa_02_AccountGroupDao"></property>
+		<property name="coa_03_SubAccount01Dao" ref="coa_03_SubAccount01Dao"></property>
+		<property name="coa_04_SubAccount02Dao" ref="coa_04_SubAccount02Dao"></property>	
+	</bean>
+
+	<bean id="coa_05_MasterListInfoControl" class="com.pyramix.swi.webui.coa.Coa_05_MasterListInfoControl" scope="prototype" parent="basisController">
+		<property name="coa_01_AccountTypeDao" ref="coa_01_AccountTypeDao"></property>
+		<property name="coa_02_AccountGroupDao" ref="coa_02_AccountGroupDao"></property>
+		<property name="coa_03_SubAccount01Dao" ref="coa_03_SubAccount01Dao"></property>
+		<property name="coa_04_SubAccount02Dao" ref="coa_04_SubAccount02Dao"></property>
+		<property name="coa_05_MasterDao" ref="coa_05_MasterDao"></property>
+	</bean>
+
+	<bean id="coa_05_MasterAddDialogControl" class="com.pyramix.swi.webui.coa.Coa_05_MasterAddDialogControl" scope="prototype" parent="basisController">
+		<property name="coa_01_AccountTypeDao" ref="coa_01_AccountTypeDao"></property>
+		<property name="coa_02_AccountGroupDao" ref="coa_02_AccountGroupDao"></property>
+		<property name="coa_03_SubAccount01Dao" ref="coa_03_SubAccount01Dao"></property>
+		<property name="coa_04_SubAccount02Dao" ref="coa_04_SubAccount02Dao"></property>
+		<property name="coa_05_MasterDao" ref="coa_05_MasterDao"></property>	
+	</bean>
+	
+	<bean id="coa_05_MasterEditDialogControl" class="com.pyramix.swi.webui.coa.Coa_05_MasterEditDialogControl" scope="prototype" parent="basisController">
+		<property name="coa_01_AccountTypeDao" ref="coa_01_AccountTypeDao"></property>
+		<property name="coa_02_AccountGroupDao" ref="coa_02_AccountGroupDao"></property>
+		<property name="coa_03_SubAccount01Dao" ref="coa_03_SubAccount01Dao"></property>
+		<property name="coa_04_SubAccount02Dao" ref="coa_04_SubAccount02Dao"></property>
+		<property name="coa_05_MasterDao" ref="coa_05_MasterDao"></property>	
+	</bean>
+
+	<bean id="coa_05_MasterListDialogWin" class="com.pyramix.swi.webui.coa.Coa_05_MasterListDialogControl" scope="prototype" parent="basisController">
+		<property name="coa_05_MasterDao" ref="coa_05_MasterDao"></property>
+	</bean>
+
+	<bean id="coa_AdjustmentListInfoControl" class="com.pyramix.swi.webui.coa.Coa_AdjustmentListInfoControl" scope="prototype" parent="basisController">
+		<property name="coa_AdjustmentDao" ref="coa_AdjustmentDao"></property>
+	</bean>
+
+	<bean id="coa_AdjustmentDialogControl" class="com.pyramix.swi.webui.coa.Coa_AdjustmentDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<bean id="coa_VoucherListInfoControl" class="com.pyramix.swi.webui.coa.Coa_VoucherListInfoControl" scope="prototype" parent="basisController">
+		<property name="coa_VoucherDao" ref="coa_VoucherDao"></property>
+	</bean>
+	
+	<bean id="coa_VoucherDialogControl" class="com.pyramix.swi.webui.coa.Coa_VoucherDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+	
+	<bean id="coa_ReceivablesListInfoControl" class="com.pyramix.swi.webui.coa.Coa_ReceivablesListInfoControl" scope="prototype" parent="basisController">
+		<property name="coa_ReceivablesDao" ref="coa_ReceivablesDao"></property>
+	</bean>
+
+	<bean id="coa_ReceivablesDialogControl" class="com.pyramix.swi.webui.coa.Coa_ReceivablesDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<!-- voucher -->
+
+	<bean id="voucherSalesListInfoControl" class="com.pyramix.swi.webui.voucher.VoucherSalesControl" scope="prototype" parent="basisController">
+		<property name="voucherSalesDao" ref="voucherSalesDao"></property>	
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+	</bean>
+
+	<bean id="voucherSalesDialogControl" class="com.pyramix.swi.webui.voucher.VoucherSalesDialogControl" scope ="prototype" parent="basisController">
+		<property name="customerOrderDao" ref="customerOrderDao"></property>	
+		<property name="voucherSalesDao" ref="voucherSalesDao"></property>
+		<property name="coa_05_MasterDao" ref="coa_05_MasterDao"></property>
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+		<property name="customerReceivableDao" ref="customerReceivableDao"></property>	
+	</bean>
+
+	<bean id="voucherSalesBatalDialogControl" class="com.pyramix.swi.webui.voucher.VoucherSalesBatalDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+
+	<bean id="voucherGiroReceiptListInfoControl" class="com.pyramix.swi.webui.voucher.VoucherGiroReceiptControl" scope="prototype" parent="basisController">
+		<property name="voucherGiroReceiptDao" ref="voucherGiroReceiptDao"></property>
+	</bean>
+
+	<bean id="voucherGiroReceiptDialogControl" class="com.pyramix.swi.webui.voucher.VoucherGiroReceiptDialogControl" scope="prototype" parent="basisController">
+		<property name="voucherSalesDao" ref="voucherSalesDao"></property>
+		<property name="settlementDao" ref="settlementDao"></property>
+		<property name="voucherGiroReceiptDao" ref="voucherGiroReceiptDao"></property>
+		<property name="coa_05_MasterDao" ref="coa_05_MasterDao"></property>	
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>	
+		<property name="coa_AdjustmentDao" ref="coa_AdjustmentDao"></property>
+	</bean>
+
+	<bean id="voucherGiroReceiptAddDialogControl" class="com.pyramix.swi.webui.voucher.VoucherGiroReceiptAddDialogControl" scope="prototype" parent="basisController">
+		<property name="coa_05_MasterDao" ref="coa_05_MasterDao"></property>	
+		<property name="coa_AdjustmentDao" ref="coa_AdjustmentDao"></property>
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>	
+		<property name="coa_ReceivablesDao" ref="coa_ReceivablesDao"></property>
+	</bean>
+
+	<bean id="voucherPaymentListInfoControl" class="com.pyramix.swi.webui.voucher.VoucherPaymentControl" scope="prototype" parent="basisController">
+		<property name="voucherPaymentDao" ref="voucherPaymentDao"></property>
+	</bean>
+
+	<bean id="voucherPaymentDialogControl" class="com.pyramix.swi.webui.voucher.VoucherPaymentDialogControl" scope="prototype" parent="basisController">
+		<property name="voucherPaymentDao" ref="voucherPaymentDao"></property>
+		<property name="coa_05_MasterDao" ref="coa_05_MasterDao"></property>
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+		<property name="settlementDao" ref="settlementDao"></property>
+		<property name="coa_VoucherDao" ref="coa_VoucherDao"></property>
+		<property name="giroDao" ref="giroDao"></property>	
+		<property name="coa_AdjustmentDao" ref="coa_AdjustmentDao"></property>
+	</bean>
+	
+	<bean id="voucherSerialNumberListInfoControl" class="com.pyramix.swi.webui.voucher.VoucherSerialNumberListInfo" scope="prototype" parent="basisController">
+		<property name="voucherSerialNumberDao" ref="voucherSerialNumberDao"></property>
+	</bean>	
+	
+	<bean id="voucherSerialNumberDialogControl" class="com.pyramix.swi.webui.voucher.VoucherSerialNumberDialogControl" scope="prototype" parent="basisController">
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+	</bean>
+
+	<bean id="voucherJournalListInfoControl" class="com.pyramix.swi.webui.voucher.VoucherJournalControl" scope="prototype" parent="basisController">
+		<property name="voucherJournalDao" ref="voucherJournalDao"></property>
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+		<property name="generalLedgerDao" ref="generalLedgerDao"></property>
+		<property name="userRoleDao" ref="userRoleDao"></property>
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	
+	<bean id="voucherJournalDialogControl" class="com.pyramix.swi.webui.voucher.VoucherJournalDialogControl" scope="prototype" parent="basisController">
+		<property name="coa_05_MasterDao" ref="coa_05_MasterDao"></property>
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+		<property name="voucherJournalDao" ref="voucherJournalDao"></property>
+	</bean>
+	
+	<bean id="voucherJournalViewDialogControl" class="com.pyramix.swi.webui.voucher.VoucherJournalViewDialogControl" scope="prototype" parent="basisController">	
+
+	</bean>
+
+	<!-- General Ledger -->
+
+	<bean id="generalLedgerListInfoControl" class="com.pyramix.swi.webui.gl.GeneralLedgerListInfoControl" scope="prototype" parent="basisController">
+		<property name="generalLedgerDao" ref="generalLedgerDao"></property>
+		<property name="coa_05_MasterDao" ref="coa_05_MasterDao"></property>
+		<property name="coa_01_AccountTypeDao" ref="coa_01_AccountTypeDao"></property>
+		<property name="endingBalanceDao" ref="endingBalanceDao"></property>
+	</bean>
+	
+	<bean id="endingBalanceListInfoControl" class="com.pyramix.swi.webui.gl.EndingBalanceListInfoControl" scope="prototype" parent="basisController">
+		<property name="endingBalanceDao" ref="endingBalanceDao"></property>		
+	</bean>
+	
+	<bean id="endingBalanceDialogControl" class="com.pyramix.swi.webui.gl.EndingBalanceDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+	
+	<bean id="generalLedgerPrintControl" class="com.pyramix.swi.webui.gl.print.GeneralLedgerPrintControl" scope="prototype" parent="basisController">
+	
+	</bean>
+	
+	<!-- Giro -->
+	
+	<bean id="giroListInfoControl" class="com.pyramix.swi.webui.giro.GiroListInfoControl" scope="prototype" parent="basisController">
+		<property name="giroDao" ref="giroDao"></property>
+		<property name="voucherPaymentDao" ref="voucherPaymentDao"></property>
+	</bean>
+	
+	<bean id="giroDialogControl" class="com.pyramix.swi.webui.giro.GiroDialogControl" scope="prototype" parent="basisController">
+		<property name="giroDao" ref="giroDao"></property>	
+	</bean>
+		
+	<!-- settlement -->
+	
+	<bean id="settlementListInfoControl" class="com.pyramix.swi.webui.settlement.SettlementListInfoControl" scope="prototype" parent="basisController">
+		<property name="settlementDao" ref="settlementDao"></property>
+		<property name="customerDao" ref="customerDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="customerReceivableDao" ref="customerReceivableDao"></property>
+	</bean>
+	
+	<bean id="settlementDialogControl" class="com.pyramix.swi.webui.settlement.SettlementDialogControl" scope="prototype" parent="basisController">
+		<property name="serialNumberGenerator" ref="serialNumberGenerator"></property>
+		<property name="customerOrderDao" ref="customerOrderDao"></property>	
+	</bean>
+	
+	<bean id="settlementDialogBatalControl" class="com.pyramix.swi.webui.settlement.SettlementDialogBatalControl" scope="prototype" parent="basisController">
+		<property name="settlementDao" ref="settlementDao"></property>	
+		<property name="voucherGiroReceiptDao" ref="voucherGiroReceiptDao"></property>
+		<property name="giroDao" ref="giroDao"></property>
+	</bean>
+	
+	<bean id="settlementDialogViewControl" class="com.pyramix.swi.webui.settlement.SettlementDialogViewControl" scope="prototype" parent="basisController">
+		<property name="settlementDao" ref="settlementDao"></property>
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+	</bean>
+
+	<!-- Receivales -->
+
+	<bean id="customerReceivablesListInfoControl" class="com.pyramix.swi.webui.receivables.CustomerReceivablesListInfoControl" scope="prototype" parent="basisController">
+		<property name="customerReceivableDao" ref="customerReceivableDao"></property>
+		<property name="customerOrderDao" ref="customerOrderDao"></property>	
+	</bean>
+
+	<!-- Receivables Print Sales -->
+
+	<bean id="customerReceivablesPrintControl" class="com.pyramix.swi.webui.receivables.print.CustomerReceivablesPrintControl" scope="prototype" parent="basisController">
+		<property name="customerReceivableDao" ref="customerReceivableDao"></property>	
+		<property name="customerOrderDao" ref="customerOrderDao"></property>	
+		<property name="customerOrderProductDao" ref="customerOrderProductDao"></property>
+	</bean>
+
+	<!-- tt -->
+	
+	<bean id="reportSalesListInfoControl" class="com.pyramix.swi.webui.report.ReportSalesListInfoControl" scope="prototype" parent="basisController">
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+		<property name="employeeDao" ref="employeeDao"></property>		
+	</bean>
+
+	<bean id="reportSalesDialogControl" class="com.pyramix.swi.webui.report.ReportSalesDialogControl" scope="prototype" parent="basisController">
+		<property name="customerOrderProductDao" ref="customerOrderProductDao"></property>	
+	</bean>
+	
+	<bean id="reportSalesCustomerListInfoControl" class="com.pyramix.swi.webui.report.ReportSalesCustomerListInfoControl" scope="prototype" parent="basisController">
+		<property name="customerReceivableDao" ref="customerReceivableDao"></property>	
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+		<property name="settlementDao" ref="settlementDao"></property>
+	</bean>
+	
+	<bean id="reportSalesVoucherPaymentDialogControl" class="com.pyramix.swi.webui.report.ReportSalesVoucherPaymentDialogControl" scope="prototype" parent="basisController">
+		<property name="voucherPaymentDao" ref="voucherPaymentDao"></property>
+	</bean>
+
+	<bean id="reportSalesVoucherGiroReceiptDialogControl" class="com.pyramix.swi.webui.report.ReportSalesVoucherGiroReceiptDialogControl" scope="prototype" parent="basisController">
+	
+	</bean>
+	
+	<bean id="reportSalesSettlementDialogControl" class="com.pyramix.swi.webui.report.ReportSalesSettlementDialogControl" scope="prototype" parent="basisController">
+		<property name="settlementDao" ref="settlementDao"></property>
+	</bean>
+	
+	<bean id="reportSalesCustomerOrderDialogControl" class="com.pyramix.swi.webui.report.ReportSalesCustomerOrderDialogControl" scope="prototype" parent="basisController">
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+		<property name="suratJalanDao" ref="suratJalanDao"></property>
+
+	</bean>
+	
+	<bean id="panelSuratJalanControl" class="com.pyramix.swi.webui.report.panel.PanelSuratJalanControl" scope="prototype" parent="basisController">
+		<property name="suratJalanDao" ref="suratJalanDao"></property>				
+	</bean>
+	
+	<bean id="panelDeliveryOrderControl" class="com.pyramix.swi.webui.report.panel.PanelDeliveryOrderControl" scope="prototype" parent="basisController">
+		<property name="deliveryOrderDao" ref="deliveryOrderDao"></property>	
+	</bean>
+	
+	<bean id="panelFakturControl" class="com.pyramix.swi.webui.report.panel.PanelFakturControl" scope="prototype" parent="basisController">
+		<property name="fakturDao" ref="fakturDao"></property>	
+	</bean>
+	
+	<bean id="panelVoucherSalesControl" class="com.pyramix.swi.webui.report.panel.PanelVoucherSalesControl" scope="prototype" parent="basisController">
+		<property name="voucherSalesDao" ref="voucherSalesDao"></property>
+	
+	</bean>
+
+	<bean id="panelCustomerOrderControl" class="com.pyramix.swi.webui.report.panel.PanelCustomerOrderControl" scope="prototype" parent="basisController">
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+		<property name="customerOrderProductDao" ref="customerOrderProductDao"></property>
+	</bean>
+	
+	<!-- Print Report -->
+	
+	<bean id="reportSalesPrintControl" class="com.pyramix.swi.webui.report.print.ReportSalesPrintControl" scope="prototype" parent="basisController">
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+		<property name="customerOrderProductDao" ref="customerOrderProductDao"></property>	
+	</bean>
+
+	<bean id="displayPdfControl" class="com.pyramix.swi.webui.report.pdf.DisplayPdfControl" scope="prototype" parent="basisController">
+	
+	</bean>
+	
+	<!-- Bank -->
+	
+	<bean id="bankListInfoControl" class="com.pyramix.swi.webui.bank.BankListInfoControl" scope="prototype" parent="basisController">
+		<property name="bankDao" ref="bankDao"></property>
+	</bean>
+
+	<bean id="bankDialogControl" class="com.pyramix.swi.webui.bank.BankDialogControl" scope="prototype" parent="basisController">
+		<property name="companyDao" ref="companyDao"></property>
+	
+	</bean>
+		
+</beans>

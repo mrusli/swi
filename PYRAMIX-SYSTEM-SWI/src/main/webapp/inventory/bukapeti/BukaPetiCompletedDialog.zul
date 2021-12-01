@@ -1,0 +1,71 @@
+<?page title="BukaPeti-Penyelesaian" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1120px" height="680px" title="Penyelesaian Buka Peti" border="normal"
+	id="bukapetiCompletedDialogWin" apply="${bukapetiCompletedDialogControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="15%">
+						Tgl.Penyelesaian:
+					</cell>
+					<cell width="20%">
+						<datebox id="completedDatebox" width="180px"></datebox>
+					</cell>
+					<cell width="15%">
+						Process No:											
+					</cell>
+					<cell width="15%">
+						<textbox id="processNumberTextbox" width="140px" disabled="true"></textbox>						
+					</cell>
+					<cell width="12%">
+						Tgl.Perubahan:
+					</cell>
+					<cell>
+						<datebox id="updatedDatebox" width="180px" disabled="true"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Status:
+					</cell>
+					<cell>
+						<combobox id="bukapetiStatusCombobox" width="180px"></combobox>
+					</cell>
+					<cell>
+						Catatan:						
+					</cell>
+					<cell colspan="3">
+						<textbox id="noteTextbox" width="280px"></textbox>						
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hlayout style="padding: 10px" valign="middle">
+			<label id="infoCompletedProductLabel" value=""
+				style="color: silver;"></label>
+			<button id="addCompletedProductButton" label="Tambah" sclass="modButton" disabled="true"></button>
+			<button id="removeCompletedProductButton" label="Hapus" sclass="modButton" disabled="true"></button>
+		</hlayout>
+		<listbox id="completedProductListbox" height="350px">
+			<listhead>
+				<listheader label="Status" width="125px"></listheader>
+				<listheader label="Coil No." width="120px"></listheader>
+				<listheader label="Kode" width="120px"></listheader>
+				<listheader label="Spesifikasi" width="210px"></listheader>
+				<listheader label="Qty (Sht/Line)" width="100px"></listheader>
+				<listheader label="Qty (Kg)" width="100px"></listheader>
+				<listheader label="Packing" width="80px"></listheader>
+				<listheader label="Customer" width="180px"></listheader>
+				<listheader/>
+			</listhead>
+		</listbox>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="updateButton" label="Update BukaPeti"></button>
+		<button id="cancelButton" label="Tutup / Batal"></button>
+		<button id="saveButton" label="Update Inventory"></button>	
+	</hlayout>	
+</window>
+</zk>

@@ -1,0 +1,90 @@
+<?page title="Settlement" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="1150px" height="585px" title="Settlement" border="normal"
+	id="reportSalesSettlementDialogWin" apply="${reportSalesSettlementDialogControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="11%">
+						No Settlement:
+					</cell>
+					<cell width="15%">
+						<textbox id="settlementNoCompTextbox" width="140px" readonly="true"></textbox>
+					</cell>
+					<cell width="12%">
+						Tgl Settlement:
+					</cell>
+					<cell width="22%">
+						<datebox id="settlementDatebox" width="230px" disabled="true"></datebox>
+					</cell>
+					<cell width="10%">
+						Customer:
+					</cell>
+					<cell>
+						<textbox id="customerTextbox" width="230px" readonly="true"/>					
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Jumlah:					
+					</cell>
+					<cell>
+						<textbox id="paymentAmountTextbox" width="110px" style="text-align: right;" disabled="true"/>					
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Referensi:
+					</cell>
+					<cell>
+						<textbox id="referenceTextbox" width="140px" readonly="true"></textbox>
+					</cell>
+					<cell>
+						Penjelasan:
+					</cell>
+					<cell colspan="3">
+						<textbox id="settlementDescriptionTextbox" width="350px" readonly="true"/>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hlayout style="padding: 10px;" valign="middle">
+			<label id="settlementDetailLabel"></label>			
+		</hlayout>		
+		<listbox id="settlementDetailListbox" height="280px">
+			<listhead>
+				<listheader label="No.Order" width="100px"></listheader>
+				<listheader label="Tgl.Order" width="90px"></listheader>
+				<listheader label="No.SuratJalan" width="120px"></listheader>
+				<listheader label="Tgl.SuratJalan" width="120px"></listheader>
+				<listheader label="Tgl.Jth-Tempo" width="90px"></listheader>
+				<listheader label="Total Order"  width="120px" align="right"></listheader>
+				<listheader label="Jumlah Pembayaran"  width="125px" align="right"></listheader>
+				<listheader label="Sisa"  width="120px" align="right"></listheader>
+				<listheader label="Jumlah Dibayarkan"></listheader>		
+			</listhead>
+		</listbox>
+	</vbox>
+	<hlayout style="padding-top: 5px;" valign="middle">
+		<label value="Posisi Settlement:"></label>
+		<textbox id="remainingTextbox" width="110px" style="text-align: right;" readonly="true"></textbox>
+		<checkbox id="installmentCheckbox" checked="false" label="Cicilan" disabled="true"></checkbox>
+	</hlayout>
+	<hlayout style="padding-top: 5px;">
+		<button id="closeButton" label="Tutup"></button>	
+	</hlayout>	
+</window>
+</zk>

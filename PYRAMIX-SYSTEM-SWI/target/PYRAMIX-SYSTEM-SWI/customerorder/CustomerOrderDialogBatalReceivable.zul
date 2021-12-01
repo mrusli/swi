@@ -1,0 +1,24 @@
+<?page title="CustomerOrderDialogBatalReceivable" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="CustomerOrderDialogBatalReceivable" border="normal"
+	id="customerOrderDialogBatalReceivableWin" apply="${customerOrderDialogBatalReceivableControl}"
+	width="1150px" height="260px">
+	<listbox id="receivableActivityListbox" height="140px">
+		<listhead>
+			<listheader label="Order-No." width="100px"></listheader>
+			<listheader label="Tgl.Order" width="120px"></listheader>
+			<listheader label="Tgl.Jatuh-Tempo" width="110px"></listheader>
+			<listheader label="Total-Order" width="120px" align="right"></listheader>
+			<listheader label="Tgl.Pembayaran" width="110px"></listheader>
+			<listheader label="Pembayaran" width="120px" align="right"></listheader>
+			<listheader label="Sisa" width="120px" align="right"></listheader>
+			<listheader label="Status" width="110px"></listheader>
+			<listheader label=""/>
+		</listhead>	
+	</listbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Batal" disabled="false"></button>
+		<button id="cancelButton" label="Tutup"></button>	
+	</hlayout>
+</window>
+</zk>

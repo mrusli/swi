@@ -1,0 +1,46 @@
+<?page title="Voucher Sales" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<zk>
+<borderlayout width="1360px" height="690px" id="voucherSalesListInfoWin" apply="${voucherSalesListInfoControl}">
+	<north border="none">
+		<vlayout>			
+			<hlayout valign="middle" style="padding: 5px 0px">
+				<label id="formTitleLabel" sclass="headTitle"></label>
+			</hlayout>
+		</vlayout>
+	</north>
+	<center border="none">
+		<div>
+			<tabbox id="voucherSalesPeriodTabbox">
+				<tabs>
+					<tab label="Semua"/>
+					<tab label="Hari-ini"/>
+					<tab label="Minggu-ini"/>
+					<tab label="Bulan-ini"/>
+				</tabs>
+			</tabbox>
+			<hlayout style="padding: 10px;" valign="middle">
+				<label id="infoVoucherSaleslabel" value="Total: 8 orders - Rp.450.329.112,-" style="color: silver;"></label>
+				<button id="addButton" label="Tambah" sclass="modButton" disabled="true"></button>
+				<button id="batalButton" label="Batal" sclass="modButton" visible="false"></button>							
+			</hlayout>
+			<listbox id="voucherSalesListbox" mold="paging" pageSize="15" height="540px">
+				<listhead>
+					<listheader label="Tgl.Transaksi" width="140px"/>
+					<listheader label="No.Voucher" width="120px"/>
+					<listheader label="Customer" width="220px"/>
+					<listheader label="Pembayaran" width="100px"/>
+					<listheader label="Total (Rp.)" width="100px" align="right"/>
+					<listheader label="No.CustomerOrder" width="120px"/>
+					<listheader label="No.SuratJalan" width="120px"/>
+					<listheader label="User" width="80px"/>
+					<listheader/>
+				</listhead>
+			</listbox>
+		</div>		
+	</center>	
+</borderlayout>
+</zk>

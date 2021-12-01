@@ -1,0 +1,60 @@
+<?page title="Delivery Order" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="680px" title="Delivery Order" border="normal"
+	id="deliveryOrderDialogWin" apply="${deliveryOrderDialogControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="10%">
+						No.:
+					</cell>
+					<cell width="15%">
+						<textbox id="deliveryOrderNoTextbox" width="125px" readonly="true"></textbox>
+					</cell>
+					<cell width="15%">
+						Tgl.Delivery Order:
+					</cell>
+					<cell width="20%">
+						<datebox id="deliveryDatebox" width="200px"></datebox>						
+					</cell>
+					<cell width="10%">
+						Lokasi:					
+					</cell>
+					<cell>
+						<combobox id="locationCombobox" width="195px"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Catatan:
+					</cell>
+					<cell colspan="3">
+						<textbox id="noteTextbox" width="535px"></textbox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hlayout style="padding: 10px;" valign="middle">
+			<label id="infoDeliveryOrderProductlabel" value="DeliveryOrder: 0 items" style="color: silver;"></label>
+			<button id="resetProductButton" label="Kesemula" sclass="modButton"></button>
+			<button id="addButton" label="Tambah" sclass="modButton"></button>			
+		</hlayout>
+		<listbox id="productListbox" height="250px">
+			<listhead>
+				<listheader label="No." width="60px"></listheader>
+				<listheader label="Qty (Sht/Line)" align="right" width="100px"/>
+				<listheader label="Qty (Kg)" align="right" width="80px"/>
+				<listheader label="Kode" width="120px"/>
+				<listheader label="Spesifikasi" width="200px"/>
+				<listheader label="No.Coil" width="100px"/>
+			</listhead>
+		</listbox>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="printButton" label="Cetak"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout></window>
+</zk>

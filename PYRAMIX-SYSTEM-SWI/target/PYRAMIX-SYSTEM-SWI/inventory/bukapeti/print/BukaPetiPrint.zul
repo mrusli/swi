@@ -1,0 +1,74 @@
+<?page title="Buka Peti" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window title="Print-BukaPeti" border="normal" closable="true"
+	id="inventoryBukapetiPrintWin" apply="${inventoryBukapetiPrintControl}" 
+	visible="true" width="1150px" height="550px" 
+	contentStyle="overflow:auto;">	
+	<hbox style="padding-top:5px; padding-bottom:5px; padding-left:70px; background-color: #f9fcff" width="100%">
+		<button id="printButton" label="Print"/>
+	</hbox>
+	<vbox id="printVbox" width="1020px" style="padding-left:0px; padding-top:110px">
+		<grid sclass="pre-print-grid">
+			<rows>
+				<row>
+					<cell width="52%">
+						<label value="Kepada YTH.," sclass="pre-print-label"></label>
+					</cell>
+					<cell width="2%">
+					
+					</cell>
+					<cell>
+						<label id="bukapetiDateLabel" value="21 November 2018" sclass="pre-print-label"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="Bag.Gudang [INTERNAL]" sclass="pre-print-label" style="font-weight: bold;"/>							
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+						<label id="bukapetiNumberLabel" value="BUKA PETI NO.: BP.18.11.0005" sclass="pre-print-label" style="font-weight: bold;"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="-"></label>						
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>					
+				</row>
+				<row>
+					<cell>
+						<label value="-"></label>						
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>					
+				</row>
+			</rows>
+		</grid>
+		<grid id="bukapetiMaterialGrid" oddRowSclass="none" sclass="pre-print-grid" height="190px">
+			<columns>
+				<column label="No." width="30px"></column>
+				<column label="Qty(Sht)" width="100px" align="right"></column>
+				<column label="Qty(Kg)" width="120px" align="right"></column>
+				<column label="Tipe" width="160px"></column>
+				<column label="Deskripsi" width="260px"></column>
+				<column label="Coil No." width="120px"></column>
+				<column></column>
+			</columns>
+		</grid>
+		
+	</vbox>
+</window>
+</zk>

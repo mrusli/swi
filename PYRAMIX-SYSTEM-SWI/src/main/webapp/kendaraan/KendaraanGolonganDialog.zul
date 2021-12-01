@@ -1,0 +1,32 @@
+<?page title="Kendaraan-Golongan" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1180px" height="420px" title="Rubah (Edit) Golongan Kendaraan" border="normal"
+	id="kendaraanGolonganDialogWin" apply="${kendaraanGolonganDialogControl}">
+	<vbox>
+		<label id="idLabel" style="font-size:1em;"/>
+		<grid>
+			<rows>
+				<row>
+					<cell width="10%">
+						Golongan:
+					</cell>
+					<cell width="18%">
+						<combobox id="golonganCombobox" width="180px"/>
+					</cell>
+					<cell width="10%">
+						Penjelasan:
+					</cell>
+					<cell>
+						<textbox id="penjelasanTextbox" width="450px"></textbox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>	
+</window>
+</zk>

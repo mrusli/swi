@@ -1,0 +1,47 @@
+<?page title="Inventory - BukaPeti" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?script type="text/javascript" src="/js/print.js"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_preprint.css"?>
+<zk>
+<borderlayout width="1450px" height="690px" id="inventoryBukapetiListInfoWin" apply="${inventoryBukapetiListInfoControl}">
+	<north border="none">
+		<vlayout>			
+			<hlayout valign="middle" style="padding: 5px 0px">
+				<label id="formTitleLabel" sclass="headTitle"></label>
+			</hlayout>
+		</vlayout>
+	</north>
+	<center border="none">
+		<div>
+			<tabbox id="bukapetiPeriodTabbox">
+				<tabs>
+					<tab label="Semua"/>
+					<tab label="Hari-ini"/>
+					<tab label="Minggu-ini"/>
+					<tab label="Bulan-ini"/>
+				</tabs>
+			</tabbox>
+			<hlayout style="padding: 10px;" valign="middle">
+				<label id="infoBukapetilabel" value="Total: 21 Buka Peti" style="color: silver;"></label>
+				<button id="addBukapetiButton" label="Tambah" sclass="modButton"></button>
+			</hlayout>
+			<listbox id="bukapetiListbox" mold="paging" pageSize="15" height="540px">
+				<listhead>
+					<listheader label="Tgl.Order" width="140px"/>					
+					<listheader label="BukaPeti-No." width="100px"/>
+					<listheader label="Selesai-Tgl." width="140px"/>
+					<listheader label="Status" width="100px"/>
+					<listheader label="Catatan" width="280px"></listheader>
+					<listheader label="User" width="180px"></listheader>
+					<listheader width="55px" align="center"/>
+					<listheader width="55px" align="center"/>
+					<listheader width="115px" align="center"/>
+				</listhead>
+			</listbox>						
+		</div>
+	</center>
+</borderlayout>
+</zk>

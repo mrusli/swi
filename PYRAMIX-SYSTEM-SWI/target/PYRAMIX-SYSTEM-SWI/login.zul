@@ -1,0 +1,65 @@
+<?page title="Pyramix-Login" contentType="text/html;charset=UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<zk>
+<window id="loginWin" border="none">
+ 
+	<vbox vflex="1" hflex="1" align="center">
+		<vbox width="700px" align="center">
+
+			<html style="color:red; font-family: Arial, Helvetica, sans-serif; font-size: 1.5em;" if="${not empty param.login_error}">
+				
+				<![CDATA[ 
+					Your login attempt was not successful, try again.
+					<br/>
+					Reason: ${SPRING_SECURITY_LAST_EXCEPTION.message} 
+				]]>
+				
+		    </html>
+		</vbox>	
+		<vbox width="600px" align="center">
+			<image src="/img/logo-and-text-W413xH428px.png"></image>
+<!-- 			
+			<label value="PYRAMIX SYSTEM" style="font-size: 3.5em"></label>		 
+-->
+			<html:form id="f" name="f" action="j_spring_security_check"
+				method="POST" xmlns:html="native">
+				<grid>
+					<rows>
+						<row>
+							<cell width="35%">
+								<label value="User Name:" style="font-size: 1.5em;"></label>							
+							</cell>
+							<cell>
+								<textbox id="username" name="username" style="font-size: 1.5em;"/>							
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="Password:" style="font-size: 1.5em;"></label>							
+							</cell>
+							<cell>
+								<textbox id="password" name="password" type="password" style="font-size: 1.5em;"/>							
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="Remember Me:" style="font-size: 1em;"></label>
+							</cell>
+							<cell>
+								<checkbox id="rememberme" name="remember-me"></checkbox>
+							</cell>
+						</row>
+						<row spans="2">
+							<hbox>
+								<html:input type="submit" value="Login" />
+								<html:input type="reset" value="Reset" />
+							</hbox>
+						</row>
+					</rows>
+				</grid>
+			</html:form>
+		</vbox>
+	</vbox>
+
+</window>
+</zk>

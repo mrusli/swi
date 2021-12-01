@@ -1,0 +1,111 @@
+<?page title="View" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1110px" height="680px" title="Melihat (View) Inventory - Transfer" border="normal"
+	id="inventoryTransferViewDialogWin" apply="${inventoryTransferViewDialogControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="10%">
+						Tgl.Order:
+					</cell>
+					<cell width="20%">
+						<datebox id="orderDatebox" width="180px" disabled="true"></datebox>
+					</cell>
+					<cell width="10%">
+						Process No:
+					</cell>
+					<cell width="20%">
+						<textbox id="processNumberTextbox" width="160px" disabled="true"></textbox>
+					</cell>
+					<cell width="10%">
+						Selesai Tgl.:
+					</cell>
+					<cell>
+						<datebox id="completeDatebox" width="180px" disabled="true"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Lokasi:					
+					</cell>
+					<cell>
+						<combobox id="transferLocationCombobox" width="180px" disabled="true"></combobox>
+					</cell>
+					<cell>
+						Status:
+					</cell>
+					<cell>
+						<combobox id="transferStatusCombobox" width="160px" disabled="true"></combobox>
+					</cell>
+					<cell>
+						
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Catatan:					
+					</cell>
+					<cell colspan="3">
+						<textbox id="noteTextbox" width="480px"></textbox>
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<tabbox id="transferTabbox">
+			<tabs>
+				<tab label="Dari"></tab>
+				<tab label="Ditransfer Ke"></tab>
+			</tabs>
+			<tabpanels>
+				<tabpanel>
+					<hlayout style="padding: 10px" valign="middle">
+						<label id="infoMaterialLabel" style="color: silver;"></label>
+					</hlayout>
+					<listbox id="materialInventoryListbox" height="250px">
+						<listhead>
+							<listheader label="No." width="30px"></listheader>
+							<listheader label="No.Coil" width="120px"></listheader>
+							<listheader label="Kode" width="120px"></listheader>
+							<listheader label="Spesifikasi" width="160px"></listheader>
+							<listheader label="Packing" width="80px"></listheader>
+							<listheader label="Qty(Kg)" align="right" width="80px"></listheader>
+							<listheader label="Qty(Sht/Line)" align="right" width="150px"></listheader>
+							<listheader label="Lokasi" width="60px"></listheader>
+						</listhead>
+					</listbox>				
+				</tabpanel>
+				<tabpanel>
+					<hlayout style="padding: 10px" valign="middle">
+						<label id="infoEndProductLabel" style="color: silver;"></label>
+						<button id="addProcessButton" label="Tambah Proses" sclass="modButton" visible="false"></button>
+						<button id="removeProcess" label="Hapus Proses" sclass="modButton" visible="false"></button>
+					</hlayout>
+					<listbox id="productInventoryListbox" height="250px">
+						<listhead>
+							<listheader label="Lokasi" width="60px"></listheader>
+							<listheader label="Materi" width="120px"></listheader>
+							<listheader label="Kode" width="120px"></listheader>
+							<listheader label="Spesifikasi" width="200px"></listheader>
+							<listheader label="Qty (Sht/Line)" align="right" width="100px"></listheader>
+							<listheader label="Qty (Kg)" align="right" width="80px"></listheader>
+							<listheader label="Packing" width="80px"></listheader>
+							<listheader/>
+						</listhead>
+					</listbox>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="cancelButton" label="Tutup"></button>
+	</hlayout>
+</window>	
+</zk>

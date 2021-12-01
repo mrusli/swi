@@ -1,0 +1,82 @@
+<?page title="EndProduct Edit" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1290px" height="210px" title="Edit" border="normal"
+	id="inventoryBukaPetiEndProductEditDialog" apply="${inventoryBukaPetiEndProductEditDialogControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="10%">
+						Material:					
+					</cell>
+					<cell width="10%">
+						Kode:					
+					</cell>
+					<cell width="8%">
+						Ketebalan:
+					</cell>
+					<cell width="6%">
+						Lebar:					
+					</cell>
+					<cell width="8%">
+						Panjang:
+					</cell>
+					<cell width="12%">
+						Qty (Sht/Line):
+					</cell>
+					<cell width="12%">
+						Qty(Kg):
+					</cell>
+					<cell width="8%">
+						Packing:
+					</cell>
+					<cell width="20%">
+						Customer:
+					</cell>
+					<cell>
+						
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<textbox id="coilNoTextbox" width="100px"></textbox>
+					</cell>
+					<cell>
+						<textbox id="kodeTextbox" width="100px" disabled="true"></textbox>					
+					</cell>
+					<cell>
+						<decimalbox id="thicknessDecimalbox" width="80px"></decimalbox>
+					</cell>
+					<cell>
+						<decimalbox id="widthDecimalbox" width="55px"></decimalbox>
+					</cell>
+					<cell>
+						<decimalbox id="lengthDecimalbox" width="80px"></decimalbox>
+					</cell>
+					<cell>
+						<intbox id="quantityShtLineIntbox" width="80px" style="text-align:right;"></intbox>
+					</cell>
+					<cell>
+						<decimalbox id="quantityKgDecimalbox" width="80px" style="text-align:right;"></decimalbox>
+					</cell>
+					<cell>
+						<textbox id="packingTextbox" width="80px" disabled="true"></textbox>
+					</cell>
+					<cell>
+						<textbox id="customerTextbox" width="210px" disabled="true"/>
+					</cell>
+					<cell>
+						<checkbox id="forSWICheckbox" label="SWI" disabled="true"></checkbox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Selesai"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>		
+
+</window>
+</zk>

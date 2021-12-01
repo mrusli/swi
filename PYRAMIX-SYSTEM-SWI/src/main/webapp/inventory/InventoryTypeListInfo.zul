@@ -1,0 +1,46 @@
+<?page title="Inventory Type" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<zk>
+<borderlayout width="1360px" height="690px" id="inventoryTypeListInfoWin" apply="${inventoryTypeListInfoControl}">
+	<north border="none">
+		<vlayout>			
+			<hlayout valign="middle" style="padding: 5px 0px">
+				<label id="formTitleLabel" sclass="headTitle"></label>
+			</hlayout>
+		</vlayout>
+	</north>
+	<west width="750px" border="normal">
+		<div>
+			<hlayout style="padding: 10px;" valign="middle">
+				<label id="infoInventoryTypeLabel" value="Total: 7 items" style="color: silver;"></label>
+				<button id="newInventoryTypeButton" label="Tambah" sclass="modButton"></button>			
+			</hlayout>
+			<listbox id="inventoryTypeListbox" mold="paging" pageSize="15" height="540px">
+				<listhead>
+					<listheader label="Tipe Barang" width="240px"/>
+					<listheader label="Berat Jenis" width="120px"/>
+					<listheader label="Penjelasan" width="330px"></listheader>
+					<listheader/>
+				</listhead>
+			</listbox>			
+		</div>
+	</west>	
+	<center border="normal">
+		<div>
+			<hlayout style="padding: 10px;" valign="middle">
+				<label id="infoInventoryCodelabel" value="Inventory Type: SPCC - 2 Inventory Code" style="color: black;"></label>
+				<button id="newInventoryCodeButton" label="Tambah" sclass="modButton"></button>			
+			</hlayout>	
+			<listbox id="inventoryCodeListbox" mold="paging" pageSize="15" height="540px">
+				<listhead>
+					<listheader label="Kode" width="150px"/>
+					<listheader/>
+				</listhead>
+			</listbox>
+		</div>
+	</center>
+</borderlayout>
+</zk>

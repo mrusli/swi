@@ -1,0 +1,83 @@
+<?page title="SuratJalan" contentType="text/html;charset=UTF-8"?>
+<div id="panelSuratJalanDiv" apply="${panelSuratJalanControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="10%">
+						No.:
+					</cell>
+					<cell width="15%">
+						<textbox id="orderNoTextbox" width="125px" readonly="true"></textbox>
+					</cell>
+					<cell width="15%">
+						Tgl.Surat Jalan:	
+					</cell>
+					<cell width="20%">
+						<datebox id="orderDatebox" width="200px" disabled="true"></datebox>
+					</cell>
+					<cell width="10%">
+						
+					</cell>
+					<cell>
+						<checkbox id="selectCustomerCheckbox" checked="true" label="Tunai" visible="false"></checkbox>					
+					</cell>
+				</row>
+				<row>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+						Tgl.Pengiriman
+					</cell>
+					<cell>
+						<datebox id="deliveryDatebox" width="200px" disabled="true"></datebox>
+					</cell>
+					<cell>
+						Customer:
+					</cell>
+					<cell>
+						<textbox id="customerTextbox" width="235px" readonly="true"/>
+						<button id="customerButton" width="25px" label="..." sclass="selectButton" disabled="true"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+						Catatan:
+					</cell>
+					<cell>
+						<textbox id="noteTextbox" width="200px"></textbox>
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>	
+				</row>
+			</rows>
+		</grid>
+		<hlayout style="padding: 10px;" valign="middle">
+			<label id="infoSuratJalanProductlabel" value="SuratJalan: 2 items" style="color: silver;"></label>
+		</hlayout>
+		<listbox id="productListbox" height="280px">
+			<listhead>
+				<listheader label="No." width="60px"></listheader>
+				<listheader label="Qty (Sht/Line)" align="right" width="100px"/>
+				<listheader label="Qty (Kg)" align="right" width="80px"/>
+				<listheader label="Kode" width="120px"/>
+				<listheader label="Spesifikasi" width="200px"/>
+				<listheader label="No.Coil" width="100px"/>
+			</listhead>
+		</listbox>
+	</vbox>
+</div>

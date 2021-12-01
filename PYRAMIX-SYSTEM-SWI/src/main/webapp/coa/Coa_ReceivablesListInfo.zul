@@ -1,0 +1,35 @@
+<?page title="Receivables COA" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<zk>
+<borderlayout width="1360px" height="690px" id="coa_ReceivablesListInfoWin" apply="${coa_ReceivablesListInfoControl}">
+	<north border="none">
+		<vlayout>			
+			<hlayout valign="middle" style="padding: 5px 0px">
+				<label id="formTitleLabel" sclass="headTitle"></label>
+			</hlayout>
+		</vlayout>
+	</north>
+	<center border="none">
+		<div>
+			<tabbox id="coaReceivablesTabbox">
+			</tabbox>
+			<hlayout style="padding: 10px;" valign="middle">
+				<label id="infoResultlabel" value="Total: 8 Items" style="color: silver;"></label>
+				<button id="addButton" label="Tambah" sclass="modButton"></button>			
+			</hlayout>
+			<listbox id="coa_ReceivablesMasterListbox" mold="paging" pageSize="15" height="540px">
+				<listhead>
+					<listheader label="No.COA" width="140px"/>
+					<listheader label="Nama" width="180px"></listheader>
+					<listheader label="Akun Debit/Kredit" width="120px"/>
+					<listheader label="COA Aktif" width="90px"/>
+					<listheader label=""/>
+				</listhead>
+			</listbox>
+		</div>		
+	</center>	
+</borderlayout>
+</zk>

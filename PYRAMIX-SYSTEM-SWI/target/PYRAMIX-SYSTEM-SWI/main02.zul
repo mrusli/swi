@@ -1,0 +1,93 @@
+<?page title="Pyramix-Main" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css"	href="/css/bootstrap-spacelab.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/style_bootstrap.css" ?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<zk>
+<div apply="${main02Control}">
+	<div xmlns:n="native">
+		<n:h4>Pyramix-System</n:h4>
+	</div>
+	<div sclass="user-nav">
+		<menubar sclass="main-menubar">
+			<menuitem id="homeMenuitem" label="Home" sclass="main-menuitem"/>
+			<menu label="Inventory">
+				<menupopup sclass="navpp">
+					<menuitem id="inventoryMenuitem" label="Inventory" sclass="main-menuitem"/>
+					<menuitem id="inventoryByTypeMenuitem" label="Inventory By Type" sclass="main-menuitem"/>
+					<menuitem id="inventoryProcessMenuitem" label="Process" sclass="main-menuitem"/>
+					<menuitem id="inventoryBukaPetiMenuitem" label="Buka-Peti" sclass="main-menuitem"/>
+					<menuitem id="inventoryTransferMenuitem" label="Transfer" sclass="main-menuitem"/>
+				</menupopup>
+			</menu>
+			<menu label="Penjualan">
+				<menupopup sclass="navpp">
+					<menuitem id="customerOrderMenuitem" label="Customer-Order" sclass="main-menuitem"/>
+					<menuitem id="reportSalesMenuitem" label="Laporan Penjualan" sclass="main-menuitem"/>
+					<menuitem id="suratJalanDaftarMenuitem" label="Surat Jalan" sclass="main-menuitem"/>
+					<menuitem id="customerMenuitem" label="Customer" sclass="main-menuitem"/>
+				</menupopup>
+			</menu>			
+			<menu label="Keuangan">
+				<menupopup sclass="navpp">
+					<menuitem id="settlementMenuitem" label="Settlement" sclass="main-menuitem"/>
+					<menuitem id="giroMenuitem" label="Giro-Gantung" sclass="main-menuitem"/>
+					<menuitem id="reportReceivablesMenuitem" label="Laporan Piutang" sclass="main-menuitem"/>								
+				</menupopup>
+			</menu>
+			<menu label="Akuntansi">
+				<menupopup sclass="navpp">
+					<menu label="Voucher">
+						<menupopup sclass="navpp">
+							<menuitem id="voucherJournalMenuitem" label="Umum dan PettyCash" sclass="main-menuitem"/>
+							<menuitem id="voucherGiroReceiptMenuitem" label="Giro Receipt" sclass="main-menuitem"/>
+							<menuitem id="voucherSalesMenuitem" label="Sales" sclass="main-menuitem"/>
+							<menuitem id="voucherPaymentMenuitem" label="Payment" sclass="main-menuitem"/>
+						</menupopup>
+					</menu>
+					<menu label="GL">
+						<menupopup sclass="navpp">
+							<menuitem id="journalActivityMenuitem" label="Aktifitas Jurnal" sclass="main-menuitem"/>
+							<menuitem id="endingBalanceMenuitem" label="Ending Balance" sclass="main-menuitem"/>								
+						</menupopup>
+					</menu>
+					<menu label="COA">
+						<menupopup sclass="navpp">
+							<menuitem id="coaMasterMenuitem" label="Master" sclass="main-menuitem"/>
+							<menuitem id="coaAdjustmentMenuitem" label="Adjustment" sclass="main-menuitem"/>
+							<menuitem id="coaVoucherMenuitem" label="Voucher" sclass="main-menuitem"/>													
+						</menupopup>
+					</menu>
+				</menupopup>
+			</menu>
+			<menu label="Kendaraan">
+				<menupopup sclass="navpp">
+					<menuitem id="kendaraanGolonganMenuitem" label="Golongan" sclass="main-menuitem"/>
+					<menuitem id="kendaraanDaftarMenuitem" label="Kendaraan" sclass="main-menuitem"/>													
+				</menupopup>
+			</menu>
+			<menu label="Karyawan">
+				<menupopup sclass="navpp">
+					<menuitem id="karyawanDaftarMenuitem" label="Karyawan" sclass="main-menuitem"/>
+					<menuitem id="karyawanKomisiMenuitem" label="Komisi Karyawan" sclass="main-menuitem"/>
+				</menupopup>
+			</menu>
+			<menu label="Pengaturan">
+				<menupopup sclass="navpp">
+					<menuitem id="userDaftarMenuitem" label="User" sclass="main-menuitem"/>
+					<menu label="Serial-Number">
+						<menupopup sclass="navpp">
+							<menuitem id="voucherSerialNoMenuitem" label="Voucher" sclass="main-menuitem"/>
+							<menuitem id="documentSerialNoMenuitem" label="Document" sclass="main-menuitem"/>								
+						</menupopup>
+					</menu>					
+				</menupopup>
+			</menu>
+			<menuitem label="Logout" sclass="main-menuitem"/>
+		</menubar>
+	</div>
+	<include id="mainInclude" width="1360px" height="620px"></include>
+</div>
+</zk>

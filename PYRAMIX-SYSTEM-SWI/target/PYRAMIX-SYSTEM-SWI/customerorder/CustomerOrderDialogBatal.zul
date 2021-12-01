@@ -1,0 +1,17 @@
+<?page title="Customer Order - Batal" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="680px" title="Customer Order - Batal" border="normal"
+	id="customerOrderDialogBatalWin" apply="${customerOrderDialogBatalControl}">
+	<hlayout valign="middle">
+		Tgl Batal:	
+		<datebox id="batalDatebox" width="200px"></datebox>
+	</hlayout>
+	<tabbox id="documentBatalTabbox" height="520px">
+	</tabbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Batal" disabled="false"></button>
+		<button id="cancelButton" label="Tutup"></button>	
+	</hlayout>		
+</window>
+</zk>

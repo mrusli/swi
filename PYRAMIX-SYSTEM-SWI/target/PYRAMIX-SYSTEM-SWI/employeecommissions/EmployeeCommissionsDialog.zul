@@ -1,0 +1,58 @@
+<?page title="Commissions" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="420px" title="Employee" border="normal"
+	id="employeeCommissionsDialogWin" apply="${employeeCommissionsDialogControl}">
+	<vbox>
+		<label id="idLabel" style="font-size:1em;"/>
+		<grid>
+			<rows>
+				<row>
+					<cell width="15%">
+						Nama Karyawan:					
+					</cell>
+					<cell width="20%">
+						<combobox id="employeeNameCombobox" width="200px"></combobox>
+					</cell>
+					<cell width="10%">
+						No.Order:
+					</cell>
+					<cell  width="12%">
+						<textbox id="customerOrderNoTextbox" disabled="true" width="110px"></textbox>
+					</cell>
+					<cell width="10%">
+						Customer:
+					</cell>
+					<cell>
+						<textbox id="customerNameTextbox" disabled="true" width="320px"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Total Order
+					</cell>
+					<cell>
+						<decimalbox id="totalSalesDecimalbox"></decimalbox>
+					</cell>
+					<cell>
+						Komisi (%)
+					</cell>
+					<cell>
+						<decimalbox id="commissionPercentDecimalbox" width="110px"></decimalbox>
+					</cell>
+					<cell>
+						Komisi (Rp.)
+					</cell>
+					<cell>
+						<decimalbox id="commissionTotalDecimalbox"></decimalbox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>	
+</window>
+</zk>

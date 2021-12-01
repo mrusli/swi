@@ -1,0 +1,174 @@
+<?page title="Employee" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1180px" height="460px" title="Employee" border="normal"
+	id="employeeDialogWin" apply="${employeeDialogControl}">
+	<vbox>
+		<label id="idLabel" style="font-size:1em;"/>
+		<grid>
+			<rows>
+				<row>
+					<cell width="12%">
+						Tipe Karyawan:
+					</cell>
+					<cell width="12%">
+						<combobox id="employeeTypeCombobox" width="120px"></combobox>
+					</cell>
+					<cell width="13%">
+						Nama Karyawan:
+					</cell>
+					<cell width="15%">
+						<textbox id="employeeNameTextbox" width="160px"/>
+					</cell>
+					<cell width="15%">
+						Nama Perusahaan:	
+					</cell>
+					<cell>
+						<combobox id="organizationLegalNameCombobox" width="350px" disabled="true"></combobox>					
+					</cell>				
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<row>
+					<cell width="12%">
+						Aktif:
+					</cell>
+					<cell width="20%">
+						<checkbox id="activeCheckbox"></checkbox>
+					</cell>
+					<cell width="15%">
+						Terima Komisi:
+					</cell>
+					<cell width="20%">
+						<checkbox id="commissionCheckbox"></checkbox>
+					</cell>
+					<cell width="10%">
+						Komisi (%):
+					</cell>
+					<cell>
+						<decimalbox id="commissionPercentDecimalbox" width="80px"></decimalbox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						No KTP:										
+					</cell>
+					<cell>
+						<textbox id="idKtpNumberTextbox" width="200px"></textbox>					
+					</cell>
+					<cell>
+						Jenis Kel:
+					</cell>
+					<cell>
+						<combobox id="genderCombobox" width="180px"></combobox>
+					</cell>
+					<cell>
+						Agama:
+					</cell>
+					<cell>
+						<combobox id="religionCombobox" width="180px"></combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Alamat:
+					</cell>
+					<cell colspan="3">
+						<textbox id="addressTextbox" width="580px"></textbox>
+					</cell>
+					<cell>
+						Kendaraan:						
+					</cell>
+					<cell>
+						<checkbox id="kendaraanCheckbox"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Kota:
+					</cell>
+					<cell>
+						<textbox id="cityTextbox" width="200px"/>
+					</cell>
+					<cell>
+						Kode Pos:
+					</cell>
+					<cell>
+						<textbox id="postalCodeTextbox" width="180px"/>
+					</cell>
+					<cell>
+						No.Kendaraan:					
+					</cell>
+					<cell>
+						<combobox id="nomorKendaraanCombobox" width="180px" disabled="true"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						No.Telp:					
+					</cell>
+					<cell>
+						<textbox id="phoneTextbox" width="200px"></textbox>
+					</cell>
+					<cell>
+						Email:
+					</cell>
+					<cell>
+						<textbox id="emailTextbox" width="180px"></textbox>
+					</cell>
+					<cell>
+											
+					</cell>
+					<cell>
+						
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Note:
+					</cell>
+					<cell colspan="3">
+						<textbox id="noteTextbox" width="580px"></textbox>
+					</cell>
+					<cell>
+						
+					</cell>
+					<cell>
+						
+					</cell>				
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<row height="45px">
+					<cell width="12%">
+						Login User:
+					</cell>
+					<cell width="20%">
+						<textbox id="loginUserNameTextbox" value="Tidak Ada Nama Login" width="200px" disabled="true"/>
+					</cell>
+					<cell width="15%">
+						<button id="createLoginUserButton" label="Buat User Login" visible="false"/>
+					</cell>
+					<cell width="20%">
+						
+					</cell>
+					<cell width="10%">
+						
+					</cell>
+					<cell>
+						
+					</cell>					
+				</row>
+			</rows>
+		</grid>	
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>	
+</window>
+</zk>

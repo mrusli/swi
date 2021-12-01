@@ -1,0 +1,44 @@
+<?page title="Employee" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<zk>
+<borderlayout width="1360px" height="690px" id="employeeListInfoWin" apply="${employeeListInfoControl}">
+	<north border="none">
+		<vlayout>			
+			<hlayout valign="middle" style="padding: 5px 0px">
+				<label id="formTitleLabel" sclass="headTitle"></label>
+			</hlayout>
+		</vlayout>
+	</north>
+	<center border="none">
+		<div>
+			<tabbox id="employeeTabbox">
+				<tabs>
+					<tab label="Semua"/>
+				</tabs>			
+			</tabbox>
+			<hlayout style="padding: 10px;" valign="middle">
+				<label id="infoResultlabel" value="Total: 15 Employee" style="color: silver;"></label>
+				<button id="addButton" label="Tambah" sclass="modButton"></button>			
+			</hlayout>
+			<listbox id="employeeListbox" mold="paging" pageSize="15" height="540px">
+				<listhead>
+					<listheader label="Tipe Karyawan" width="100px"/>
+					<listheader label="Nama" width="160px"></listheader>
+					<listheader label="Nama-Login" width="160px"></listheader>
+					<listheader label="No.Telp" width="160px"></listheader>
+					<!-- 					
+					<listheader label="Perusahaan" width="290px"/> 
+					-->
+					<listheader label="Aktif" width="100px"/>
+					<listheader label="Terima Komisi" width="100px"/>
+					<listheader label="Catatan" width="280px"></listheader>
+					<listheader />
+				</listhead>
+			</listbox>
+		</div>		
+	</center>	
+</borderlayout>
+</zk>

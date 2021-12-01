@@ -1,0 +1,21 @@
+<?page title="Customer" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="300px" height="500px" title="Customer" border="normal"
+	id="customerListDialog" apply="${customerListDialogControl}">
+	<hlayout valign="middle" style="padding-bottom: 5px;">
+		Search:
+		<textbox id="searchCustomerTextbox" width="155px"></textbox>
+		<button id="searchCodeButton" label="Cari" width="45px" sclass="selectButton"></button>
+	</hlayout>
+	<listbox id="customerListbox" height="340px">
+		<listhead>
+			<listheader label="Nama Customer"></listheader>
+		</listhead>
+	</listbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="selectButton" label="Pilih"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>
+</window>
+</zk>

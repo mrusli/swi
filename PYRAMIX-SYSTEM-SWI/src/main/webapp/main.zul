@@ -1,0 +1,244 @@
+<?page title="Main" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<zk>
+<timer id="timerKeepAliveSession" repeats="true" delay="600000"/>
+<window border="normal"
+	id="mainWindow" apply="${mainWindowControl}" >
+	<hlayout>
+		<image src="/img/pyramix-logo-text-127x38px.png"></image>
+		<label id="pageTitleLabel" sclass="headTitle"></label>	
+	</hlayout>
+	<hlayout>
+		<label id="productVersionLabel"></label>
+		<space width="10px"></space>
+		<label id="loginUserInformationLabel"></label>
+	</hlayout>
+
+	<hlayout id="userManagerHlayout" style="padding-left:0px; padding-top:5px;">
+	
+		<html><![CDATA[
+			<head>
+				<style>
+					p, a {
+						font-family: verdana;
+					}
+				</style>
+			</head>
+			<body>
+				<p>Login-Profile : <a target="_blank" href="/system/settings/ProfileListInfo.zul">Profile</a>&nbsp;
+				
+				</p>
+			
+				<p>Settings : <a target="_blank" href="/system/settings/SettingsListInfo.zul">Settings</a>&nbsp;
+				
+				</p>
+				<p>Inventory : <a target="_blank" href="/system/inventory/InventoryListInfo.zul">Inventory</a>&nbsp;
+					<a target="_blank" href="/system/inventory/InventoryListInfoByType.zul">Inventory By Type</a>&nbsp;
+					<a target="_blank" href="/system/inventory/InventoryTypeListInfo.zul">Inventory Type</a>&nbsp;
+					<a target="_blank" href="/system/inventory/process/InventoryProcessListInfo.zul">Inventory Proses</a>&nbsp;
+					<a target="_blank" href="/system/inventory/bukapeti/InventoryBukaPetiListInfo.zul">Buka Peti</a>&nbsp;
+					<a target="_blank" href="/system/inventory/transfer/InventoryTransferListInfo.zul">Transfer</a>&nbsp;
+<!-- 					
+					<a target="_blank" href="/system/inventory/sqlserver/SqlServerInventoryListInfo.zul">Data Pump</a>&nbsp;
+					<a target="_blank" href="/system/utility/UtilityListInfo.zul">Data Pump - Database Connection</a>&nbsp;
+ -->				
+ 				</p>
+				<p>Customer Order : <a target="_blank" href="/system/customerorder/CustomerOrderListInfo.zul">Customer Order</a>&nbsp;
+				
+				</p>
+				<p>Settlement : <a target="_blank" href="/system/settlement/SettlementListInfo.zul">Settlement</a>&nbsp;
+				
+				</p>
+				<p>Voucher : <a target="_blank" href="/system/voucher/VoucherJournalListInfo.zul">Voucher Umum dan PettyCash</a>&nbsp;
+					<a target="_blank" href="/system/voucher/VoucherGiroReceiptListInfo.zul">Voucher Giro Receipt</a>&nbsp;
+					<a target="_blank" href="/system/voucher/VoucherSalesListInfo.zul">Voucher Sales</a>
+					<a target="_blank" href="/system/voucher/VoucherPaymentListInfo.zul">Voucher Payment</a>&nbsp;
+					<a target="_blank" href="/system/giro/GiroListInfo.zul">Daftar Giro Gantung</a>&nbsp;				
+				</p>
+				<p>Utility : <a target="_blank" href="/system/voucher/VoucherSerialNumberListInfo.zul">Voucher Serial Number</a>&nbsp;
+					<a target="_blank" href="/system/serial/DocumentSerialNumberListInfo.zul">Document Serial Number</a>&nbsp;
+<!-- 					
+	<a target="_blank" href="/system/utility/DatabaseInfo.zul">Database Info</a>&nbsp;				
+ -->
+				</p>
+				<p>Laporan : <a target="_blank" href="/system/report/ReportSalesListInfo.zul">Laporan Penjualan</a>&nbsp;
+					<a target="_blank" href="/system/receivables/CustomerReceivablesListInfo.zul">Laporan Piutang</a>&nbsp;
+					<a target="_blank" href="/system/report/ReportSalesCustomerListInfo.zul">Laporan Penjualan Langganan</a>&nbsp;
+				</p>
+				<p>General Ledger : <a target="_blank" href="/system/gl/GeneralLedgerListInfo.zul">Aktifitas Jurnal</a>&nbsp;
+					<a target="_blank" href="/system/gl/EndingBalanceListInfo.zul">Ending Balance</a>&nbsp;
+				</p>
+				<p>COA : <a target="_blank" href="/system/coa/Coa_05_MasterListInfo.zul">COA Master</a>&nbsp;
+					<a target="_blank" href="/system/coa/Coa_AdjustmentListInfo.zul">COA untuk Adjustment</a>&nbsp;
+					<a target="_blank" href="/system/coa/Coa_VoucherListInfo.zul">COA untuk Voucher</a>&nbsp;
+					<a target="_blank" href="/system/coa/Coa_ReceivablesListInfo.zul">COA untuk Piutang</a>&nbsp;				
+				</p>
+				<p>Customer : <a target="_blank" href="/system/customer/CustomerListInfo.zul">Customer</a>&nbsp;
+				
+				</p>
+				<p>Kendaraan : <a target="_blank" href="/system/kendaraan/KendaraanGolonganListInfo.zul">Golongan</a>&nbsp;
+					<a target="_blank" href="/system/kendaraan/KendaraanListInfo.zul">Kendaraan</a>&nbsp;
+				</p>
+				<p>Perusahaan : <a target="_blank" href="/system/company/CompanyListInfo.zul">Perusahaan</a>&nbsp;
+					<a target="_blank" href="/system/bank/BankListInfo.zul">Bank</a>&nbsp;
+				
+				</p>				
+				<p>Employee : <a target="_blank" href="/system/employeecommissions/EmployeeCommissionsListInfo.zul">Employee Commissions</a>&nbsp;
+					<a target="_blank" href="/system/employee/EmployeeListInfo.zul">Employee</a>&nbsp;
+					<a target="_blank" href="/system/user/UserListInfo.zul">User</a>&nbsp;
+				</p>
+				<p>Surat Jalan : <a target="_blank" href="/system/suratjalan/SuratJalanListInfo.zul">Daftar Surat Jalan</a>&nbsp;
+					<a target="_blank" href="/system/deliveryorder/DeliveryOrderListInfo.zul">Delivery Order</a>&nbsp;
+					<a target="_blank" href="/system/faktur/FakturListInfo.zul">Faktur</a>&nbsp;
+				</p>
+ 			</body>
+		]]></html>		
+	</hlayout>
+	
+	<hlayout id="userUserHlayout" style="padding-left:0px; padding-top:5px;">
+	
+		<html><![CDATA[
+			<head>
+			<style>
+				p, a {
+					font-family: verdana;
+				}
+			</style>
+			</head>
+			<body>
+				<p>Login-Profile : <a target="_blank" href="/system/settings/ProfileListInfo.zul">Profile</a>&nbsp;
+				
+				</p>
+				<p>Inventory : <a target="_blank" href="/system/inventory/InventoryListInfo.zul">Inventory</a>&nbsp;
+					<a target="_blank" href="/system/inventory/InventoryListInfoByType.zul">Inventory By Type</a>&nbsp;
+					<a target="_blank" href="/system/inventory/InventoryTypeListInfo.zul">Inventory Type</a>&nbsp;
+					<a target="_blank" href="/system/inventory/process/InventoryProcessListInfo.zul">Inventory Proses</a>&nbsp;
+					<a target="_blank" href="/system/inventory/bukapeti/InventoryBukaPetiListInfo.zul">Buka Peti</a>&nbsp;
+					<a target="_blank" href="/system/inventory/transfer/InventoryTransferListInfo.zul">Transfer</a>&nbsp;
+					<a target="_blank" href="/system/inventory/sqlserver/SqlServerInventoryListInfo.zul">Data Pump</a>&nbsp;
+					<a target="_blank" href="/system/utility/UtilityListInfo.zul">Data Pump - Database Connection</a>&nbsp;
+				</p>
+				<p>Customer Order : <a target="_blank" href="/system/customerorder/CustomerOrderListInfo.zul">Customer Order</a>&nbsp;
+		
+				</p>
+				<p>Settlement : <a target="_blank" href="/system/settlement/SettlementListInfo.zul">Settlement</a>&nbsp;
+				
+				</p>
+				<p>Voucher : <a target="_blank" href="/system/voucher/VoucherJournalListInfo.zul">Voucher Umum dan PettyCash</a>&nbsp;
+					<a target="_blank" href="/system/voucher/VoucherGiroReceiptListInfo.zul">Voucher Giro Receipt</a>&nbsp;
+					<a target="_blank" href="/system/voucher/VoucherSalesListInfo.zul">Voucher Sales</a>
+					<a target="_blank" href="/system/voucher/VoucherPaymentListInfo.zul">Voucher Payment</a>&nbsp;
+					<a target="_blank" href="/system/giro/GiroListInfo.zul">Daftar Giro Gantung</a>&nbsp;				
+				</p>
+				<p>Utility : <a target="_blank" href="/system/voucher/VoucherSerialNumberListInfo.zul">Voucher Serial Number</a>&nbsp;
+					<a target="_blank" href="/system/serial/DocumentSerialNumberListInfo.zul">Document Serial Number</a>&nbsp;
+				
+				</p>
+				<p>Laporan : <a target="_blank" href="/system/report/ReportSalesListInfo.zul">Laporan Penjualan</a>&nbsp;
+					<a target="_blank" href="/system/receivables/CustomerReceivablesListInfo.zul">Laporan Piutang</a>&nbsp;
+					<a target="_blank" href="/system/report/ReportSalesCustomerListInfo.zul">Laporan Penjualan Langganan</a>&nbsp;
+				</p>
+				<p>General Ledger : <a target="_blank" href="/system/gl/GeneralLedgerListInfo.zul">Aktifitas Jurnal</a>&nbsp;
+					<a target="_blank" href="/system/gl/EndingBalanceListInfo.zul">Ending Balance</a>&nbsp;
+				</p>
+				<p>COA : <a target="_blank" href="/system/coa/Coa_05_MasterListInfo.zul">COA Master</a>&nbsp;
+					<a target="_blank" href="/system/coa/Coa_AdjustmentListInfo.zul">COA untuk Adjustment</a>&nbsp;
+					<a target="_blank" href="/system/coa/Coa_VoucherListInfo.zul">COA untuk Voucher</a>&nbsp;
+				
+				</p>
+				<p>Customer : <a target="_blank" href="/system/customer/CustomerListInfo.zul">Customer</a>&nbsp;
+				
+				</p>
+				<p>Kendaraan : <a target="_blank" href="/system/kendaraan/KendaraanGolonganListInfo.zul">Golongan</a>&nbsp;
+					<a target="_blank" href="/system/kendaraan/KendaraanListInfo.zul">Kendaraan</a>&nbsp;
+				
+				</p>
+				<p>Surat Jalan : <a target="_blank" href="/system/suratjalan/SuratJalanListInfo.zul">Daftar Surat Jalan</a>&nbsp;
+					<a target="_blank" href="/system/deliveryorder/DeliveryOrderListInfo.zul">Delivery Order</a>&nbsp;
+					<a target="_blank" href="/system/faktur/FakturListInfo.zul">Faktur</a>&nbsp;				
+				</p>
+ 			</body>
+		]]></html>				
+	</hlayout>	
+
+	<hlayout id="userCheckerHlayout" style="padding-left:0px; padding-top:5px;">
+	
+		<html><![CDATA[
+			<head>
+				<style>
+					p, a {
+						font-family: verdana;
+					}
+				</style>
+			</head>
+			<body>
+				<p>Login-Profile : <a target="_blank" href="/system/settings/ProfileListInfo.zul">Profile</a>&nbsp;
+				
+				</p>
+				<p>Inventory : <a target="_blank" href="/system/inventory/InventoryListInfo.zul">Inventory</a>&nbsp;
+					<a target="_blank" href="/system/inventory/InventoryListInfoByType.zul">Inventory By Type</a>&nbsp;
+					<a target="_blank" href="/system/inventory/InventoryTypeListInfo.zul">Inventory Type</a>&nbsp;
+					<a target="_blank" href="/system/inventory/process/InventoryProcessListInfo.zul">Inventory Proses</a>&nbsp;
+					<a target="_blank" href="/system/inventory/bukapeti/InventoryBukaPetiListInfo.zul">Buka Peti</a>&nbsp;
+					<a target="_blank" href="/system/inventory/transfer/InventoryTransferListInfo.zul">Transfer</a>&nbsp;
+					<a target="_blank" href="/system/inventory/sqlserver/SqlServerInventoryListInfo.zul">Data Pump</a>&nbsp;
+					<a target="_blank" href="/system/utility/UtilityListInfo.zul">Data Pump - Database Connection</a>&nbsp;
+				</p>
+				<p>Customer Order : <a target="_blank" href="/system/customerorder/CustomerOrderListInfo.zul">Customer Order</a>&nbsp;
+		
+				</p>
+				<p>Settlement : <a target="_blank" href="/system/settlement/SettlementListInfo.zul">Settlement</a>&nbsp;
+				
+				</p>
+				<p>Voucher : <a target="_blank" href="/system/voucher/VoucherJournalListInfo.zul">Voucher Umum dan PettyCash</a>&nbsp;
+					<a target="_blank" href="/system/voucher/VoucherGiroReceiptListInfo.zul">Voucher Giro Receipt</a>&nbsp;
+					<a target="_blank" href="/system/voucher/VoucherSalesListInfo.zul">Voucher Sales</a>
+					<a target="_blank" href="/system/voucher/VoucherPaymentListInfo.zul">Voucher Payment</a>&nbsp;
+					<a target="_blank" href="/system/giro/GiroListInfo.zul">Daftar Giro Gantung</a>&nbsp;				
+				</p>
+				<p>Utility : <a target="_blank" href="/system/voucher/VoucherSerialNumberListInfo.zul">Voucher Serial Number</a>&nbsp;
+					<a target="_blank" href="/system/serial/DocumentSerialNumberListInfo.zul">Document Serial Number</a>&nbsp;
+				
+				</p>
+				<p>Laporan : <a target="_blank" href="/system/report/ReportSalesListInfo.zul">Laporan Penjualan</a>&nbsp;
+					<a target="_blank" href="/system/receivables/CustomerReceivablesListInfo.zul">Laporan Piutang</a>&nbsp;
+					<a target="_blank" href="/system/report/ReportSalesCustomerListInfo.zul">Laporan Penjualan Langganan</a>&nbsp;
+				</p>
+				<p>General Ledger : <a target="_blank" href="/system/gl/GeneralLedgerListInfo.zul">Aktifitas Jurnal</a>&nbsp;
+					<a target="_blank" href="/system/gl/EndingBalanceListInfo.zul">Ending Balance</a>&nbsp;
+				</p>
+				<p>COA : <a target="_blank" href="/system/coa/Coa_05_MasterListInfo.zul">COA Master</a>&nbsp;
+					<a target="_blank" href="/system/coa/Coa_AdjustmentListInfo.zul">COA untuk Adjustment</a>&nbsp;
+					<a target="_blank" href="/system/coa/Coa_VoucherListInfo.zul">COA untuk Voucher</a>&nbsp;
+				
+				</p>
+				<p>Customer : <a target="_blank" href="/system/customer/CustomerListInfo.zul">Customer</a>&nbsp;
+				
+				</p>
+				<p>Kendaraan : <a target="_blank" href="/system/kendaraan/KendaraanGolonganListInfo.zul">Golongan</a>&nbsp;
+					<a target="_blank" href="/system/kendaraan/KendaraanListInfo.zul">Kendaraan</a>&nbsp;
+				
+				</p>
+				<p>Surat Jalan : <a target="_blank" href="/system/suratjalan/SuratJalanListInfo.zul">Daftar Surat Jalan</a>&nbsp;
+					<a target="_blank" href="/system/deliveryorder/DeliveryOrderListInfo.zul">Delivery Order</a>&nbsp;
+					<a target="_blank" href="/system/faktur/FakturListInfo.zul">Faktur</a>&nbsp;				
+				</p>
+		   	</body>
+		]]></html>		
+		
+	</hlayout>
+
+	<separator height="25px" orient="vertical"></separator>
+
+	<hlayout style="padding-left:0px; padding-top:5px;">
+		<html:form id="f_logout" name="f_logout" action="j_spring_security_logout"
+			method="POST" xmlns:html="native">
+			
+			<html:input type="submit" value="Logout" />
+			
+		</html:form>
+	</hlayout>
+
+</window>
+</zk>

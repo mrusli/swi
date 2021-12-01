@@ -1,0 +1,6 @@
+<?page title="Profile" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="profileWindow" width="1360px" height="620px" apply="${profileWindowControl}">
+	<label id="formTitleLabel" sclass="include-title"></label>
+</window>
+</zk>

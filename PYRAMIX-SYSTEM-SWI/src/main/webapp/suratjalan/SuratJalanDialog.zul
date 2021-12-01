@@ -1,0 +1,94 @@
+<?page title="Surat Jalan" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="680px" title="Surat Jalan" border="normal"
+	id="suratJalanDialogWin" apply="${suratJalanDialogControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="10%">
+						No.:
+					</cell>
+					<cell width="15%">
+						<textbox id="orderNoTextbox" width="125px" readonly="true"></textbox>
+					</cell>
+					<cell width="15%">
+						Tgl.Surat Jalan:	
+					</cell>
+					<cell width="20%">
+						<datebox id="orderDatebox" width="200px"></datebox>
+					</cell>
+					<cell width="10%">
+						
+					</cell>
+					<cell>
+						<checkbox id="selectCustomerCheckbox" checked="true" label="Tunai" visible="false"></checkbox>					
+					</cell>
+				</row>
+				<row>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+						Tgl.Pengiriman
+					</cell>
+					<cell>
+						<datebox id="deliveryDatebox" width="200px"></datebox>
+					</cell>
+					<cell>
+						Customer:
+					</cell>
+					<cell>
+						<textbox id="customerTextbox" width="235px" readonly="true"/>
+						<button id="customerButton" width="25px" label="..." sclass="selectButton" disabled="true"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+						Catatan:
+					</cell>
+					<cell>
+						<textbox id="noteTextbox" width="200px"></textbox>
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>	
+				</row>
+			</rows>
+		</grid>
+		<hlayout style="padding: 10px;" valign="middle">
+			<label id="infoSuratJalanProductlabel" value="SuratJalan: 2 items" style="color: silver;"></label>
+			<button id="resetProductButton" label="Kesemula" sclass="modButton"></button>
+			<button id="addProductButton" label="Tambah" sclass="modButton" visible="false"></button>			
+		</hlayout>
+		<listbox id="productListbox" height="250px">
+			<listhead>
+				<listheader label="No." width="60px"></listheader>
+				<listheader label="Qty (Sht/Line)" align="right" width="100px"/>
+				<listheader label="Qty (Kg)" align="right" width="80px"/>
+				<listheader label="Kode" width="120px"/>
+				<listheader label="Spesifikasi" width="200px"/>
+				<listheader label="No.Coil" width="100px"/>
+			</listhead>
+		</listbox>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="printButton" label="Cetak"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>	
+</window>
+</zk>

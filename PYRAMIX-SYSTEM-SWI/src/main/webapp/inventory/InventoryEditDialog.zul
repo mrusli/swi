@@ -1,0 +1,165 @@
+<?page title="Edit" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1100px" height="500px" title="Rubah (Edit) Inventory" border="normal"
+	id="inventoryEditDialog" apply="${inventoryEditDialogControl}">
+
+	<hlayout>
+		<label id="idLabel" sclass="smallText"></label>
+	</hlayout>
+
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="15%">
+						No Coil:
+					</cell>
+					<cell width="20%">
+						<textbox id="coilNoTextbox" width="200px"></textbox>
+					</cell>
+					<cell width="10%">
+						Packing:
+					</cell>
+					<cell width="20%">
+						<combobox id="packingCombobox" width="140px" readonly="true"></combobox>
+					</cell>
+					<cell width="5%">
+						Lokasi:
+					</cell>
+					<cell width="15%">
+						<combobox id="locationCombobox" width="120px" readonly="true"></combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Status:
+					</cell>
+					<cell>
+						<combobox id="inventoryStatusCombobox" width="125px" readonly="true"></combobox>
+					</cell>
+					<cell>
+						Tgl.Penerimaan:
+					</cell>
+					<cell>
+						<datebox id="receivingDatebox" width="220px"></datebox>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Thickness:
+					</cell>
+					<cell>
+						<decimalbox id="thicknessDecimalbox" width="125px"/>
+					</cell>
+					<cell>
+						Width:
+					</cell>
+					<cell>
+						<decimalbox id="widthDecimalbox" width="125px"/>
+					</cell>
+					<cell>
+						Length:
+					</cell>
+					<cell>
+						<decimalbox id="lengthDecimalbox" width="125px"/>
+						<label id="lengthLabel" value="Coil" visible="false"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Kode Barang:
+					</cell>
+					<cell>
+						<textbox id="codeTextbox" width="125px" readonly="true"/>
+						<button id="codeButton" width="25px" label="..." sclass="selectButton"/>
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+					<cell>
+
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Qty (Sht/Line):
+					</cell>
+					<cell>
+						<intbox id="qtySLIntbox" width="125px"></intbox>
+					</cell>
+					<cell>
+						Qty (Kg):
+					</cell>
+					<cell>
+						<decimalbox id="qtyWeightDecimalbox" width="125px"></decimalbox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						No.Kontrak / PO:	
+					</cell>
+					<cell>
+						<textbox id="contractTextbox" width="125px"></textbox>
+					</cell>
+					<cell>
+						No.L/C:
+					</cell>
+					<cell>
+						<textbox id="lcTextbox" width="125px"></textbox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<row>
+					<cell width="15%">
+						SKU:
+					</cell>
+					<cell width="45%">
+						<textbox id="skuTextbox" width="430px" disabled="true"></textbox>
+					</cell>
+					<cell width="15%">
+						<button id="skuButton" label="Create SKU" width="140px" sclass="selectButton" disabled="true"></button>
+					</cell>
+					<cell>
+						<button id="revertSKUButton" label="Revert SKU" width="140px" sclass="selectButton" disabled="true"></button>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Note:
+					</cell>
+					<cell>
+						<textbox id="noteTextbox" width="430px"></textbox>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</vbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>
+
+</window>
+</zk>

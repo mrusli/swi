@@ -1,0 +1,58 @@
+<?page title="Add" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="500px" title="Tambah (Add) Inventory" border="normal"
+	id="inventoryAddDialog" apply="${inventoryAddDialogControl}">
+
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="15%">
+						Tgl.Penerimaan:
+					</cell>
+					<cell width="25%">
+						<datebox id="receivingDatebox" width="220px"></datebox>
+					</cell>
+					<cell width="15%">
+						No.Kontrak / PO:	
+					</cell>
+					<cell width="15%">
+						<textbox id="contractTextbox" width="125px"></textbox>
+					</cell>
+					<cell width="10%">
+						No.L/C:
+					</cell>
+					<cell>
+						<textbox id="lcTextbox" width="125px"></textbox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</vbox>
+	<listbox id="inventoryListbox" height="315px">
+		<listhead>
+			<listheader label="Kode" width="160px"/>
+			<listheader label="Ketebalan(mm)" width="100px"/>
+			<listheader label="Lebar(mm)" width="90px"/>
+			<listheader label="Panjang(mm)" width="90px"/>
+			<listheader label="Qty (Sht/Line)" width="100px"/>
+			<listheader label="Qty (Kg)" width="80px"/>
+			<listheader label="Packing" width="110px"/>
+			<listheader label="Lokasi" width="110px"/>
+			<listheader label="No.Coil" width="150px"/>
+			<listheader label="Status" width="110px"/>
+		</listhead>
+	</listbox>
+	<hbox>
+		<button id="addRowButton" label="+" sclass="modButton" width="30px"></button>
+		<button id="removeRowButton" label="-" sclass="modButton" width="30px"></button>
+	</hbox>
+	<hlayout style="padding-top: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>
+
+</window>
+
+</zk>

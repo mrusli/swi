@@ -1,0 +1,5 @@
+<?page title="print" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style src="${param.printStyle}" media="print" />
+	<html content="${param.printContent}"></html>
+</zk>

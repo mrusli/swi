@@ -1,0 +1,36 @@
+<?page title="MySql-Inventory" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<zk>
+<window id="mySqlInventoryListInfo" apply="${mySqlInventoryListInfoControl}" 
+	title="Data Pump - MySql Inventory" border="normal">
+	<tabbox>
+		<tabs>
+			<tab id="allTab" 		label="Semua"></tab>
+			<tab id="coilTab" 		label="Coil"></tab>
+			<tab id="petianTab"	 	label="Petian"></tab>
+			<tab id="lembaranTab" 	label="Lembaran"></tab>
+		</tabs>
+	</tabbox>
+	<hlayout style="padding: 10px;" valign="middle">
+		<label id="infoResultlabel" value="Total: 12 items - 45MT" style="color: silver;"></label>			
+	</hlayout>	
+	<listbox id="inventoryListbox" mold="paging" pageSize="12" height="455px">
+		<listhead>
+			<listheader label="Specification" width="180px"></listheader>
+			<listheader label="Packing" width="80px"></listheader>
+			<listheader label="Qty (S/L)" width="60px" align="right"></listheader>
+			<listheader label="Qty (Kg)" width="90px" align="right"></listheader>
+			<listheader label="Location" width="80px"></listheader>
+			<listheader label="Note" width="180px"></listheader>
+			<listheader label="Coil No" width="120px"></listheader>
+			<listheader label="Contract No" width="160px"></listheader>
+			<listheader label="Received Date" width="125px"></listheader>
+			<listheader label="Code" width="120px"></listheader>
+			<listheader width="40px"/>
+		</listhead>
+	</listbox>
+
+</window>
+</zk>

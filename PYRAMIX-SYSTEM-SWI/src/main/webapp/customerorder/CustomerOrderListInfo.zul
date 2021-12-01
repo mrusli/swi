@@ -1,0 +1,61 @@
+<?page title="Customer Order" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?script type="text/javascript" src="/js/print.js"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/style_preprint.css"?>
+<zk>
+<borderlayout width="1450px" height="690px" id="customerOrderListInfoWin" apply="${customerOrderListInfoControl}">
+	<north border="none">
+		<vlayout>			
+			<hlayout valign="middle" style="padding: 5px 0px">
+				<label id="formTitleLabel" sclass="headTitle" style="font-weight: bold;"></label>
+			</hlayout>
+		</vlayout>
+	</north>
+	<center border="none">
+		<div>
+			<tabbox id="ordersPeriodTabbox">
+				<tabs>
+					<tab label="Semua"/>
+					<tab label="Hari-ini"/>
+					<tab label="Minggu-ini"/>
+					<tab label="Bulan-ini"/>
+				</tabs>
+			</tabbox>
+			<hlayout style="padding: 10px;" valign="middle">
+				<label id="infoResultlabel" style="font-weight: bold;"></label>
+				<button id="addButton" label="Tambah" sclass="modButton"></button>
+				<button id="batalButton" label="Batal" sclass="modButton"></button>							
+				<label value="Transaksi:"></label>
+				<combobox id="ppnTransactionCombobox" sclass="z-combobox-listinfo"></combobox>
+				<label value="Customer:"></label>
+				<combobox id="customerCombobox" width="180px"></combobox>
+				<label value="Pilih-Tgl:"></label>
+				<datebox id="startDatebox" width="160px"></datebox>
+				<label value="S/D:"></label>
+				<datebox id="endDatebox" width="160px"></datebox>
+				<button id="filterButton" label="Filter" sclass="modButton"></button>
+				<button id="resetButton" label="Reset" sclass="modButton"></button>			
+			</hlayout>
+			<listbox id="customerOrderListbox" mold="paging" pageSize="15" height="540px">
+				<listhead>
+					<listheader label="Tgl." width="90px"/>
+					<listheader label="Order-No." width="100px"/>
+					<listheader label="Customer" width="180px"/>
+					<listheader label="Pembayaran" width="100px"/>
+					<listheader label="Total Order" width="100px" align="right"/>
+					<listheader label="Sales" width="100px"/>
+					<listheader label="Posting/Voucher" width="170px"/>
+					<listheader label="Settlement" width="80px" align="right"/>
+					<listheader label="Surat Jalan" width="155px"/>
+					<listheader label="D/O" width="155px"/>
+					<listheader label="Faktur" width="155px"/>
+					<listheader label=""/>
+				</listhead>
+			</listbox>
+		</div>		
+	</center>	
+</borderlayout>
+</zk>

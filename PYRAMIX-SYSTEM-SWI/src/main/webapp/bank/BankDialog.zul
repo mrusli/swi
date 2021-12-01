@@ -1,0 +1,74 @@
+<?page title="Bank" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+<window width="1150px" height="420px" title="Rubah (Edit) Bank" border="normal"
+	id="bankDialogWin" apply="${bankDialogControl}">
+	<vbox>
+		<grid>
+			<rows>
+				<row>
+					<cell width="15%">
+						Nama Bank:	
+					</cell>
+					<cell width="20%">
+						<textbox id="bankNameTextbox" width="120px"></textbox>
+					</cell>
+					<cell width="15%">
+						Cabang:
+					</cell>
+					<cell width="20%">
+						<textbox id="cabangNameTextbox" width="180px"></textbox>
+					</cell>
+					<cell width="15%">
+						No Rekening:
+					</cell>
+					<cell>
+						<textbox id="nomorRekeningTextbox" width="120px"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Tipe Pemilik Rek:
+					</cell>
+					<cell>
+						<combobox id="tipePemilikRekCombobox" width="180px"></combobox>
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+					<cell>
+					
+					</cell>
+				</row>
+				<row>
+					<cell>
+						Nama Pemilik Rek:
+					</cell>
+					<cell colspan="2">
+						<combobox id="companyCombobox" width="360px" readonly="true"/>
+						<textbox id="individualTextbox" width="360px" visible="false"/>
+					</cell>
+					<cell align="right">
+						No COA:
+					</cell>
+					<cell colspan="2">
+						<textbox id="nomorCoaTextbox" width="260px" disabled="true"/>
+						<button id="masterCoaSelectButton" width="25px" label="..." sclass="selectButton"/>
+					</cell>
+				
+				</row>
+			</rows>
+		</grid>
+	</vbox>
+	<hlayout style="padding-top: 5px;padding-bottom: 5px;">
+		<button id="saveButton" label="Save"></button>
+		<button id="cancelButton" label="Cancel"></button>	
+	</hlayout>	
+</window>
+</zk>
