@@ -9,9 +9,6 @@
 		<vlayout>			
 			<hlayout valign="middle" style="padding: 5px 0px">
 				<label id="formTitleLabel" sclass="headTitle"></label>
-				<label sclass="headTitle" value=" - Search : "></label>
-				<textbox id="searchTextbox" width="420px"></textbox>
-				<button id="searchButton" label="Cari"></button>
 			</hlayout>
 		</vlayout>
 	</north>
@@ -20,8 +17,9 @@
 			<tabbox id="inventoryTypeTabbox">
 			</tabbox>
 			<hlayout style="padding: 10px;" valign="middle">
-				<label id="infoResultlabel" value="Total: 12 items - 45MT" style="color: silver;"></label>
-				<button id="newButton" label="Tambah" sclass="modButton" disabled="true"></button>			
+				<label id="infoResultlabel" value="Total: 12 items - 45MT" style="font-weight: bold;"></label>
+				<label value=" - Packing:"></label>
+				<combobox id="packingCombobox" width="140px" readonly="true"></combobox>			
 			</hlayout>	
 			<listbox id="inventoryListbox" mold="paging" pageSize="15" height="540px">
 				<listhead>
