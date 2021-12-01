@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="CommonContext-Config.xml"></import>
+
+	<bean id="dao" class="com.pyramix.swi.persistence.common.dao.hibernate.DaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- Settings -->
+	
+	<bean id="settingsDao" class="com.pyramix.swi.persistence.settings.dao.hibernate.SettingsHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- User -->
+
+    <bean id="userDao" class="com.pyramix.swi.persistence.user.dao.hibernate.UserHibernate">
+    	<property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+	<bean id="userRoleDao" class="com.pyramix.swi.persistence.userrole.dao.hibernate.UserRoleHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- Utility -->
+
+	<bean id="sqlUtilityDao" class="com.pyramix.swi.persistence.sql.dao.hibernate.SqlUtilityHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- Employee -->
+	
+	<bean id="employeeDao" class="com.pyramix.swi.persistence.employee.dao.hibernate.EmployeeHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- Company -->
+
+	<bean id="companyDao" class="com.pyramix.swi.persistence.company.dao.hibernate.CompanyHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>	
+	</bean>
+
+	<!-- Customer -->
+
+	<bean id="customerDao" class="com.pyramix.swi.persistence.customer.dao.hibernate.CustomerHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>	
+	</bean>
+
+	<!-- EmployeeCommissions -->
+	
+	<bean id="employeeCommissionsDao" class="com.pyramix.swi.persistence.employeecommissions.dao.hibernate.EmployeeCommissionsHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- Inventory -->
+	
+	<bean id="inventoryDao" class="com.pyramix.swi.persistence.inventory.dao.hibernate.InventoryHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="inventoryTypeDao" class="com.pyramix.swi.persistence.inventory.dao.hibernate.InventoryTypeHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="inventoryCodeDao" class="com.pyramix.swi.persistence.inventory.dao.hibernate.InventoryCodeHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- InventoryProcess -->
+	
+	<bean id="inventoryProcessDao" class="com.pyramix.swi.persistence.inventory.process.dao.hibernate.InventoryProcessHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- InventoryBukaPeti -->
+
+	<bean id="inventoryBukapetiDao" class="com.pyramix.swi.persistence.inventory.bukapeti.dao.hibernate.InventoryBukaPetiHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- InventoryTransfer -->
+
+	<bean id="inventoryTransferDao" class="com.pyramix.swi.persistence.inventory.transfer.dao.hibernate.InventoryTransferHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+    <!-- CustomerOrder -->
+    
+	<bean id="customerOrderDao" class="com.pyramix.swi.persistence.customerorder.dao.hibernate.CustomerOrderHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="customerOrderProductDao" class="com.pyramix.swi.persistence.customerorder.dao.hibernate.CustomerOrderProductHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- DeliveryOrder -->
+
+    <bean id="deliveryOrderDao" class="com.pyramix.swi.persistence.deliveryorder.dao.hibernate.DeliveryOrderHibernate">
+    	<property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+	<!-- Faktur -->
+	
+	<bean id="fakturDao" class="com.pyramix.swi.persistence.faktur.dao.hibernate.FakturHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- SuratJalan -->
+	    
+    <bean id="suratJalanDao" class="com.pyramix.swi.persistence.suratjalan.dao.hibernate.SuratJalanHibernate">
+    	<property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>        
+
+	<!-- Voucher -->	
+
+	<bean id="voucherSalesDao" class="com.pyramix.swi.persistence.voucher.dao.hibernate.VoucherSalesHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="voucherGiroReceiptDao" class="com.pyramix.swi.persistence.voucher.dao.hibernate.VoucherGiroReceiptHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="voucherPaymentDao" class="com.pyramix.swi.persistence.voucher.dao.hibernate.VoucherPaymentHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="voucherJournalDao" class="com.pyramix.swi.persistence.voucher.dao.hibernate.VoucherJournalHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="voucherSerialNumberDao" class="com.pyramix.swi.persistence.voucher.dao.hibernate.VoucherSerialNumberHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<!-- Giro -->
+
+    <bean id="giroDao" class="com.pyramix.swi.persistence.voucher.dao.hibernate.GiroHibernate">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+	<!-- Settlement -->
+
+	<bean id="settlementDao" class="com.pyramix.swi.persistence.settlement.dao.hibernate.SettlementHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>	
+	</bean>
+
+	<!-- document -->
+
+	<bean id="documentSerialNumberDao" class="com.pyramix.swi.persistence.serial.dao.hibernate.DocumentSerialNumberHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+ 	<!-- Coa -->
+
+	<bean id="coa_01_AccountTypeDao" class="com.pyramix.swi.persistence.coa.dao.hibernate.Coa_01_AccountTypeHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="coa_02_AccountGroupDao" class="com.pyramix.swi.persistence.coa.dao.hibernate.Coa_02_AccountGroupHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="coa_03_SubAccount01Dao" class="com.pyramix.swi.persistence.coa.dao.hibernate.Coa_03_SubAccount01Hibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="coa_04_SubAccount02Dao" class="com.pyramix.swi.persistence.coa.dao.hibernate.Coa_04_SubAccount02Hibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="coa_05_MasterDao" class="com.pyramix.swi.persistence.coa.dao.hibernate.Coa_05_MasterHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+        
+	<bean id="coa_AdjustmentDao" class="com.pyramix.swi.persistence.coa.dao.hibernate.Coa_AdjustmentHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="coa_VoucherDao" class="com.pyramix.swi.persistence.coa.dao.hibernate.Coa_VoucherHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="coa_ReceivablesDao" class="com.pyramix.swi.persistence.coa.dao.hibernate.Coa_ReceivablesHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<!-- GeneralLedger -->
+
+	<bean id="generalLedgerDao" class="com.pyramix.swi.persistence.gl.dao.hibernate.GeneralLedgerHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="endingBalanceDao" class="com.pyramix.swi.persistence.gl.dao.hibernate.EndingBalanceHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<!-- CustomerReceivable -->
+	
+	<bean id="customerReceivableDao" class="com.pyramix.swi.persistence.receivable.dao.hibernate.CustomerReceivableHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>	
+	</bean>
+	
+	<bean id="customerReceivableActivityDao" class="com.pyramix.swi.persistence.receivableactivity.dao.hibernate.CustomerReceivableActivityHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- Kendaraan -->
+	
+	<bean id="kendaraanGolonganDao" class="com.pyramix.swi.persistence.kendaraan.dao.hibernate.KendaraanGolonganHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>	
+	</bean>
+	
+	<bean id="kendaraanDao" class="com.pyramix.swi.persistence.kendaraan.dao.hibernate.KendaraanHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>	
+	</bean>
+	
+	<!-- Bank -->
+	
+	<bean id="bankDao" class="com.pyramix.swi.persistence.bank.dao.hibernate.BankHibernate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+</beans>
