@@ -309,6 +309,36 @@ public class InventoryHibernate extends DaoHibernate implements InventoryDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<Inventory> findInventoryByInventoryTypePacking(InventoryStatus status, InventoryType inventoryType,
+			InventoryPacking inventoryPacking) {
+		Session session = super.getSessionFactory().openSession();
+		
+		Criteria criteria = session.createCriteria(Inventory.class);
+		criteria.createAlias("inventoryCode", "code");
+		criteria.add(Restrictions.eq("code.inventoryType", inventoryType));
+		criteria.add(Restrictions.eq("inventoryStatus", status));
+		criteria.add(Restrictions.eq("inventoryPacking", inventoryPacking));
+		criteria.add(Restrictions.eqOrIsNull("inventoryProcess", null));
+		criteria.add(Restrictions.eqOrIsNull("inventoryBukapeti", null));
+		criteria.addOrder(Order.asc("code.productCode"));
+		criteria.addOrder(Order.asc("thickness"));
+		criteria.addOrder(Order.asc("width"));
+		criteria.addOrder(Order.asc("length"));
+		criteria.addOrder(Order.asc("marking"));		
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+		try {
+			return criteria.list();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			session.close();
+		}
+	}	
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<InventoryCode> findAllInventoryCode() throws Exception {
 		Session session = super.getSessionFactory().openSession();
 		
@@ -709,6 +739,7 @@ public class InventoryHibernate extends DaoHibernate implements InventoryDao {
 		}
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Inventory> findAllInventoryByInventoryCode(InventoryCode inventoryCode, InventoryStatus status) throws Exception {

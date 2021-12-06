@@ -86,5 +86,8 @@ public interface InventoryDao {
 
 	public List<Inventory> findAllInventoryByInventoryCodePacking(InventoryStatus status, InventoryCode inventoryCode,
 			InventoryPacking packing);
+
+	public List<Inventory> findInventoryByInventoryTypePacking(InventoryStatus ready, InventoryType inventoryType,
+			InventoryPacking inventoryPacking);
 	
 }
