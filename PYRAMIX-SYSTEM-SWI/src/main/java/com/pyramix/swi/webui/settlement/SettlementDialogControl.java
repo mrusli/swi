@@ -366,34 +366,19 @@ public class SettlementDialogControl extends GFCBaseController {
 		int lastIndex = settlementDetailListbox.getItemCount()-1;
 		
 		for (SettlementDetail detail : getSettlementDetailList()) {
-			// Total Order
-			// detail.setAmountToSettle(amountToSettle);
 			amountToSettle = detail.getAmountToSettle();
-			// amountToSettle;
-			// System.out.println("amountToSettle: "+amountToSettle);
 
 			// Jumlah Pembayaran
-			// detail.setAmountSettled(amountSettled);
-			// amountSettled;
 			Listitem item = settlementDetailListbox.getItemAtIndex(index);
 			Decimalbox amountSettledDecimalbox = (Decimalbox) item.getChildren().get(8).getFirstChild();
 			amountSettled = amountSettledDecimalbox.getValue(); 
 			detail.setAmountSettled(amountSettled);
-			// System.out.println("amountSettled: "+detail.getAmountSettled());
 			
 			// Sisa
-			// detail.setRemainingAmountToSettle(remainingAmount);
-			// remainingAmountToSettle;
 			remainingAmountToSettle = amountSettled.subtract(amountToSettle);
 			detail.setRemainingAmountToSettle(remainingAmountToSettle.compareTo(BigDecimal.ZERO)==-1 ?
 					remainingAmountToSettle.multiply(new BigDecimal(-1)) : remainingAmountToSettle);			
-			// System.out.println("remainingAmountToSettle: "+detail.getRemainingAmountToSettle());
-			
-			// link
-			// detail.setCustomerOrder(order);
-			// customerOrder;
-			// System.out.println("customerOrder: "+detail.getCustomerOrder());
-			
+						
 			// NOTE: installmentCheckbox is ONLY applicable towards the last item in the listbox
 			// -- controled by lastIndex
 			if ((index==lastIndex) && (installmentCheckbox.isChecked())) {

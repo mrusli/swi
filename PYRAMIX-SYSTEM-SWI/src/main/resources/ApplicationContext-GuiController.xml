@@ -624,6 +624,7 @@
 		<property name="settlementDao" ref="settlementDao"></property>	
 		<property name="voucherGiroReceiptDao" ref="voucherGiroReceiptDao"></property>
 		<property name="giroDao" ref="giroDao"></property>
+		<property name="voucherPaymentDao" ref="voucherPaymentDao"></property>
 	</bean>
 	
 	<bean id="settlementDialogViewControl" class="com.pyramix.swi.webui.settlement.SettlementDialogViewControl" scope="prototype" parent="basisController">

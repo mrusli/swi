@@ -190,6 +190,15 @@ public class VoucherSales extends IdBasedObject {
 			joinColumns = @JoinColumn(name = "id_voucher"),
 			inverseJoinColumns = @JoinColumn(name = "id_general_ledger"))
 	private List<GeneralLedger> generalLedgers;
+
+	//	batal_date date
+	@Column(name = "batal_date")
+	@Temporal(TemporalType.DATE)
+	private Date batalDate;
+	
+	//	batal_note varchar(255)
+	@Column(name = "batal_note")
+	private String batalNote;
 	
 	@Override
 	public String toString() {
@@ -424,5 +433,21 @@ public class VoucherSales extends IdBasedObject {
 
 	public void setGeneralLedgers(List<GeneralLedger> generalLedgers) {
 		this.generalLedgers = generalLedgers;
+	}
+
+	public Date getBatalDate() {
+		return batalDate;
+	}
+
+	public void setBatalDate(Date batalDate) {
+		this.batalDate = batalDate;
+	}
+
+	public String getBatalNote() {
+		return batalNote;
+	}
+
+	public void setBatalNote(String batalNote) {
+		this.batalNote = batalNote;
 	}
 }

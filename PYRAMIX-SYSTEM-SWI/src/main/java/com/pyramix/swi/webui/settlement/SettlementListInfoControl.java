@@ -64,7 +64,7 @@ public class SettlementListInfoControl extends GFCBaseController {
 	private User loginUser;
 	
 	private final int WORK_DAY_WEEK 	= 6;
-	private final int DEFAULT_TAB_INDEX = 1;
+	private final int DEFAULT_TAB_INDEX = 0;
 	
 	private static final Logger log = Logger.getLogger(SettlementListInfoControl.class);
 	
@@ -207,6 +207,10 @@ public class SettlementListInfoControl extends GFCBaseController {
 				lc = initUserCreate(new Listcell(), settlement);
 				lc.setParent(item);
 				
+				// status
+				lc = initSettlementStatus(new Listcell(), settlement);
+				lc.setParent(item);
+				
 				// edit
 				lc = initEdit(new Listcell(), settlement);
 				lc.setParent(item);
@@ -216,9 +220,9 @@ public class SettlementListInfoControl extends GFCBaseController {
 				item.setValue(settlement);
 				
 				// if the status of settlement is 'BATAL', change the backgroud color to red
-				if (settlement.getSettlementStatus().equals(DocumentStatus.BATAL)) {
-					item.setClass("red-background");
-				}
+				// if (settlement.getSettlementStatus().equals(DocumentStatus.BATAL)) {
+				//	item.setClass("red-background");
+				// }
 			}
 
 			private Listcell initPostingVoucherPayment(Listcell listcell, Settlement settlement) throws Exception {
@@ -504,7 +508,18 @@ public class SettlementListInfoControl extends GFCBaseController {
 				
 				return listcell;
 			}
-						
+			
+			private Listcell initSettlementStatus(Listcell listcell, Settlement settlement) {
+				if (settlement.getSettlementStatus().equals(DocumentStatus.BATAL)) {
+					Label label = new Label();
+					label.setValue("Batal");
+					label.setSclass("badge badge-red");
+					label.setParent(listcell);
+				}
+				
+				return listcell;
+			}			
+			
 			private Listcell initEdit(Listcell listcell, Settlement settlement) {
 				Button editButton = new Button();
 				
@@ -557,9 +572,6 @@ public class SettlementListInfoControl extends GFCBaseController {
 						receivable.getCustomerReceivableActivities();
 												
 				for (SettlementDetail detail : settlement.getSettlementDetails()) {
-					
-					// System.out.println("customerOrderId to Settle="+detail.getCustomerOrder().getId());
-
 					boolean installment = false;
 					CustomerReceivableActivity selectedActivity = null;
 					
@@ -717,6 +729,8 @@ public class SettlementListInfoControl extends GFCBaseController {
 					
 					// update
 					getSettlementDao().update(settlement);
+					
+					log.info("VoucherGiroReceipt: "+settlement.getVoucherGiroReceipt().toString());
 					
 					// re-load / re-list
 					int selIndex = settlementPeriodTabbox.getSelectedIndex();

@@ -1,8 +1,10 @@
 <?page title="Settlement" contentType="text/html;charset=UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/bootstrap-spacelab.min.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
+
 <zk>
 <borderlayout width="1360px" height="690px" id="settlementListInfoWin" apply="${settlementListInfoControl}">
 	<north border="none">
@@ -25,9 +27,9 @@
 			<hlayout style="padding: 10px;" valign="middle">
 				<label id="infoResultlabel" value="Total: 8 settlement - Rp.450.329.112,-" style="color: silver;"></label>
 				<button id="addButton" label="Tambah" sclass="modButton"></button>	
-				<button id="batalButton" label="Batal" sclass="modButton" disabled="true"></button>								
+				<button id="batalButton" label="Batal" sclass="modButtonRed" disabled="true"></button>
 			</hlayout>
-			<listbox id="settlementListbox" mold="paging" pageSize="15" height="540px">
+			<listbox id="settlementListbox" mold="paging" pageSize="15" height="545px">
 				<listhead>
 					<listheader label="Tgl.Settlement" width="150px"/>
 					<listheader label="No.Settlement" width="120px"/>
@@ -36,7 +38,8 @@
 					<listheader label="Posisi Settlement" width="120px" align="right"/>
 					<listheader label="Pembayaran-Giro" width="200px"/>
 					<listheader label="Pembayaran-Bank/Tunai" width="200px"/>
-					<listheader label="User" width="120px"/>
+					<listheader label="User" width="90px"/>
+					<listheader width="80px"></listheader>
 					<listheader/>
 				</listhead>
 			</listbox>

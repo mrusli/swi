@@ -1,13 +1,695 @@
 <?page title="Settlement-Batal" contentType="text/html;charset=UTF-8"?>
-<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk>
-<window width="1150px" height="680px" title="Settlement - Batal" border="normal"
+<window width="1250px" height="680px" title="Settlement - Batal" border="normal"
 	id="settlementDialogBatalWin" apply="${settlementDialogBatalControl}">
-	<tabbox id="documentBatalTabbox" height="520px">
+	<tabbox id="settlementBatalTabbox" height="520px">
+		<tabs>
+			<tab id="settlementTab" label="Settlement"></tab>
+			<tab id="voucherTab" label="Voucher" visible="true"></tab>
+			<tab id="giroTab" label="Giro" visible="true"></tab>
+			<tab id="giroPaymentTab" label="Giro-Payment" visible="false"></tab>
+			<tab id="glTab" label="GL" visible="true"></tab>
+			<tab id="glGiroPaymentTab" label="GL-Giro-Payment" visible="false"></tab>
+			<tab id="piutangTab" label="Piutang" visible="true"></tab>
+		</tabs>
+		<tabpanels>
+			<tabpanel>
+				<!-- Settlement -->
+				<vbox>
+					<grid>
+						<rows>
+							<row>
+								<cell width="11%">
+									Status:
+								</cell>
+								<cell width="15%">
+									<combobox id="statusSettlementCombobox" width="140px"></combobox>									
+								</cell>
+								<cell width="12%">
+									Tgl Pembatalan:
+								</cell>
+								<cell width="22%">
+									<datebox id="pembatalanSettlementDatebox" width="230px"></datebox>									
+								</cell>
+								<cell width="10%">
+									Catatan:
+								</cell>
+								<cell>
+									<textbox id="pembatalanCatatanSettlementTextbox" width="230px"></textbox>
+								</cell>							
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row>
+								<cell width="11%">
+									No Settlement:
+								</cell>
+								<cell width="15%">
+									<textbox id="settlementNoCompTextbox" width="140px" readonly="true"></textbox>
+								</cell>
+								<cell width="12%">
+									Tgl Settlement:
+								</cell>
+								<cell width="22%">
+									<datebox id="settlementDatebox" width="230px" readonly="true" disabled="true"></datebox>
+								</cell>
+								<cell width="10%">
+									Customer:
+								</cell>
+								<cell>
+									<textbox id="customerSettlementTextbox" width="230px" readonly="true"/>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Jumlah:					
+								</cell>
+								<cell>
+									<textbox id="paymentAmountTextbox" width="110px" style="text-align: right;" disabled="true"/>
+									<button id="paymentAmountButton" width="25px" label="..." sclass="selectButton" disabled="true"/>					
+								</cell>
+								<cell>
+									
+								</cell>
+								<cell>
+
+								</cell>
+								<cell>
+									
+								</cell>
+								<cell>
+									
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Referensi:
+								</cell>
+								<cell>
+									<textbox id="referenceSettlementTextbox" width="140px" readonly="true"></textbox>
+								</cell>
+								<cell>
+									Penjelasan:
+								</cell>
+								<cell colspan="3">
+									<textbox id="descriptionSettlementTextbox" width="350px" readonly="true"/>
+								</cell>
+							</row>							
+						</rows>
+					</grid>
+					<listbox id="settlementDetailListbox" height="280px">
+						<listhead>
+							<listheader label="No.Order" width="100px"></listheader>
+							<listheader label="Tgl.Order" width="90px"></listheader>
+							<listheader label="No.SuratJalan" width="100px"></listheader>
+							<listheader label="Tgl.SuratJalan" width="100px"></listheader>
+							<listheader label="Tgl.Jth-Tempo" width="100px"></listheader>
+							<listheader label="Total Order"  width="120px" align="right"></listheader>
+							<listheader label="Jumlah Pembayaran"  width="125px" align="right"></listheader>
+							<listheader label="Sisa"  width="120px" align="right"></listheader>
+							<listheader label="Jumlah Dibayarkan"></listheader>
+							
+						</listhead>
+					</listbox>										
+				</vbox>
+			</tabpanel>
+			<tabpanel>
+				<!-- Voucher -->
+				<vbox>
+					<grid>
+						<rows>
+							<row>
+								<cell width="11%">
+									Status:
+								</cell>
+								<cell width="15%">
+									<combobox id="statusVoucherCombobox" width="140px"></combobox>									
+								</cell>
+								<cell width="12%">
+									Tgl Pembatalan:
+								</cell>
+								<cell width="22%">
+									<datebox id="pembatalanVoucherDatebox" width="230px"></datebox>									
+								</cell>
+								<cell width="10%">
+									Catatan:
+								</cell>
+								<cell>
+									<textbox id="pembatalanVoucherCatatanTextbox" width="230px"></textbox>
+								</cell>							
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row>
+								<cell width="11%">
+									No Voucher:
+								</cell>
+								<cell width="15%">
+									<textbox id="voucherNoCompTextbox" width="140px" readonly="true"></textbox>
+								</cell>
+								<cell width="10%">
+									No Posting:	
+								</cell>
+								<cell width="20%">
+									<textbox id="voucherNoPostTextbox" width="140px" readonly="true"></textbox>
+								</cell>
+								<cell width="10%">
+									Tgl Voucher:
+								</cell>
+								<cell>
+									<datebox id="transactionDatebox" width="230px" readonly="true" disabled="true"></datebox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Tipe Voucher:
+								</cell>
+								<cell>
+									<label id="voucherTypeLabel"/>
+								</cell>
+								<cell>
+									Status:
+								</cell>
+								<cell>
+									<combobox id="voucherStatusCombobox" width="200px" disabled="true"/>
+								</cell>
+								<cell>
+									Customer:
+								</cell>
+								<cell>
+									<textbox id="customerVoucherTextbox" width="230px" readonly="true"/>
+								</cell>
+							</row>
+						</rows>
+					</grid>				
+					<grid id="giroReceiptGrid" visible="false">
+						<rows>
+							<row>
+								<cell width="11%">
+									No.Giro:
+								</cell>
+								<cell width="15%">
+									<textbox id="noGiroReceiptTextbox" width="140px" readonly="true"/>
+								</cell>
+								<cell width="10%">
+									Bank:	
+								</cell>
+								<cell width="20%">
+									<textbox id="giroBankReceiptTextbox" width="200px" readonly="true"/>
+								</cell>
+								<cell width="10%">
+									Tgl.Giro:
+								</cell>
+								<cell>
+									<datebox id="giroDateReceiptDatebox" width="230px" readonly="true" disabled="true"/>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Jumlah (Rp.):
+								</cell>
+								<cell>
+									<textbox id="theSumOfGiroReceiptTextbox" width="110px" style="text-align: right;" readonly="true"/>
+								</cell>
+								<cell>
+									Penjelasan :
+								</cell>
+								<cell>
+									<textbox id="descriptionGiroReceiptTextbox" width="200px" readonly="true"></textbox>
+								</cell>
+								<cell>
+									Referensi :
+								</cell>
+								<cell>
+									<textbox id="referenceGiroReceiptTextbox" width="230px" readonly="true"></textbox>
+								</cell>					
+							</row>						
+						</rows>				
+					</grid>
+					<grid id="voucherPaymentGrid" visible="false">
+						<rows>
+							<row>
+								<cell width="11%">
+									Jumlah:
+								</cell>
+								<cell width="15%">
+									<textbox id="theSumOfVoucherPaymentTextbox" width="140px" style="text-align: right;" readonly="true"/>
+								</cell>
+								<cell width="10%">
+									Penjelasan:	
+								</cell>
+								<cell width="20%">
+									<textbox id="descriptionVoucherPaymentTextbox" width="200px" readonly="true"></textbox>
+								</cell>
+								<cell width="10%">
+									Referensi :
+								</cell>
+								<cell>
+									<textbox id="referenceVoucherPaymentTextbox" width="230px" readonly="true"></textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Dibayar Dgn:
+								</cell>
+								<cell>
+									<combobox id="paidByCombobox" width="140px" readonly="true" disabled="true"></combobox>
+								</cell>
+								<cell>
+									<label id="paidByLabel" value="Bank Info:"/>
+								</cell>
+								<cell colspan="3">
+									<textbox id="paidByInfoTextbox" width="450px" readonly="true"/>
+								</cell>
+							</row>						
+						</rows>
+					</grid>
+					<listbox id="voucherDbcrVoucherPaymentGiroReceiptListbox" height="280px">
+						<listhead>
+							<listheader label="No Akun" width="175px"/>
+							<listheader label="Nama Akun" width="240px"/>
+							<listheader label="Keterangan" width="320px"/>
+							<listheader label="Debit" width="120px" align="right"/>
+							<listheader label="Kredit" width="120px" align="right"/>
+							<listheader></listheader>
+						</listhead>
+					</listbox>					
+				</vbox>
+			</tabpanel>
+			<tabpanel>
+				<!-- Giro -->
+				<label value="giro"></label>
+				<vbox>
+					<grid>
+						<rows>
+							<row>
+								<cell width="11%">
+									Status:
+								</cell>
+								<cell width="15%">
+									<combobox id="statusGiroCombobox" width="140px"></combobox>									
+								</cell>
+								<cell width="12%">
+									Tgl Pembatalan:
+								</cell>
+								<cell width="22%">
+									<datebox id="giroPembatalanDatebox" width="230px"></datebox>									
+								</cell>
+								<cell width="10%">
+									Catatan:
+								</cell>
+								<cell>
+									<textbox id="giroPembatalanCatatanTextbox" width="230px"></textbox>
+								</cell>							
+							</row>
+						</rows>
+					</grid>				
+					<grid>
+						<rows>
+							<row>
+								<cell width="10%">
+									Giro No:
+								</cell>
+								<cell width="20%">
+									<textbox id="giroNoTextbox" width="210px" readonly="true"/>
+								</cell>
+								<cell width="10%">
+									Giro Bank:
+								</cell>
+								<cell width="20%">
+									<textbox id="giroBankTextbox" width="200px" readonly="true"/>
+								</cell>
+								<cell width="12%">
+									Tgl Penc.Giro:
+								</cell>
+								<cell>
+									<datebox id="giroDateDatebox" width="250px" readonly="true" disabled="true"/>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Tgl.Terima:
+								</cell>
+								<cell>
+									<datebox id="giroReceivedDatebox" width="210px" readonly="true" disabled="true"></datebox>
+								</cell>
+								<cell>
+									Jumlah:
+								</cell>
+								<cell>
+									<decimalbox id="giroAmountDecimalbox" width="200px" readonly="true"></decimalbox>						
+								</cell>
+								<cell>
+									Customer:					
+								</cell>
+								<cell>
+									<textbox id="giroCustomerTextbox" width="250px" readonly="true"/>					
+								</cell>
+							</row>
+						</rows>
+					</grid>		
+				</vbox>				
+			</tabpanel>
+			<tabpanel>
+				<!-- Giro-Payment -->
+				<label value="Giro-Payment"></label>
+				<vbox>
+					<grid>
+						<rows>
+							<row>
+								<cell width="11%">
+									Status:
+								</cell>
+								<cell width="15%">
+									<combobox id="statusGiroPaymentCombobox" width="140px"></combobox>									
+								</cell>
+								<cell width="12%">
+									Tgl Pembatalan:
+								</cell>
+								<cell width="22%">
+									<datebox id="giroPaymentPembatalanDatebox" width="230px"></datebox>									
+								</cell>
+								<cell width="10%">
+									Catatan:
+								</cell>
+								<cell>
+									<textbox id="giroPaymentPembatalanCatatanTextbox" width="230px"></textbox>
+								</cell>							
+							</row>
+						</rows>
+					</grid>				
+					<grid>
+						<rows>
+							<row>
+								<cell width="15%">
+									No Voucher:
+								</cell>
+								<cell width="15%">
+									<textbox id="voucherNoGiroPaymentCompTextbox" width="140px" readonly="true"></textbox>
+								</cell>
+								<cell width="10%">
+									No Posting:	
+								</cell>
+								<cell width="20%">
+									<textbox id="voucherNoPostGiroPaymentTextbox" width="140px" readonly="true"></textbox>
+								</cell>
+								<cell width="10%">
+									Tgl Voucher:
+								</cell>
+								<cell>
+									<datebox id="transactionGiroPaymentDatebox" width="230px" readonly="true" disabled="true"></datebox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Dibayar Dengan:
+								</cell>
+								<cell>
+									<combobox id="paidByGiroPaymentCombobox" width="140px" value="giro" readonly="true" disabled="true"></combobox>
+								</cell>
+								<cell>
+									<label id="paidByGiroPaymentLabel" value="Giro Info:"/>
+								</cell>
+								<cell colspan="3">
+									<textbox id="paidByInfoGiroPaymentTextbox" width="450px" readonly="true"/>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Tipe Voucher:
+								</cell>
+								<cell>
+									<label id="voucherTypeGiroPaymentLabel"/>
+								</cell>
+								<cell>
+									Status:
+								</cell>
+								<cell>
+									<combobox id="voucherStatusGiroPaymentCombobox" width="200px" disabled="true"/>
+								</cell>
+								<cell>
+									Customer:
+								</cell>
+								<cell>
+									<textbox id="customerGiroPaymentTextbox" width="230px" readonly="true"/>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Jumlah (Rp.):
+								</cell>
+								<cell>
+									<textbox id="theSumOfGiroPaymentTextbox" width="140px" style="text-align: right;" readonly="true"/>
+								</cell>
+								<cell>
+									Penjelasan :
+								</cell>
+								<cell>
+									<textbox id="descriptionGiroPaymentTextbox" width="200px" readonly="true"></textbox>
+								</cell>
+								<cell>
+									Referensi :
+								</cell>
+								<cell>
+									<textbox id="referenceGiroPaymentTextbox" width="253px" readonly="true"></textbox>
+								</cell>					
+							</row>
+						</rows>
+					</grid>
+					<listbox id="voucherDbcrGiroPaymentListbox" height="280px">
+						<listhead>
+							<listheader label="No Akun" width="175px"/>
+							<listheader label="Nama Akun" width="240px"/>
+							<listheader label="Keterangan" width="320px"/>
+							<listheader label="Debit" width="135px" align="center"/>
+							<listheader label="Kredit" width="135px" align="center"/>
+							<listheader width="30px"/>
+							<listheader/>
+						</listhead>
+					</listbox>
+				</vbox>			
+			</tabpanel>
+			<tabpanel>
+				<!-- GL -->
+				<label value="GL"></label>
+				<vbox>
+					<grid>
+						<rows>
+							<row>
+								<cell width="11%">
+									Status:
+								</cell>
+								<cell width="15%">
+									<combobox id="glPembatalanCombobox" width="140px"></combobox>									
+								</cell>
+								<cell width="12%">
+									Tgl Pembatalan:
+								</cell>
+								<cell width="22%">
+									<datebox id="glPembatalanDatebox" width="230px"></datebox>									
+								</cell>
+								<cell width="10%">
+									Catatan:
+								</cell>
+								<cell>
+									<textbox id="glPembatalanCatatanTextbox" width="230px"></textbox>
+								</cell>							
+							</row>
+						</rows>
+					</grid>				
+					<grid>
+						<rows>
+							<row>
+								<cell width="11%">
+									Tgl Posting:
+								</cell>
+								<cell width="20%">
+									<datebox id="glPostingDatebox" width="210px" readonly="true" disabled="true"></datebox>
+								</cell>
+								<cell width="10%">
+									No Posting:	
+								</cell>
+								<cell width="22%">
+									<textbox id="glPostingNumberTextbox" width="240px" readonly="true"></textbox>
+								</cell>
+								<cell width="10%">
+									No Voucher:
+								</cell>
+								<cell>
+									<textbox id="glVoucherNumberTextbox" width="240px" readonly="true"></textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Tipe Voucher:
+								</cell>
+								<cell>
+									<label id="glVoucherTypeLabel"/>
+								</cell>
+								<cell>
+									Penjelasan:
+								</cell>
+								<cell>
+									<textbox id="glDescriptionTextbox" width="240px" readonly="true"></textbox>
+								</cell>
+								<cell>
+									Referensi:
+								</cell>
+								<cell>
+									<textbox id="glReferenceTextbox" width="240px" readonly="true"></textbox>
+								</cell>
+							</row>
+						</rows>
+					</grid>				
+					<listbox id="glListbox" height="280px">
+						<listhead>
+							<listheader label="No Akun" width="175px"/>
+							<listheader label="Nama Akun" width="240px"/>
+							<listheader label="Keterangan" width="320px"/>
+							<listheader label="Debit" width="135px" align="center"/>
+							<listheader label="Kredit" width="135px" align="center"/>
+							<listheader/>
+						</listhead>
+					</listbox>
+				</vbox>
+			</tabpanel>
+			<tabpanel>
+				<!-- GL Giro-Payment TabPanel -->
+				<label value="GL Giro-Payment" sclass="h3"></label>
+				<vbox>
+					<grid>
+						<rows>
+							<row>
+								<cell width="11%">
+									Status:
+								</cell>
+								<cell width="15%">
+									<combobox id="glGiroPaymentPembatalanCombobox" width="140px"></combobox>									
+								</cell>
+								<cell width="12%">
+									Tgl Pembatalan:
+								</cell>
+								<cell width="22%">
+									<datebox id="glGiroPaymentPembatalanDatebox" width="230px"></datebox>									
+								</cell>
+								<cell width="10%">
+									Catatan:
+								</cell>
+								<cell>
+									<textbox id="glGiroPaymentPembatalanCatatanTextbox" width="230px"></textbox>
+								</cell>							
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row>
+								<cell width="11%">
+									Tgl Posting:
+								</cell>
+								<cell width="20%">
+									<datebox id="glGiroPaymentPostingDatebox" width="210px" readonly="true" disabled="true"></datebox>
+								</cell>
+								<cell width="10%">
+									No Posting:	
+								</cell>
+								<cell width="22%">
+									<textbox id="glGiroPaymentPostingNumberTextbox" width="240px" readonly="true"></textbox>
+								</cell>
+								<cell width="10%">
+									No Voucher:
+								</cell>
+								<cell>
+									<textbox id="glGiroPaymentVoucherNumberTextbox" width="240px" readonly="true"></textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									Tipe Voucher:
+								</cell>
+								<cell>
+									<label id="glGiroPaymentVoucherTypeLabel"/>
+								</cell>
+								<cell>
+									Penjelasan:
+								</cell>
+								<cell>
+									<textbox id="glGiroPaymentDescriptionTextbox" width="240px" readonly="true"></textbox>
+								</cell>
+								<cell>
+									Referensi:
+								</cell>
+								<cell>
+									<textbox id="glGiroPaymentReferenceTextbox" width="240px" readonly="true"></textbox>
+								</cell>
+							</row>
+						</rows>
+					</grid>				
+					<listbox id="glGiroPaymentListbox" height="280px">
+						<listhead>
+							<listheader label="No Akun" width="175px"/>
+							<listheader label="Nama Akun" width="240px"/>
+							<listheader label="Keterangan" width="320px"/>
+							<listheader label="Debit" width="135px" align="center"/>
+							<listheader label="Kredit" width="135px" align="center"/>
+							<listheader/>
+						</listhead>
+					</listbox>
+				</vbox>
+			</tabpanel>
+			<tabpanel>
+				<!-- Piutang -->
+				<label value="piutang"></label>
+				<vbox>
+					<grid>
+						<rows>
+							<row>
+								<cell width="11%">
+									Status:
+								</cell>
+								<cell width="15%">
+									<combobox id="piutangPembatalanCombobox" width="140px"></combobox>									
+								</cell>
+								<cell width="12%">
+									Tgl Pembatalan:
+								</cell>
+								<cell width="22%">
+									<datebox id="piutangPembatalanDatebox" width="230px"></datebox>									
+								</cell>
+								<cell width="10%">
+									Catatan:
+								</cell>
+								<cell>
+									<textbox id="piutangPembatalanCatatanTextbox" width="230px"></textbox>
+								</cell>							
+							</row>
+						</rows>
+					</grid>
+					<listbox id="piutangListbox" height="280px">
+						<listhead>
+							<listheader label="Order-No." width="140px"></listheader>
+							<listheader label="Tgl.Order" width="120px"></listheader>
+							<listheader label="Tgl.Jatuh-Tempo" width="110px"></listheader>
+							<listheader label="Total-Order(Rp.)" width="220px"></listheader>
+							<listheader label="Tgl.Pembayaran" width="140px"></listheader>
+							<listheader label="Pembayaran(Rp.)" width="120px"></listheader>
+							<listheader label="Sisa(Rp.)" width="120px"></listheader>
+							<listheader label="Status" width="80px"></listheader>
+							<listheader/>
+						</listhead>
+					</listbox>
+				</vbox>
+			</tabpanel>
+		</tabpanels>
 	</tabbox>
 	<hlayout style="padding-top: 5px;">
-		<button id="saveButton" label="Batal" disabled="false"></button>
-		<button id="cancelButton" label="Tutup"></button>	
+		<button id="saveBatalButton" label="Simpan"></button>
+		<button id="saveRevertButton" label="Simpan" visible="false"></button>	
+		<button id="closeButton" label="Tutup"></button>	
 	</hlayout>		
 </window>
 </zk>
