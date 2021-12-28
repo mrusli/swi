@@ -10,7 +10,7 @@
 	<north border="none">
 		<vlayout>			
 			<hlayout valign="middle" style="padding: 5px 0px">
-				<label id="formTitleLabel" sclass="headTitle" style="font-weight: bold;"></label>
+				<label id="formTitleLabel" sclass="headTitle"></label>
 			</hlayout>
 		</vlayout>
 	</north>

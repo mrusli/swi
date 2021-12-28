@@ -391,7 +391,6 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 				label = new Label();
 				label.setValue(activity.getReceivableStatus().equals(DocumentStatus.BATAL) ?
 						toLocalFormat(BigDecimal.ZERO) : toLocalFormat(activity.getAmountSales()));
-				label.setStyle("float: right;");
 				label.setParent(vbox);
 				if (activity.getActivityType().compareTo(ActivityType.PENJUALAN)==0) {
 					// title: spesifikasi
@@ -453,7 +452,6 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 				label = new Label();
 				label.setValue(activity.getReceivableStatus().equals(DocumentStatus.BATAL) ?
 						toLocalFormat(BigDecimal.ZERO) : toLocalFormat(activity.getAmountPaid()));
-				label.setStyle("float:right;");
 				label.setParent(vbox);
 				if (activity.getActivityType().compareTo(ActivityType.PENJUALAN)==0) {
 					// title: subtotal
@@ -491,7 +489,7 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 				
 				// Sisa
 				lc = new Listcell();
-				lc.setStyle("vertical-align:top;float:right;");
+				lc.setStyle("vertical-align:top;");
 				lc.setParent(item);
 				vbox = new Vbox();
 				vbox.setParent(lc);
@@ -508,13 +506,19 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 				vbox = new Vbox();
 				vbox.setParent(lc);
 				label = new Label();
-				label.setValue(activity.isPaymentComplete() ? "Lunas" : " - ");
-				label.setParent(vbox);
+				if (activity.getReceivableStatus().equals(DocumentStatus.BATAL)) {
+					label.setValue("Batal");
+					label.setSclass("badge badge-red");
+					label.setParent(vbox);					
+				} else {
+					label.setValue(activity.isPaymentComplete() ? "Lunas" : " - ");
+					label.setParent(vbox);
+				}
 
 				// if the status of receivableActivity is 'BATAL', change the backgroud color to red
-				if (activity.getReceivableStatus().equals(DocumentStatus.BATAL)) {
-					item.setClass("red-background");
-				}
+				// if (activity.getReceivableStatus().equals(DocumentStatus.BATAL)) {
+				// 	item.setClass("red-background");
+				// }
 			}
 		};
 	}

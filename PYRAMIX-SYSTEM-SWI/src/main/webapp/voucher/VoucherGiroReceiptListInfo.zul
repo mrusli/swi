@@ -1,5 +1,6 @@
 <?page title="Voucher Giro Receipt" contentType="text/html;charset=UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/bootstrap-spacelab.min.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
@@ -23,7 +24,7 @@
 				</tabs>			
 			</tabbox>
 			<hlayout style="padding: 10px;" valign="middle">
-				<label id="infoResultlabel" style="color: silver;"></label>
+				<label id="infoResultlabel" style="color: black;"></label>
 				<button id="addButton" label="Tambah" sclass="modButton"></button>
 				<label value="Tgl:"></label>
 				<combobox id="dateTypeSelectCombobox" width="160px"></combobox>
@@ -43,6 +44,7 @@
 					<listheader label="Tgl.Jth-Tempo" width="150px"/>
 					<listheader label="Nominal (Rp.)" width="120px" align="right"/>
 					<listheader label="User" width="100px"/>
+					<listheader width="60px"></listheader>					
 					<listheader/>
 				</listhead>
 			</listbox>

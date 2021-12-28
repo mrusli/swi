@@ -1,3 +1,7 @@
+3.8.0 - 28/12/2021
+- Upgrade 'Batal' for the Settlement
+- Change 'Batal' indicator in VoucherGiroReceipt, Giro, VoucherPayment, Settlement, CustomerReceivable
+
 3.7.20-SWI - 27/11/2021
 - Add edit capability for Giro in 'Voucher: ... Daftar Giro Gantung' (Informasi Giro)
 

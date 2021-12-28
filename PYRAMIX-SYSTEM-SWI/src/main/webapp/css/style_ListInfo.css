@@ -94,6 +94,10 @@
 	background-color: red;
 }
 
+.badge-green {
+	background-color: green;
+}
+
 /*
 */
 .button-with-dropdown > .z-menuitem-content {

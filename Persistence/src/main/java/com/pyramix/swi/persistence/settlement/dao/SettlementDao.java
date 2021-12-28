@@ -3,6 +3,7 @@ package com.pyramix.swi.persistence.settlement.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.pyramix.swi.domain.organization.Customer;
 import com.pyramix.swi.domain.settlement.Settlement;
 import com.pyramix.swi.domain.settlement.SettlementDetail;
 
@@ -18,11 +19,15 @@ public interface SettlementDao {
 	
 	public List<Settlement> findAllSettlement_OrderBy_SettlementDate(boolean desc) throws Exception;
 
+	public List<Settlement> findSettlement_By_SettlementDate(boolean desc, Date startDate, Date endDate) throws Exception;
+
+	public List<Settlement> findAllSettlement_By_Customer_OrderBy_SettlementDate(boolean desc, Customer customer) throws Exception;
+		
+	public List<Settlement> findSettlement_By_Customer_By_SettlementDate(boolean desc, Customer customer, Date  startDate, Date endDate) throws Exception;	
+	
 	public Settlement findCustomerByProxy(long id) throws Exception;
 
 	public Settlement findVoucherGiroReceiptByProxy(long id) throws Exception;
-
-	public List<Settlement> findSettlement_By_SettlementDate(boolean desc, Date startDate, Date endDate) throws Exception;
 	
 	public List<SettlementDetail> findSettlementDetail_By_CustomerOrderId(long id) throws Exception;
 

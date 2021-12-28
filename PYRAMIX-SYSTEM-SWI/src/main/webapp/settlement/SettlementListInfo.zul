@@ -25,9 +25,17 @@
 				</tabs>			
 			</tabbox>
 			<hlayout style="padding: 10px;" valign="middle">
-				<label id="infoResultlabel" value="Total: 8 settlement - Rp.450.329.112,-" style="color: silver;"></label>
+				<label id="infoResultlabel" style="color: black;"></label>
 				<button id="addButton" label="Tambah" sclass="modButton"></button>	
 				<button id="batalButton" label="Batal" sclass="modButtonRed" disabled="true"></button>
+				<label value="Customer:"></label>
+				<combobox id="customerCombobox" width="180px"></combobox>
+				<label value="Pilih-Tgl:"></label>
+				<datebox id="startDatebox" width="160px"></datebox>
+				<label value="S/D:"></label>
+				<datebox id="endDatebox" width="160px"></datebox>
+				<button id="filterButton" label="Filter" sclass="modButton"></button>
+				<button id="resetButton" label="Reset" sclass="modButton"></button>				
 			</hlayout>
 			<listbox id="settlementListbox" mold="paging" pageSize="15" height="545px">
 				<listhead>
@@ -39,7 +47,7 @@
 					<listheader label="Pembayaran-Giro" width="200px"/>
 					<listheader label="Pembayaran-Bank/Tunai" width="200px"/>
 					<listheader label="User" width="90px"/>
-					<listheader width="80px"></listheader>
+					<listheader width="60px"></listheader>
 					<listheader/>
 				</listhead>
 			</listbox>

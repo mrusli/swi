@@ -34,8 +34,11 @@
 								<cell width="10%">
 									Catatan:
 								</cell>
-								<cell>
+								<cell width="22%">
 									<textbox id="pembatalanCatatanSettlementTextbox" width="230px"></textbox>
+								</cell>
+								<cell align="right">
+									<label id="settlementIdLabel" style="font-size:0.5em;"></label>								
 								</cell>							
 							</row>
 						</rows>
@@ -67,8 +70,7 @@
 									Jumlah:					
 								</cell>
 								<cell>
-									<textbox id="paymentAmountTextbox" width="110px" style="text-align: right;" disabled="true"/>
-									<button id="paymentAmountButton" width="25px" label="..." sclass="selectButton" disabled="true"/>					
+									<textbox id="paymentSettlementAmountTextbox" width="140px" style="text-align: right;" readonly="true"/>
 								</cell>
 								<cell>
 									
@@ -101,16 +103,17 @@
 					</grid>
 					<listbox id="settlementDetailListbox" height="280px">
 						<listhead>
+							<listheader label="Status-Order" width="90px" align="center"></listheader>
 							<listheader label="No.Order" width="100px"></listheader>
 							<listheader label="Tgl.Order" width="90px"></listheader>
 							<listheader label="No.SuratJalan" width="100px"></listheader>
 							<listheader label="Tgl.SuratJalan" width="100px"></listheader>
 							<listheader label="Tgl.Jth-Tempo" width="100px"></listheader>
 							<listheader label="Total Order"  width="120px" align="right"></listheader>
-							<listheader label="Jumlah Pembayaran"  width="125px" align="right"></listheader>
+							<listheader label="Settlement" width="80px" align="right" style="font-weight: bold; color: red;"></listheader>
+							<listheader label="Pembayaran"  width="120px" align="right" style="font-weight: bold; color: red;"></listheader>
 							<listheader label="Sisa"  width="120px" align="right"></listheader>
-							<listheader label="Jumlah Dibayarkan"></listheader>
-							
+							<listheader label="Jumlah Dibayarkan"></listheader>	
 						</listhead>
 					</listbox>										
 				</vbox>
@@ -136,8 +139,11 @@
 								<cell width="10%">
 									Catatan:
 								</cell>
-								<cell>
-									<textbox id="pembatalanVoucherCatatanTextbox" width="230px"></textbox>
+								<cell width="22%">
+									<textbox id="pembatalanVoucherCatatanTextbox" width="230px" style="color:red;"></textbox>
+								</cell>
+								<cell align="right">
+									<label id="voucherIdLabel" style="font-size:0.5em;"></label>
 								</cell>							
 							</row>
 						</rows>
@@ -270,19 +276,18 @@
 					</grid>
 					<listbox id="voucherDbcrVoucherPaymentGiroReceiptListbox" height="280px">
 						<listhead>
-							<listheader label="No Akun" width="175px"/>
-							<listheader label="Nama Akun" width="240px"/>
-							<listheader label="Keterangan" width="320px"/>
-							<listheader label="Debit" width="120px" align="right"/>
-							<listheader label="Kredit" width="120px" align="right"/>
-							<listheader></listheader>
+							<listheader label="No Akun" width="95px" valign="top"/>
+							<listheader label="Nama Akun" width="180px" valign="top"/>
+							<listheader label="Keterangan" width="390px"/>
+							<listheader label="Debit" width="120px" align="right" valign="top"/>
+							<listheader label="Kredit" width="120px" align="right" valign="top"/>
+							<listheader/>
 						</listhead>
 					</listbox>					
 				</vbox>
 			</tabpanel>
 			<tabpanel>
 				<!-- Giro -->
-				<label value="giro"></label>
 				<vbox>
 					<grid>
 						<rows>
@@ -297,14 +302,17 @@
 									Tgl Pembatalan:
 								</cell>
 								<cell width="22%">
-									<datebox id="giroPembatalanDatebox" width="230px"></datebox>									
+									<datebox id="pembatalanGiroDatebox" width="230px"></datebox>									
 								</cell>
 								<cell width="10%">
 									Catatan:
 								</cell>
-								<cell>
-									<textbox id="giroPembatalanCatatanTextbox" width="230px"></textbox>
-								</cell>							
+								<cell width="22%">
+									<textbox id="giroPembatalanCatatanTextbox" width="230px" style="color: red;"></textbox>
+								</cell>			
+								<cell align="right">
+									<label id="giroIdLabel" style="font-size:0.5em;"></label>
+								</cell>				
 							</row>
 						</rows>
 					</grid>				
@@ -341,7 +349,7 @@
 									Jumlah:
 								</cell>
 								<cell>
-									<decimalbox id="giroAmountDecimalbox" width="200px" readonly="true"></decimalbox>						
+									<textbox id="giroAmountTextbox" width="200px" readonly="true"></textbox>						
 								</cell>
 								<cell>
 									Customer:					
@@ -355,8 +363,7 @@
 				</vbox>				
 			</tabpanel>
 			<tabpanel>
-				<!-- Giro-Payment -->
-				<label value="Giro-Payment"></label>
+				<!-- GiroVoucherPayment -->			
 				<vbox>
 					<grid>
 						<rows>
@@ -371,14 +378,17 @@
 									Tgl Pembatalan:
 								</cell>
 								<cell width="22%">
-									<datebox id="giroPaymentPembatalanDatebox" width="230px"></datebox>									
+									<datebox id="pembatalanGiroPaymentDatebox" width="230px"></datebox>									
 								</cell>
 								<cell width="10%">
 									Catatan:
 								</cell>
-								<cell>
-									<textbox id="giroPaymentPembatalanCatatanTextbox" width="230px"></textbox>
-								</cell>							
+								<cell width="22%">
+									<textbox id="giroPaymentPembatalanCatatanTextbox" width="230px" style="color: red;"></textbox>
+								</cell>			
+								<cell align="right">
+									<label id="giroVoucherPaymentIdLabel" style="font-size:0.5em;"></label>
+								</cell>				
 							</row>
 						</rows>
 					</grid>				
@@ -412,10 +422,10 @@
 									<combobox id="paidByGiroPaymentCombobox" width="140px" value="giro" readonly="true" disabled="true"></combobox>
 								</cell>
 								<cell>
-									<label id="paidByGiroPaymentLabel" value="Giro Info:"/>
+									
 								</cell>
 								<cell colspan="3">
-									<textbox id="paidByInfoGiroPaymentTextbox" width="450px" readonly="true"/>
+									
 								</cell>
 							</row>
 							<row>
@@ -462,12 +472,11 @@
 					</grid>
 					<listbox id="voucherDbcrGiroPaymentListbox" height="280px">
 						<listhead>
-							<listheader label="No Akun" width="175px"/>
-							<listheader label="Nama Akun" width="240px"/>
-							<listheader label="Keterangan" width="320px"/>
-							<listheader label="Debit" width="135px" align="center"/>
-							<listheader label="Kredit" width="135px" align="center"/>
-							<listheader width="30px"/>
+							<listheader label="No Akun" width="95px" valign="top"/>
+							<listheader label="Nama Akun" width="180px" valign="top"/>
+							<listheader label="Keterangan" width="390px"/>
+							<listheader label="Debit" width="120px" align="right" valign="top"/>
+							<listheader label="Kredit" width="120px" align="right" valign="top"/>
 							<listheader/>
 						</listhead>
 					</listbox>
@@ -475,7 +484,6 @@
 			</tabpanel>
 			<tabpanel>
 				<!-- GL -->
-				<label value="GL"></label>
 				<vbox>
 					<grid>
 						<rows>
@@ -484,7 +492,7 @@
 									Status:
 								</cell>
 								<cell width="15%">
-									<combobox id="glPembatalanCombobox" width="140px"></combobox>									
+									<combobox id="statusGLCombobox" width="140px"></combobox>									
 								</cell>
 								<cell width="12%">
 									Tgl Pembatalan:
@@ -495,9 +503,12 @@
 								<cell width="10%">
 									Catatan:
 								</cell>
-								<cell>
-									<textbox id="glPembatalanCatatanTextbox" width="230px"></textbox>
-								</cell>							
+								<cell width="22%">
+									<textbox id="glPembatalanCatatanTextbox" width="230px" style="color: red;"></textbox>
+								</cell>			
+								<cell align="right">
+									<label id="glId" style="font-size:0.5em;"></label>
+								</cell>				
 							</row>
 						</rows>
 					</grid>				
@@ -547,11 +558,11 @@
 					</grid>				
 					<listbox id="glListbox" height="280px">
 						<listhead>
-							<listheader label="No Akun" width="175px"/>
-							<listheader label="Nama Akun" width="240px"/>
-							<listheader label="Keterangan" width="320px"/>
-							<listheader label="Debit" width="135px" align="center"/>
-							<listheader label="Kredit" width="135px" align="center"/>
+							<listheader label="No Akun" width="95px" valign="top"/>
+							<listheader label="Nama Akun" width="180px" valign="top"/>
+							<listheader label="Keterangan" width="390px"/>
+							<listheader label="Debit" width="120px" align="right" valign="top"/>
+							<listheader label="Kredit" width="120px" align="right" valign="top"/>
 							<listheader/>
 						</listhead>
 					</listbox>
@@ -559,7 +570,6 @@
 			</tabpanel>
 			<tabpanel>
 				<!-- GL Giro-Payment TabPanel -->
-				<label value="GL Giro-Payment" sclass="h3"></label>
 				<vbox>
 					<grid>
 						<rows>
@@ -568,7 +578,7 @@
 									Status:
 								</cell>
 								<cell width="15%">
-									<combobox id="glGiroPaymentPembatalanCombobox" width="140px"></combobox>									
+									<combobox id="statusGLPaymentCombobox" width="140px"></combobox>									
 								</cell>
 								<cell width="12%">
 									Tgl Pembatalan:
@@ -579,9 +589,12 @@
 								<cell width="10%">
 									Catatan:
 								</cell>
-								<cell>
-									<textbox id="glGiroPaymentPembatalanCatatanTextbox" width="230px"></textbox>
-								</cell>							
+								<cell width="22%">
+									<textbox id="glGiroPaymentPembatalanCatatanTextbox" width="230px" style="color:red;"></textbox>
+								</cell>			
+								<cell align="right">
+									<label id="glGiroPaymentIdLabel" style="font-size:0.5em;"></label>
+								</cell>				
 							</row>
 						</rows>
 					</grid>
@@ -631,11 +644,11 @@
 					</grid>				
 					<listbox id="glGiroPaymentListbox" height="280px">
 						<listhead>
-							<listheader label="No Akun" width="175px"/>
-							<listheader label="Nama Akun" width="240px"/>
-							<listheader label="Keterangan" width="320px"/>
-							<listheader label="Debit" width="135px" align="center"/>
-							<listheader label="Kredit" width="135px" align="center"/>
+							<listheader label="No Akun" width="95px" valign="top"/>
+							<listheader label="Nama Akun" width="180px" valign="top"/>
+							<listheader label="Keterangan" width="390px"/>
+							<listheader label="Debit" width="120px" align="right" valign="top"/>
+							<listheader label="Kredit" width="120px" align="right" valign="top"/>
 							<listheader/>
 						</listhead>
 					</listbox>
@@ -643,7 +656,6 @@
 			</tabpanel>
 			<tabpanel>
 				<!-- Piutang -->
-				<label value="piutang"></label>
 				<vbox>
 					<grid>
 						<rows>
@@ -652,7 +664,7 @@
 									Status:
 								</cell>
 								<cell width="15%">
-									<combobox id="piutangPembatalanCombobox" width="140px"></combobox>									
+									<combobox id="statusPiutangCombobox" width="140px"></combobox>									
 								</cell>
 								<cell width="12%">
 									Tgl Pembatalan:
@@ -664,12 +676,12 @@
 									Catatan:
 								</cell>
 								<cell>
-									<textbox id="piutangPembatalanCatatanTextbox" width="230px"></textbox>
-								</cell>							
+									<textbox id="piutangPembatalanCatatanTextbox" width="230px" style="color:red;"></textbox>
+								</cell>			
 							</row>
 						</rows>
 					</grid>
-					<listbox id="piutangListbox" height="280px">
+					<listbox id="piutangListbox" height="380px">
 						<listhead>
 							<listheader label="Order-No." width="140px"></listheader>
 							<listheader label="Tgl.Order" width="120px"></listheader>
@@ -679,6 +691,7 @@
 							<listheader label="Pembayaran(Rp.)" width="120px"></listheader>
 							<listheader label="Sisa(Rp.)" width="120px"></listheader>
 							<listheader label="Status" width="80px"></listheader>
+							<listheader width="105px" valign="top" align="right"></listheader>
 							<listheader/>
 						</listhead>
 					</listbox>

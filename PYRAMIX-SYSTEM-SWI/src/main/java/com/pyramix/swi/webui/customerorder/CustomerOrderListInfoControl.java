@@ -204,7 +204,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			// list by date
 			listCustomerOrderByDate(startDate, endDate, checkTransaction, usePpn);
 			
-			// find all customer in the customer order - today
+			// find all customer in the customer order - this week
 			listCustomerInCustomerOrder();
 			
 			// assign startDate and endDate to date component - disable date component			
@@ -221,7 +221,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			// list by date
 			listCustomerOrderByDate(startDate, endDate, checkTransaction, usePpn);
 
-			// find all customer in the customer order - today
+			// find all customer in the customer order - this month
 			listCustomerInCustomerOrder();
 			
 			// assign startDate and endDate to date component - disable date component			
@@ -303,12 +303,12 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			}
 		}
 		
-		uniqueCustList.forEach(cust->log.info(cust.getCompanyLegalName()));
+		// uniqueCustList.forEach(cust->log.info(cust.getCompanyLegalName()));
 		uniqueCustList.sort((o1,o2) -> {
 			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
 		});
-		log.info("Sort Ascending:");
-		uniqueCustList.forEach(cust->log.info(cust.getCompanyLegalName()));
+		// log.info("Sort Ascending:");
+		// uniqueCustList.forEach(cust->log.info(cust.getCompanyLegalName()));
 		
 		// populate customerCombobox
 		Comboitem comboitem = null;

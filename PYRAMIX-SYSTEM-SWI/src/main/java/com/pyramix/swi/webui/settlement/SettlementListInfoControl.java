@@ -13,6 +13,8 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -57,8 +59,10 @@ public class SettlementListInfoControl extends GFCBaseController {
 	private Listbox settlementListbox;
 	private Tabbox settlementPeriodTabbox;
 	private Button batalButton;
+	private Combobox customerCombobox;
 	
 	private List<Settlement> settlementList;
+	private List<Customer> customerList;
 	private BigDecimal totalSettlementVal;
 	private int settlementCount;
 	private User loginUser;
@@ -136,22 +140,112 @@ public class SettlementListInfoControl extends GFCBaseController {
 		}
 	}
 	
+	private void settlementCount_and_Total() {
+		settlementCount = getSettlementList().size();
+		totalSettlementVal = BigDecimal.ZERO;
+		getSettlementList().forEach(settlement -> {
+			// count totalPaid
+			if (settlement.getSettlementStatus().equals(DocumentStatus.NORMAL)) {
+				totalSettlementVal = totalSettlementVal.add(settlement.getAmountPaid());
+			}
+		});
+	}
+
+	private void settlementCustomer() throws Exception {
+		setCustomerList(findUniqueCustomerList());
+
+		loadCustomerCombobox();
+	}
+
 	private void listAllSettlement() throws Exception {
 		setSettlementList(
 				getSettlementDao().findAllSettlement_OrderBy_SettlementDate(true));
+				
+		settlementCount_and_Total();
 		
-		settlementCount = getSettlementList().size();
+		settlementCustomer();
 		
 		batalButton.setDisabled(settlementCount==0);
+	}
+	
+	private void listAllSettlement_By_Customer(Customer customer) throws Exception {
+		setSettlementList(
+				getSettlementDao().findAllSettlement_By_Customer_OrderBy_SettlementDate(true, customer));
+
+		settlementCount_and_Total();
+		
+		batalButton.setDisabled(settlementCount==0);
+		
 	}
 	
 	private void listSettlementByDate(Date startDate, Date endDate) throws Exception {
 		setSettlementList(
 				getSettlementDao().findSettlement_By_SettlementDate(true, startDate, endDate));
 		
-		settlementCount = getSettlementList().size();
+		settlementCount_and_Total();
+		
+		settlementCustomer();
 		
 		batalButton.setDisabled(settlementCount==0);
+	}
+	
+	private void listSettlementByDate_By_Customer(Date startDate, Date endDate, Customer customer) throws Exception {
+		setSettlementList(
+				getSettlementDao().findSettlement_By_Customer_By_SettlementDate(true, customer, startDate, endDate));
+
+		settlementCount_and_Total();
+		
+		batalButton.setDisabled(settlementCount==0);
+	}
+	
+	private List<Customer> findUniqueCustomerList() throws Exception {
+		List<Customer> uniqueCustList = new ArrayList<Customer>();
+		boolean unique = true;
+		for (Settlement settlement : getSettlementList()) {
+			Settlement settlementCustomerByProxy = 
+					getSettlementDao().findCustomerByProxy(settlement.getId());
+			if (uniqueCustList.isEmpty()) {
+				uniqueCustList.add(settlementCustomerByProxy.getCustomer());
+				unique = false;
+			} else {
+				unique = true;
+				for (Customer uniqueCust : uniqueCustList) {
+					if (uniqueCust.getId().compareTo(settlementCustomerByProxy.getCustomer().getId())==0) {
+						unique = false;
+						break;
+					}
+				}
+			}
+			if (unique) {
+				uniqueCustList.add(settlementCustomerByProxy.getCustomer());
+			}
+		}
+	
+		uniqueCustList.sort((o1, o2) -> {
+			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
+		});
+		
+		return uniqueCustList;
+	}
+	
+	private void loadCustomerCombobox() {
+		customerCombobox.getItems().clear();
+		
+		Comboitem comboitem;
+		
+		comboitem = new Comboitem();
+		comboitem.setLabel("Semua");
+		comboitem.setValue(null);
+		comboitem.setParent(customerCombobox);		
+		
+		for (Customer customer : getCustomerList()) {
+			comboitem = new Comboitem();
+			comboitem.setLabel(customer.getCompanyType()+"."+customer.getCompanyLegalName());
+			comboitem.setValue(customer);
+			comboitem.setParent(customerCombobox);
+		}
+		
+		customerCombobox.setSelectedIndex(0);
 	}
 	
 	private void displaySettlementListInfo() throws Exception {
@@ -162,8 +256,6 @@ public class SettlementListInfoControl extends GFCBaseController {
 	}
 
 	private ListitemRenderer<Settlement> getSettlementListitemRenderer() {
-
-		totalSettlementVal = BigDecimal.ZERO;
 		
 		return new ListitemRenderer<Settlement>() {
 			
@@ -214,9 +306,7 @@ public class SettlementListInfoControl extends GFCBaseController {
 				// edit
 				lc = initEdit(new Listcell(), settlement);
 				lc.setParent(item);
-				
-				totalSettlementVal = totalSettlementVal.add(settlement.getAmountPaid());
-				
+								
 				item.setValue(settlement);
 				
 				// if the status of settlement is 'BATAL', change the backgroud color to red
@@ -551,6 +641,70 @@ public class SettlementListInfoControl extends GFCBaseController {
 				" settlement - Rp."+toLocalFormat(totalSettlementVal));
 	}
 	
+	public void onSelect$settlementListbox(Event event) throws Exception {
+		Settlement settlement = settlementListbox.getSelectedItem().getValue();
+		boolean isBatal = settlement.getSettlementStatus().equals(DocumentStatus.BATAL);
+		
+		batalButton.setDisabled(isBatal);
+	}
+	
+	public void onClick$filterButton(Event event) throws Exception {
+		int selIndex = settlementPeriodTabbox.getSelectedIndex();
+		
+		Customer selCustomer = customerCombobox.getSelectedItem().getValue();
+		
+		listBySelection_By_Filter(selIndex, selCustomer);
+	}
+	
+	private void listBySelection_By_Filter(int selIndex, Customer customer) throws Exception {
+		Date startDate;
+		Date endDate;
+		
+		switch (selIndex) {
+		case 0: // Semua
+			if (customer==null) {
+				listAllSettlement();
+			} else {
+				listAllSettlement_By_Customer(customer);
+			}
+			displaySettlementListInfo();				
+			break;
+		case 1: // Hari-ini
+			startDate = asDate(getLocalDate());
+			endDate = asDate(getLocalDate());
+			if (customer==null) {
+				listSettlementByDate(startDate, endDate);				
+			} else {
+				listSettlementByDate_By_Customer(startDate, endDate, customer);
+			}
+			displaySettlementListInfo();
+			break;
+		case 2: // Minggu-ini
+			startDate = asDate(getFirstDateOfTheWeek(getLocalDate()));
+			endDate = asDate(getLastDateOfTheWeek(getLocalDate(), WORK_DAY_WEEK));
+			if (customer==null) {
+				listSettlementByDate(startDate, endDate);				
+			} else {
+				listSettlementByDate_By_Customer(startDate, endDate, customer);
+			}
+			displaySettlementListInfo();
+			break;
+		case 3: // Bulan-ini
+			startDate = asDate(getFirstdateOfTheMonth(getLocalDate()));
+			endDate = asDate(getLastDateOfTheMonth(getLocalDate()));
+			if (customer==null) {
+				listSettlementByDate(startDate, endDate);				
+			} else {
+				listSettlementByDate_By_Customer(startDate, endDate, customer);
+			}
+			displaySettlementListInfo();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	
 	public void onClick$addButton(Event event) throws Exception {
 		Window settlementDialogWin = (Window) Executions.createComponents("/settlement/SettlementDialog.zul", null, null);
 		
@@ -653,92 +807,14 @@ public class SettlementListInfoControl extends GFCBaseController {
 			throw new Exception("Belum memilih Settlement untuk dibatalkan.");
 		} else {
 			Settlement selSettlement = settlementListbox.getSelectedItem().getValue();
+			// re-load the selected settlement (because changing from Normal to Batal affects the ref object)
+			selSettlement = getSettlementDao().findSettlementById(selSettlement.getId());
 			
 			Map<String, Settlement> args =
 					Collections.singletonMap("settlement", selSettlement);
 			
 			Window settlementBatalWin = 
 					(Window) Executions.createComponents("/settlement/SettlementDialogBatal.zul", null, args);
-			
-			settlementBatalWin.addEventListener(Events.ON_OK, new EventListener<Event>() {
-
-				@Override
-				public void onEvent(Event event) throws Exception {
-					Settlement settlement = (Settlement) event.getData();
-					
-					// NOTE: need to:
-					// 1. 	reset the 'amountPaid' and 'paymentComplete' in CustomerOrder (if multiple 
-					// 		CustomerOrder is selected, each one of them must be updated)
-					// 2. 	reset the 'amountPaid'; 'amountPaidPPN'; 'paymentComplete'; 'remainingAmount';
-					//		and 'receivableStatus' in CustomerReceivableActivity
-					
-					// 1. reset CustomerOrder
-					// create a list to hold customerOrder id
-					List<Long> customerOrderIdList = new ArrayList<Long>();
-					
-					// access the SettlementDetail and store the CustomerOrder id into a list
-					for (SettlementDetail settlementDetail : settlement.getSettlementDetails()) {
-						log.info("Resetting: "+settlementDetail.toString());
-						
-						// save the customerOrder id into a list (because we need it later to reset 
-						// the customer receivable based on the customerOrder id)
-						customerOrderIdList.add(settlementDetail.getCustomerOrder().getId());
-						
-						// reset the 'amountPaid' and 'paymentComplete' in CustomerOrder
-						settlementDetail.getCustomerOrder().setAmountPaid(BigDecimal.ZERO);
-						settlementDetail.getCustomerOrder().setPaymentComplete(false);
-					}
-					
-					// 2. reset CustomerReceivableActivity
-					// get all the receivable activities from the Settlement
-					// Settlement settlementByProxy = getSettlementDao().findCustomerReceivableByProxy(settlement.getId());
-					// List<CustomerReceivableActivity> receivableActivities = settlementByProxy.getCustomerReceivable().getCustomerReceivableActivities();
-					
-					Customer customerByProxy = getCustomerByProxy(settlement.getId());
-					
-					CustomerReceivable receivable =
-							getCustomerReceivableFromCustomerByProxy(customerByProxy.getId());
-					List<CustomerReceivableActivity> receivableActivities =
-							receivable.getCustomerReceivableActivities();
-					
-					// find the customerOrderId in the list and find the ActivityType of PENJUALAN (don't want ActivityType of PEMBAYARAN)
-					for (CustomerReceivableActivity customerReceivableActivity : receivableActivities) {
-						Long customerOrderId = customerReceivableActivity.getCustomerOrderId();
-						
-						if (customerOrderIdList.contains(customerOrderId)) {
-							if (customerReceivableActivity.getActivityType().compareTo(ActivityType.PENJUALAN)==0) {
-								log.info("Resetting: "+customerReceivableActivity.toString());
-								
-								// reset the 'amountPaid'; 'amountPaidPPN'; 'paymentComplete'; 'remainingAmount'; 'receivableStatus'
-								customerReceivableActivity.setPaymentDate(null);
-								customerReceivableActivity.setAmountPaid(BigDecimal.ZERO);
-								customerReceivableActivity.setAmountPaidPpn(BigDecimal.ZERO);
-								customerReceivableActivity.setPaymentComplete(false);
-								customerReceivableActivity.setRemainingAmount(BigDecimal.ZERO);
-							}
-						} 
-						
-						//else {
-						//	log.error("CustomerOrderId from CustomerReceivableActivity no match for the SettlementDetail(s)");
-						//}
-						
-					}
-					
-					// assign receivable to settlement
-					settlement.setCustomerReceivable(receivable);
-					
-					// update
-					getSettlementDao().update(settlement);
-					
-					log.info("VoucherGiroReceipt: "+settlement.getVoucherGiroReceipt().toString());
-					
-					// re-load / re-list
-					int selIndex = settlementPeriodTabbox.getSelectedIndex();
-					
-					listBySelection(selIndex);					
-					
-				}
-			});
 			
 			settlementBatalWin.doModal();
 		}
@@ -815,6 +891,14 @@ public class SettlementListInfoControl extends GFCBaseController {
 
 	public void setCustomerReceivableDao(CustomerReceivableDao customerReceivableDao) {
 		this.customerReceivableDao = customerReceivableDao;
+	}
+
+	public List<Customer> getCustomerList() {
+		return customerList;
+	}
+
+	public void setCustomerList(List<Customer> customerList) {
+		this.customerList = customerList;
 	}
 	
 }

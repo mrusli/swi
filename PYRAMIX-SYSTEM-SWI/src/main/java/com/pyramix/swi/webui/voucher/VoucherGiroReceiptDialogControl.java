@@ -490,64 +490,73 @@ public class VoucherGiroReceiptDialogControl extends GFCBaseController {
 			}
 
 			private Listcell initDescription(Listcell listcell, String dbcrDescription, int index) {
-				if (index>1) {
-					Textbox descripTextbox = new Textbox();
-					
-					descripTextbox.setWidth("310px");
-					descripTextbox.setValue(dbcrDescription);
-					descripTextbox.setDisabled((index<2) || (getPageMode().compareTo(PageMode.VIEW) == 0));
-					descripTextbox.setParent(listcell);					
-				} else {
+				if (getPageMode().equals(PageMode.VIEW)) {
 					listcell.setLabel(dbcrDescription);
+				} else {
+					if (index>1) {
+						Textbox descripTextbox = new Textbox();
+						
+						descripTextbox.setWidth("310px");
+						descripTextbox.setValue(dbcrDescription);
+						descripTextbox.setDisabled((index<2) || (getPageMode().compareTo(PageMode.VIEW) == 0));
+						descripTextbox.setParent(listcell);					
+					} else {
+						listcell.setLabel(dbcrDescription);
+					}
 				}
 				
 				return listcell;
 			}
 
 			private Listcell initCoaNumber(Listcell listcell, VoucherGiroReceiptDebitCredit voucherDbCr, int index) throws Exception {
-				Combobox coaNumberCombobox = new Combobox();
-				Comboitem comboitem;
-				if (index>1) {
-					// adjustment account ONLY
-					if (voucherDbCr.getCreditAmount().compareTo(BigDecimal.ZERO)==0) {
-						// DEBIT accounts
-						List<Coa_Adjustment> coaDebitAdjustmentList = getCoa_AdjustmentDao().findCoaAdjustmentByDebitAccount(true);
-						for (Coa_Adjustment coa_Adjustment : coaDebitAdjustmentList) {
-							comboitem = new Comboitem();
-							comboitem.setLabel(coa_Adjustment.getMasterCoa().getMasterCoaComp());
-							comboitem.setValue(coa_Adjustment);
-							comboitem.setParent(coaNumberCombobox);
+				if (getPageMode().equals(PageMode.VIEW)) {
+					listcell.setLabel(voucherDbCr.getMasterCoa().getMasterCoaComp());
+				} else {
+					Combobox coaNumberCombobox = new Combobox();
+					Comboitem comboitem;
+					if (index>1) {
+						// adjustment account ONLY
+						if (voucherDbCr.getCreditAmount().compareTo(BigDecimal.ZERO)==0) {
+							// DEBIT accounts
+							List<Coa_Adjustment> coaDebitAdjustmentList = getCoa_AdjustmentDao().findCoaAdjustmentByDebitAccount(true);
+							for (Coa_Adjustment coa_Adjustment : coaDebitAdjustmentList) {
+								comboitem = new Comboitem();
+								comboitem.setLabel(coa_Adjustment.getMasterCoa().getMasterCoaComp());
+								comboitem.setValue(coa_Adjustment);
+								comboitem.setParent(coaNumberCombobox);
+							}
+						} else {
+							// CREDIT accounts
+							List<Coa_Adjustment> coaCreditAdjustmentList = getCoa_AdjustmentDao().findCoaAdjustmentByDebitAccount(false);
+							for (Coa_Adjustment coa_Adjustment : coaCreditAdjustmentList) {
+								comboitem = new Comboitem();
+								comboitem.setLabel(coa_Adjustment.getMasterCoa().getMasterCoaComp());
+								comboitem.setValue(coa_Adjustment);
+								comboitem.setParent(coaNumberCombobox);
+							}
 						}
-					} else {
-						// CREDIT accounts
-						List<Coa_Adjustment> coaCreditAdjustmentList = getCoa_AdjustmentDao().findCoaAdjustmentByDebitAccount(false);
-						for (Coa_Adjustment coa_Adjustment : coaCreditAdjustmentList) {
-							comboitem = new Comboitem();
-							comboitem.setLabel(coa_Adjustment.getMasterCoa().getMasterCoaComp());
-							comboitem.setValue(coa_Adjustment);
-							comboitem.setParent(coaNumberCombobox);
-						}
-					}
-					// event
-					coaNumberCombobox.addEventListener(Events.ON_SELECT, new EventListener<Event>() {
-
-						@Override
-						public void onEvent(Event event) throws Exception {
-							Combobox combobox = (Combobox) event.getTarget();
-							Comboitem comboitem = combobox.getSelectedItem();
-							Coa_Adjustment coa_Adjustment = comboitem.getValue();
+						// event
+						coaNumberCombobox.addEventListener(Events.ON_SELECT, new EventListener<Event>() {
 							
-							Listitem item = voucherDbcrListbox.getItemAtIndex(index);							
-							Listcell lc = (Listcell) item.getChildren().get(1);
-							lc.setLabel(coa_Adjustment.getMasterCoa().getMasterCoaName());
-						}
-					});
-					
+							@Override
+							public void onEvent(Event event) throws Exception {
+								Combobox combobox = (Combobox) event.getTarget();
+								Comboitem comboitem = combobox.getSelectedItem();
+								Coa_Adjustment coa_Adjustment = comboitem.getValue();
+								
+								Listitem item = voucherDbcrListbox.getItemAtIndex(index);							
+								Listcell lc = (Listcell) item.getChildren().get(1);
+								lc.setLabel(coa_Adjustment.getMasterCoa().getMasterCoaName());
+							}
+						});
+						
+					}
+					coaNumberCombobox.setValue(voucherDbCr.getMasterCoa().getMasterCoaComp());
+					coaNumberCombobox.setWidth("165px");
+					coaNumberCombobox.setDisabled((index<2) || (getPageMode().compareTo(PageMode.VIEW) == 0));
+					coaNumberCombobox.setParent(listcell);
 				}
-				coaNumberCombobox.setValue(voucherDbCr.getMasterCoa().getMasterCoaComp());
-				coaNumberCombobox.setWidth("165px");
-				coaNumberCombobox.setDisabled((index<2) || (getPageMode().compareTo(PageMode.VIEW) == 0));
-				coaNumberCombobox.setParent(listcell);
+				
 				
 				return listcell;
 			}

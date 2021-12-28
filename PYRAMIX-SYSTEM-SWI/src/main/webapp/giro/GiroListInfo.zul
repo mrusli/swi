@@ -1,10 +1,11 @@
 <?page title="Giro" contentType="text/html;charset=UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/bootstrap-spacelab.min.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
 <zk>
-<borderlayout width="1360px" height="690px" id="giroListInfoWin" apply="${giroListInfoControl}">
+<borderlayout width="1460px" height="690px" id="giroListInfoWin" apply="${giroListInfoControl}">
 	<north border="none">
 		<vlayout>			
 			<hlayout valign="middle" style="padding: 5px 0px">
@@ -24,7 +25,7 @@
 			</tabbox>
 			<hlayout style="padding: 10px;" valign="middle">
 				<combobox id="paidStatusCombobox"></combobox>
-				<label id="infoResultlabel" value="Total: 8 giro - Rp.450.329.112,-" style="color: silver;"></label>
+				<label id="infoResultlabel" style="color: black;"></label>
 			</hlayout>
 			<listbox id="giroListbox" mold="paging" pageSize="15" height="540px">
 				<listhead>
@@ -36,6 +37,7 @@
 					<listheader label="No.Giro" width="120px"/>
 					<listheader label="Bank" width="140px"/>
 					<listheader label="Voucher-GiroReceipt" width="160px"/>
+					<listheader width="60px"></listheader>
 					<listheader />
 				</listhead>
 			</listbox>
