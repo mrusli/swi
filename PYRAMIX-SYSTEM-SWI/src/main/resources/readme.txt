@@ -1,3 +1,9 @@
+3.8.0 - 03/01/2022
+- Upgrade 'Batal' for the Settlement and CustomerOrder
+- Save 'Batal' date and note in database tables 
+- Change 'Batal' indicator in VoucherGiroReceipt, Giro, VoucherPayment, Settlement, CustomerReceivable
+- Upgrade Commissions to include Customer, Dates, TotalSales
+
 3.7.22-SWI - 06/12/2021
 - Replace the InventoryListInfoByType tab list using InventoryType instead of InventoryCode (prior to version 3.7.21-SWI)
 - InventoryTypes in the tabs are sorted with WeightQuantity (heaviest on the leftmost tab)

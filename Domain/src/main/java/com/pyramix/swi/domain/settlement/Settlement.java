@@ -136,6 +136,7 @@ public class Settlement extends IdBasedObject {
 
 	// settlement_status int(11)
 	@Column(name = "settlement_status")
+	@Enumerated(EnumType.ORDINAL)
 	private DocumentStatus settlementStatus;
 	
 	// userCreate MUST fecth LAZY !!! 
@@ -146,6 +147,15 @@ public class Settlement extends IdBasedObject {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_create_id_fk")
 	private User userCreate;
+	
+	//	batal_date date
+	@Column(name = "batal_date")
+	@Temporal(TemporalType.DATE)
+	private Date batalDate;
+	
+	//	batal_note varchar(255)
+	@Column(name = "batal_note")
+	private String batalNote;
 	
 	@Override
 	public String toString() {
@@ -308,6 +318,22 @@ public class Settlement extends IdBasedObject {
 
 	public void setUserCreate(User userCreate) {
 		this.userCreate = userCreate;
+	}
+
+	public Date getBatalDate() {
+		return batalDate;
+	}
+
+	public void setBatalDate(Date batalDate) {
+		this.batalDate = batalDate;
+	}
+
+	public String getBatalNote() {
+		return batalNote;
+	}
+
+	public void setBatalNote(String batalNote) {
+		this.batalNote = batalNote;
 	}
 	
 }

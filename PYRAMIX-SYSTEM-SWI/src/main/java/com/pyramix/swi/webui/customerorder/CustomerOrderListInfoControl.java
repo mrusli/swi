@@ -60,6 +60,7 @@ import com.pyramix.swi.persistence.user.dao.UserDao;
 import com.pyramix.swi.persistence.voucher.dao.VoucherSalesDao;
 import com.pyramix.swi.webui.common.GFCBaseController;
 import com.pyramix.swi.webui.common.PageMode;
+import com.pyramix.swi.webui.common.SuppressedException;
 import com.pyramix.swi.webui.faktur.FakturData;
 import com.pyramix.swi.webui.inventory.deliveryorder.DeliveryOrderData;
 import com.pyramix.swi.webui.suratjalan.SuratJalanData;
@@ -204,7 +205,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			// list by date
 			listCustomerOrderByDate(startDate, endDate, checkTransaction, usePpn);
 			
-			// find all customer in the customer order - today
+			// find all customer in the customer order - this week
 			listCustomerInCustomerOrder();
 			
 			// assign startDate and endDate to date component - disable date component			
@@ -221,7 +222,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			// list by date
 			listCustomerOrderByDate(startDate, endDate, checkTransaction, usePpn);
 
-			// find all customer in the customer order - today
+			// find all customer in the customer order - this month
 			listCustomerInCustomerOrder();
 			
 			// assign startDate and endDate to date component - disable date component			
@@ -303,12 +304,12 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			}
 		}
 		
-		uniqueCustList.forEach(cust->log.info(cust.getCompanyLegalName()));
+		// uniqueCustList.forEach(cust->log.info(cust.getCompanyLegalName()));
 		uniqueCustList.sort((o1,o2) -> {
 			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
 		});
-		log.info("Sort Ascending:");
-		uniqueCustList.forEach(cust->log.info(cust.getCompanyLegalName()));
+		// log.info("Sort Ascending:");
+		// uniqueCustList.forEach(cust->log.info(cust.getCompanyLegalName()));
 		
 		// populate customerCombobox
 		Comboitem comboitem = null;
@@ -1311,38 +1312,24 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			CustomerOrder customerOrder = customerOrderListbox.getSelectedItem().getValue();
 		
 			if (customerOrder.getOrderStatus().compareTo(DocumentStatus.BATAL)==0) {
-				throw new Exception("Sudah Dibatalkan.");
+				throw new SuppressedException("Sudah Dibatalkan", true);
 			}
 			
-/*			CustomerOrder customerOrderSuratJalanByProxy =
-					getCustomerOrderDao().findSuratJalanByProxy(customerOrder.getId());
-			
-			customerOrderSuratJalanByProxy.getSuratJalan().setSuratJalanStatus(DocumentStatus.BATAL);
-			
-			getCustomerOrderDao().update(customerOrderSuratJalanByProxy);
-*/			
-			// if (customerOrder.getOrderStatus().equals(DocumentStatus.BATAL)) {
-			//	throw new Exception ("Sudah dibatalkan.");
-			// }
-			
+			if (customerOrder.isPaymentComplete()) {
+				throw new SuppressedException("Batalkan Settlement terlebih dahulu sebelum membatalkan Customer Order", true);
+			}
+						
 			log.info("Starting CustomerOrder Batal...");
 			
 			Map<String, CustomerOrder> args = 
 					Collections.singletonMap("customerOrder", customerOrder);
 			Window customerOrderBatalWin = 
-					(Window) Executions.createComponents("/customerorder/CustomerOrderDialogBatal.zul", null, args);
+					(Window) Executions.createComponents("/customerorder/CustomerOrderDialogBatal02.zul", null, args);
 			
 			customerOrderBatalWin.addEventListener(Events.ON_OK, new EventListener<Event>() {
 
 				@Override
 				public void onEvent(Event event) throws Exception {
-					// CustomerOrder customerOrder = (CustomerOrder) event.getData();
-					
-					// update
-					// getCustomerOrderDao().update(customerOrder);
-					
-					log.info("Completed CustomerOrder Batal...");
-					
 					// re-load / re-list
 					int selIndex = ordersPeriodTabbox.getSelectedIndex();
 					

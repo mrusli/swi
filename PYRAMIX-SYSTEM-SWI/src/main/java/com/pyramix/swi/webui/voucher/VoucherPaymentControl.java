@@ -1,6 +1,5 @@
 package com.pyramix.swi.webui.voucher;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +42,7 @@ public class VoucherPaymentControl extends GFCBaseController {
 	private Tabbox voucherPaymentPeriodTabbox;
 	
 	private List<VoucherPayment> voucherPaymentList;
-	private BigDecimal totalPaymentVal;
+	// private BigDecimal totalPaymentVal;
 	private int paymentCount;
 	
 	private final int WORK_DAY_WEEK 	= 6;
@@ -138,7 +137,7 @@ public class VoucherPaymentControl extends GFCBaseController {
 
 	private ListitemRenderer<VoucherPayment> getPaymentListitemRenderer() {
 		
-		totalPaymentVal = BigDecimal.ZERO;
+		// totalPaymentVal = BigDecimal.ZERO;
 		
 		return new ListitemRenderer<VoucherPayment>() {
 			
@@ -187,30 +186,22 @@ public class VoucherPaymentControl extends GFCBaseController {
 				lc = initUserCreate(new Listcell(), payment);
 				lc.setParent(item);
 				
+				// Status
+				lc = initVoucherPaymentStatus(new Listcell(), payment);
+				lc.setParent(item);
+				
 				// edit
 				lc = initEditButton(new Listcell(), payment);
 				lc.setParent(item);
 				
-				totalPaymentVal = totalPaymentVal.add(payment.getTheSumOf());
+				// totalPaymentVal = totalPaymentVal.add(payment.getTheSumOf());
 
 				// if the status of voucherPayment is 'BATAL', change the backgroud color to red
-				if (payment.getVoucherStatus().equals(DocumentStatus.BATAL)) {
-					item.setClass("red-background");
-				}
+				// if (payment.getVoucherStatus().equals(DocumentStatus.BATAL)) {
+				//	item.setClass("red-background");
+				// }
 			}			
-			
-			private Listcell initUserCreate(Listcell listcell, VoucherPayment payment) throws Exception {
-				VoucherPayment paymentByProxy = getVoucherPaymentDao().findUserCreateByProxy(payment.getId());
-				
-				// userCreate - username
-				Label label = new Label();
-				label.setValue(paymentByProxy.getUserCreate()==null ? "" : 
-					paymentByProxy.getUserCreate().getUser_name());
-				label.setParent(listcell);				
-
-				return listcell;
-			}
-
+						
 			private Listcell initVoucherReference(Listcell listcell, VoucherPayment payment) throws Exception {
 				Label postingLabel = new Label();
 
@@ -255,6 +246,29 @@ public class VoucherPaymentControl extends GFCBaseController {
 				return listcell;
 			}
 
+			private Listcell initUserCreate(Listcell listcell, VoucherPayment payment) throws Exception {
+				VoucherPayment paymentByProxy = getVoucherPaymentDao().findUserCreateByProxy(payment.getId());
+				
+				// userCreate - username
+				Label label = new Label();
+				label.setValue(paymentByProxy.getUserCreate()==null ? "" : 
+					paymentByProxy.getUserCreate().getUser_name());
+				label.setParent(listcell);				
+
+				return listcell;
+			}
+
+			private Listcell initVoucherPaymentStatus(Listcell listcell, VoucherPayment payment) {
+				if (payment.getVoucherStatus().equals(DocumentStatus.BATAL)) {
+					Label label = new Label();
+					label.setValue("Batal");
+					label.setSclass("badge badge-red");
+					label.setParent(listcell);
+				}
+				
+				return listcell;
+			}			
+			
 			private Listcell initEditButton(Listcell listcell, VoucherPayment payment) {
 				Button editButton = new Button();
 				
@@ -287,7 +301,7 @@ public class VoucherPaymentControl extends GFCBaseController {
 	}
 
 	public void onAfterRender$voucherPaymentListbox(Event event) throws Exception {
-		infoResultlabel.setValue("Total: "+getFormatedInteger(paymentCount)+" pembayaran - Rp."+toLocalFormat(totalPaymentVal));
+		infoResultlabel.setValue("Total: "+paymentCount+" Voucher");
 	}
 
 	protected Giro getGiroByProxy(long id) throws Exception {

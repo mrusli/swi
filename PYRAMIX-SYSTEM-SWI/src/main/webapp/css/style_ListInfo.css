@@ -57,15 +57,7 @@
 	background-color: #f90000;	
 }
 
-.modButtonRed:active {
-	background-color: #f90000;
-}
-
-.modButtonRed:hover {
-	background-color: #f90000;
-}
-
-.modButtonRed:after {
+.modButtonRed:focus, .modButtonRed:hover {
 	background-color: #f90000;
 }
 
@@ -93,4 +85,29 @@
 
 .red-background.z-listitem .z-listcell {
 	background: red;
+}
+
+/*
+	Bootstrap Badge
+*/
+.badge-red {
+	background-color: red;
+}
+
+.badge-green {
+	background-color: green;
+}
+
+/*
+*/
+.button-with-dropdown > .z-menuitem-content {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-right: 6px;
+	padding-left: 6px;
+}
+
+.button-with-dropdown > .z-menuitem-content > .z-menuitem-text {
+	font-family: revert;
+	font-size: 1em;
 }

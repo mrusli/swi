@@ -5,6 +5,30 @@
 	id="settlementDialogViewWin" apply="${settlementDialogViewControl}">
 	<vbox>
 		<label id="idLabel" style="font-size:1em;"/>
+		<grid id="settlementBatalGrid">
+			<rows>
+				<row>
+					<cell width="11%">
+						Status:
+					</cell>
+					<cell width="15%">
+						<label id="settlementStatusLabel" style="color: red;"></label>
+					</cell>
+					<cell width="12%">
+						Tgl Pembatalan:
+					</cell>
+					<cell width="22%">
+						<datebox id="pembatalanSettlementDatebox" width="230px" readonly="true" disabled="true"></datebox>
+					</cell>
+					<cell width="10%">
+						Catatan:
+					</cell>
+					<cell>
+						<textbox id="pembatalanCatatanSettlementTextbox" width="230px" readonly="true"></textbox>
+					</cell>					
+				</row>
+			</rows>
+		</grid>
 		<grid>
 			<rows>
 				<row>
@@ -64,9 +88,7 @@
 					</cell>
 				</row>
 			</rows>
-		</grid>
-		<hlayout id="settlementDetailControl" style="padding: 10px;" valign="middle">
-		</hlayout>		
+		</grid>		
 		<listbox id="settlementDetailListbox" height="280px">
 			<listhead>
 				<listheader label="No.Order" width="100px"></listheader>

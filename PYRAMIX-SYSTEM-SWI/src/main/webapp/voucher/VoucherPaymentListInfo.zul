@@ -1,5 +1,6 @@
 <?page title="Voucher Payment" contentType="text/html;charset=UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/bootstrap-spacelab.min.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style_ListInfo.css"?>
 <?link rel="stylesheet" type="text/css" href="/css/style_Dialog.css"?>
@@ -23,7 +24,7 @@
 				</tabs>			
 			</tabbox>
 			<hlayout style="padding: 10px;" valign="middle">
-				<label id="infoResultlabel" value="Total: 8 pembayaran - Rp.450.329.112,-" style="color: silver;"></label>
+				<label id="infoResultlabel" style="color: black;"></label>
 				<button id="addButton" label="Tambah" sclass="modButton" disabled="true"></button>			
 			</hlayout>
 			<listbox id="voucherPaymentListbox" mold="paging" pageSize="15" height="540px">
@@ -35,6 +36,7 @@
 					<listheader label="Dibayar Dgn" width="120px"/>
 					<listheader label="Pembayarn Info" width="380px"/>
 					<listheader label="User"/>
+					<listheader width="60px"/>
 					<listheader/>
 				</listhead>
 			</listbox>

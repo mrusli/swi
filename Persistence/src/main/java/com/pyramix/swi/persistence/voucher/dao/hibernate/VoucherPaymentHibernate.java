@@ -184,4 +184,24 @@ public class VoucherPaymentHibernate extends DaoHibernate implements VoucherPaym
 			session.close();
 		}
 	}
+
+	@Override
+	public VoucherPayment findGeneralLedgerByProxy(Long id) throws Exception {
+		Session session = super.getSessionFactory().openSession();
+		
+		Criteria criteria = session.createCriteria(VoucherPayment.class);
+		VoucherPayment payment = (VoucherPayment) criteria.add(Restrictions.idEq(id)).uniqueResult();
+		
+		try {
+			Hibernate.initialize(payment.getGeneralLedgers());
+			
+			return payment;
+		} catch (Exception e) {
+			throw e;
+			
+		} finally {
+			session.close();
+		}
+
+	}
 }

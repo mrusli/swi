@@ -90,6 +90,15 @@ public class CustomerReceivableActivity extends IdBasedObject {
 	// receivable_status int(11)
 	@Column(name = "receivable_status")
 	private DocumentStatus receivableStatus;
+
+	//	batal_date date
+	@Column(name = "batal_date")
+	@Temporal(TemporalType.DATE)
+	private Date batalDate;
+	
+	//	batal_note varchar(255)
+	@Column(name = "batal_note")
+	private String batalNote;
 	
 	@Override
 	public String toString() {
@@ -228,6 +237,22 @@ public class CustomerReceivableActivity extends IdBasedObject {
 
 	public void setReceivableStatus(DocumentStatus receivableStatus) {
 		this.receivableStatus = receivableStatus;
+	}
+
+	public Date getBatalDate() {
+		return batalDate;
+	}
+
+	public void setBatalDate(Date batalDate) {
+		this.batalDate = batalDate;
+	}
+
+	public String getBatalNote() {
+		return batalNote;
+	}
+
+	public void setBatalNote(String batalNote) {
+		this.batalNote = batalNote;
 	}
 	
 	

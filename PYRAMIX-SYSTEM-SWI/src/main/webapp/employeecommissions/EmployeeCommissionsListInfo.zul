@@ -18,9 +18,15 @@
 			<tabbox id="employeeCommissionsTabbox">		
 			</tabbox>
 			<hlayout style="padding: 10px;" valign="middle">
-				<!-- Total: Rp.22,399,200.- Jumlah Komisisi -->
-				<label id="infoResultlabel" value="" style="color: silver;"></label>
-				<button id="addButton" label="Tambah" sclass="modButton" disabled="true"></button>			
+				<label value="Customer:"></label>
+				<combobox id="customerCombobox" width="180px"></combobox>
+				<label value="Pilih-Tgl:"></label>
+				<datebox id="startDatebox" width="160px"></datebox>
+				<label value="S/D:"></label>
+				<datebox id="endDatebox" width="160px"></datebox>
+				<button id="filterButton" label="Filter" sclass="modButton"></button>
+				<button id="resetButton" label="Reset" sclass="modButton"></button>
+				<label id="totalEmployeeSalesLabel" value="Total Penjualan (Rp.):"></label>				
 			</hlayout>
 			<listbox id="employeeCommissionsListbox" mold="paging" pageSize="15" height="540px">
 				<listhead>

@@ -66,5 +66,7 @@ public interface VoucherGiroReceiptDao {
 
 	public VoucherGiroReceipt findPostingVoucherNumberByProxy(Long id) throws Exception;
 
+	public VoucherGiroReceipt findGeneralLedgerByProxy(Long id) throws Exception;
+
 
 }

@@ -212,4 +212,26 @@ public class VoucherGiroReceiptHibernate extends DaoHibernate implements Voucher
 		}
 
 	}
+
+	@Override
+	public VoucherGiroReceipt findGeneralLedgerByProxy(Long id) throws Exception {
+		Session session = super.getSessionFactory().openSession();
+		
+		Criteria criteria = session.createCriteria(VoucherGiroReceipt.class);
+		VoucherGiroReceipt voucherGiroReceipt =
+				(VoucherGiroReceipt) criteria.add(Restrictions.idEq(id)).uniqueResult();
+		
+		try {
+			Hibernate.initialize(voucherGiroReceipt.getGeneralLedgers());
+			
+			return voucherGiroReceipt;
+		} catch (Exception e) {
+			throw e;
+			
+		} finally {
+			session.close();
+			
+		}
+
+	}
 }

@@ -1,58 +1,77 @@
 <?page title="Commissions" contentType="text/html;charset=UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk>
-<window width="1150px" height="420px" title="Employee" border="normal"
+<window width="1150px" height="240px" title="Employee" border="normal"
 	id="employeeCommissionsDialogWin" apply="${employeeCommissionsDialogControl}">
 	<vbox>
 		<label id="idLabel" style="font-size:1em;"/>
 		<grid>
 			<rows>
 				<row>
-					<cell width="15%">
-						Nama Karyawan:					
-					</cell>
-					<cell width="20%">
-						<combobox id="employeeNameCombobox" width="200px"></combobox>
-					</cell>
-					<cell width="10%">
+					<cell width="12%">
 						No.Order:
 					</cell>
-					<cell  width="12%">
-						<textbox id="customerOrderNoTextbox" disabled="true" width="110px"></textbox>
+					<cell width="15%">
+						<textbox id="customerOrderNoTextbox" width="145px" readonly="true"></textbox>
+					</cell>
+					<cell width="10%">
+						Tgl.Order:	
+					</cell>
+					<cell width="20%">
+						<datebox id="customerOrderDatebox" width="200px" readonly="true" disabled="true"></datebox>
 					</cell>
 					<cell width="10%">
 						Customer:
 					</cell>
 					<cell>
-						<textbox id="customerNameTextbox" disabled="true" width="320px"></textbox>
+						<textbox id="customerOrderCustomerTextbox" width="260px" readonly="true"/>
+					</cell>								
+				</row>
+				<row>				
+					<cell>
+						Sales:					
+					</cell>
+					<cell>
+						<combobox id="employeeNameCombobox" width="145px" readonly="true" disabled="true"></combobox>
+					</cell>
+					<cell>
+						
+					</cell>
+					<cell>
+						
+					</cell>
+					<cell>
+						
+					</cell>
+					<cell>
+
 					</cell>
 				</row>
 				<row>
 					<cell>
-						Total Order
+						Total (Bef.Ppn)
 					</cell>
 					<cell>
-						<decimalbox id="totalSalesDecimalbox"></decimalbox>
+						<textbox id="totalSalesTextbox" width="145px" style="text-align: right;" readonly="true"></textbox>
 					</cell>
 					<cell>
 						Komisi (%)
 					</cell>
 					<cell>
-						<decimalbox id="commissionPercentDecimalbox" width="110px"></decimalbox>
+						<textbox id="commissionPercentTextbox" width="110px" style="text-align: right;" readonly="true"></textbox>
 					</cell>
 					<cell>
 						Komisi (Rp.)
 					</cell>
 					<cell>
-						<decimalbox id="commissionTotalDecimalbox"></decimalbox>
+						<textbox id="commissionTotalTextbox" style="text-align: right;" readonly="true"></textbox>
 					</cell>
 				</row>
 			</rows>
 		</grid>
 	</vbox>
 	<hlayout style="padding-top: 5px;">
-		<button id="saveButton" label="Save"></button>
-		<button id="cancelButton" label="Cancel"></button>	
+		<button id="cancelButton" label="Tutup"></button>	
 	</hlayout>	
 </window>
 </zk>

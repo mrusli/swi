@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import com.pyramix.swi.domain.organization.Customer;
 import com.pyramix.swi.domain.settlement.Settlement;
 import com.pyramix.swi.domain.settlement.SettlementDetail;
 import com.pyramix.swi.persistence.common.dao.hibernate.DaoHibernate;
@@ -88,6 +89,59 @@ public class SettlementHibernate extends DaoHibernate implements SettlementDao {
 		}
 		
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Settlement> findAllSettlement_By_Customer_OrderBy_SettlementDate(boolean desc, 
+			Customer customer) throws Exception {
+		
+		Session session = super.getSessionFactory().openSession();
+		
+		Criteria criteria = session.createCriteria(Settlement.class);
+		criteria.add(Restrictions.eq("customer", customer));
+		criteria.addOrder(desc ? Order.desc("settlementDate") : Order.asc("settlementDate"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		
+		try {
+
+			return new ArrayList<Settlement>(criteria.list());
+			
+		} catch (Exception e) {
+			throw e;
+			
+		} finally {
+			session.close();
+			
+		}
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Settlement> findSettlement_By_Customer_By_SettlementDate(boolean desc, Customer customer,
+			Date startDate, Date endDate) throws Exception {
+		
+		Session session = super.getSessionFactory().openSession();
+		
+		Criteria criteria = session.createCriteria(Settlement.class);
+		criteria.add(Restrictions.eq("customer", customer));
+		criteria.add(Restrictions.between("settlementDate", startDate, endDate));
+		criteria.addOrder(desc ? Order.desc("settlementDate") : Order.asc("settlementDate"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		
+		try {
+
+			return new ArrayList<Settlement>(criteria.list());
+			
+		} catch (Exception e) {
+			throw e;
+			
+		} finally {
+			session.close();
+			
+		}
+	}
+	
 	
 	
 	@Override

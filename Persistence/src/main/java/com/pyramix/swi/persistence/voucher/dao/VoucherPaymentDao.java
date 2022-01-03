@@ -52,5 +52,7 @@ public interface VoucherPaymentDao {
 
 	public VoucherPayment findUserCreateByProxy(Long id) throws Exception;
 
+	public VoucherPayment findGeneralLedgerByProxy(Long id) throws Exception;
+
 	
 }

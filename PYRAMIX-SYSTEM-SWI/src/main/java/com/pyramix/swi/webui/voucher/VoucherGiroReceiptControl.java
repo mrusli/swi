@@ -52,6 +52,7 @@ public class VoucherGiroReceiptControl extends GFCBaseController {
 	private final int WORK_DAY_WEEK 	= 6;	
 	private final int DEFAULT_TAB_INDEX = 1;
 	
+	@SuppressWarnings("unused")
 	private final Logger log = Logger.getLogger(VoucherGiroReceiptControl.class);
 	
 	public void onCreate$voucherGiroReceiptListInfoWin(Event event) throws Exception {
@@ -159,9 +160,7 @@ public class VoucherGiroReceiptControl extends GFCBaseController {
 			getVoucherGiroReceiptList().sort((o1,o2) -> {
 				return o1.getGiroDate().compareTo(o2.getGiroDate());
 			});
-			
-			getVoucherGiroReceiptList().forEach(giro -> log.info(giro.getGiroDate()));
-			
+						
 			VoucherGiroReceipt giroDueEarliest = getVoucherGiroReceiptList().get(0);
 			lastIndex = getVoucherGiroReceiptList().size()-1;
 			VoucherGiroReceipt giroDueLatest = getVoucherGiroReceiptList().get(lastIndex);
@@ -286,7 +285,6 @@ public class VoucherGiroReceiptControl extends GFCBaseController {
 			// list by date
 			listAllVoucherGiroReceiptByDate(startDate, endDate, true);
 
-
 			if (getVoucherGiroReceiptList().isEmpty()) {
 				startDatebox.setDisabled(true);
 				endDatebox.setDisabled(true);
@@ -383,6 +381,10 @@ public class VoucherGiroReceiptControl extends GFCBaseController {
 				lc = initUserCreate(new Listcell(), receipt);
 				lc.setParent(item);
 				
+				// Status
+				lc = initGiroReceiptStatus(new Listcell(), receipt);
+				lc.setParent(item);
+				
 				// edit
 				lc = initEditButton(new Listcell(), receipt);
 				lc.setParent(item);
@@ -390,12 +392,11 @@ public class VoucherGiroReceiptControl extends GFCBaseController {
 				// totalReceiptVal = totalReceiptVal.add(receipt.getTheSumOf());
 				
 				// if the status of receipt is 'BATAL', change the backgroud color to red
-				if (receipt.getVoucherStatus().equals(DocumentStatus.BATAL)) {
-					item.setClass("red-background");
-				}
+				// if (receipt.getVoucherStatus().equals(DocumentStatus.BATAL)) {
+				//	item.setClass("red-background");
+				// }
 			}
-			
-			
+
 			private Listcell initUserCreate(Listcell listcell, VoucherGiroReceipt receipt) throws Exception {
 				// userCreate by proxy
 				VoucherGiroReceipt giroReceiptByProxy = 
@@ -407,7 +408,17 @@ public class VoucherGiroReceiptControl extends GFCBaseController {
 				return listcell;
 			}
 
+			private Listcell initGiroReceiptStatus(Listcell listcell, VoucherGiroReceipt receipt) {
+				if (receipt.getVoucherStatus().equals(DocumentStatus.BATAL)) {
+					Label label = new Label();
+					label.setValue("Batal");
+					label.setSclass("badge badge-red");
+					label.setParent(listcell);
+				}
 
+				return listcell;
+			}
+			
 			private Listcell initEditButton(Listcell listcell, VoucherGiroReceipt receipt) {
 				Button editButton = new Button();
 				
@@ -454,7 +465,7 @@ public class VoucherGiroReceiptControl extends GFCBaseController {
 	}
 
 	public void onAfterRender$voucherGiroReceiptListbox(Event event) throws Exception {
-		infoResultlabel.setValue("Total: "+receiptCount);
+		infoResultlabel.setValue("Total: "+receiptCount+" Voucher");
 				//+" receipt - Rp."+toLocalFormat(totalReceiptVal));
 	}
 	

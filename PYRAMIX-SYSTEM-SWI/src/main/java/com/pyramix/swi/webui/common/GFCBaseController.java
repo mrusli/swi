@@ -105,7 +105,7 @@ public class GFCBaseController extends GenericForwardComposer<Component> impleme
 	 * @return
 	 */
 	public LocalDate asLocalDate(Date date) {
-		
+
 		return new java.sql.Date(date.getTime()).toLocalDate();
 	}
 	

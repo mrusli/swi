@@ -171,6 +171,15 @@ public class CustomerOrder extends IdBasedObject {
 	@JoinColumn(name = "user_create_id_fk")
 	private User userCreate;	
 	
+	//	batal_date date
+	@Column(name = "batal_date")
+	@Temporal(TemporalType.DATE)
+	private Date batalDate;
+	
+	//	batal_note varchar(255)
+	@Column(name = "batal_note")
+	private String batalNote;
+	
 	@Override
 	public String toString() {
 		return "CustomerOrder [id="+getId()+
@@ -384,6 +393,22 @@ public class CustomerOrder extends IdBasedObject {
 
 	public void setEmployeeSales(Employee employeeSales) {
 		this.employeeSales = employeeSales;
+	}
+
+	public Date getBatalDate() {
+		return batalDate;
+	}
+
+	public void setBatalDate(Date batalDate) {
+		this.batalDate = batalDate;
+	}
+
+	public String getBatalNote() {
+		return batalNote;
+	}
+
+	public void setBatalNote(String batalNote) {
+		this.batalNote = batalNote;
 	}
 
 }

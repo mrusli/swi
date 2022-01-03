@@ -8,6 +8,8 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Decimalbox;
+import org.zkoss.zul.Grid;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
@@ -17,6 +19,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.pyramix.swi.domain.customerorder.CustomerOrder;
+import com.pyramix.swi.domain.serial.DocumentStatus;
 import com.pyramix.swi.domain.settlement.Settlement;
 import com.pyramix.swi.domain.settlement.SettlementDetail;
 import com.pyramix.swi.domain.suratjalan.SuratJalan;
@@ -36,10 +39,13 @@ public class SettlementDialogViewControl extends GFCBaseController {
 	
 	private Window settlementDialogViewWin;
 	private Listbox settlementDetailListbox;
-	private Datebox settlementDatebox;
+	private Datebox settlementDatebox, pembatalanSettlementDatebox;
 	private Textbox settlementNoCompTextbox, customerTextbox, referenceTextbox,
-		paymentAmountTextbox, settlementDescriptionTextbox, remainingTextbox; 
+		paymentAmountTextbox, settlementDescriptionTextbox, remainingTextbox,
+		pembatalanCatatanSettlementTextbox; 
 	private Checkbox installmentCheckbox;
+	private Grid settlementBatalGrid;
+	private Label settlementStatusLabel;
 	
 	private Settlement settlement;
 	private BigDecimal totalAmount, remainingAmount;
@@ -58,6 +64,8 @@ public class SettlementDialogViewControl extends GFCBaseController {
 		// set locale to datebox
 		settlementDatebox.setLocale(getLocale());
 		settlementDatebox.setFormat(getLongDateFormat());
+		pembatalanSettlementDatebox.setLocale(getLocale());
+		pembatalanSettlementDatebox.setFormat(getLongDateFormat());
 		
 		// init
 		setTotalAmount(BigDecimal.ZERO);
@@ -68,6 +76,11 @@ public class SettlementDialogViewControl extends GFCBaseController {
 	}
 
 	private void setSettlementInfo() throws Exception {
+		settlementBatalGrid.setVisible(getSettlement().getSettlementStatus().equals(DocumentStatus.BATAL));
+		settlementStatusLabel.setValue(getSettlement().getSettlementStatus().toString());
+		pembatalanSettlementDatebox.setValue(getSettlement().getBatalDate());
+		pembatalanCatatanSettlementTextbox.setValue(getSettlement().getBatalNote());
+		
 		settlementNoCompTextbox.setValue(getSettlement().getSettlementNumber().getSerialComp());
 		settlementDatebox.setValue(getSettlement().getCreateDate());
 		

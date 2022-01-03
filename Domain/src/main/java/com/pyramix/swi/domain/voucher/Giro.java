@@ -88,6 +88,15 @@ public class Giro extends IdBasedObject {
 	@Enumerated(EnumType.ORDINAL)
 	private DocumentStatus giroStatus;
 	
+	//	batal_date date 
+	@Column(name = "batal_date")
+	@Temporal(TemporalType.DATE)
+	private Date batalDate;
+	
+	//	batal_note varchar(255)
+	@Column(name = "batal_note")
+	private String batalNote;
+	
 	@Override
 	public String toString() {
 		return "Giro [id="+getId()+
@@ -184,6 +193,22 @@ public class Giro extends IdBasedObject {
 
 	public void setGiroStatus(DocumentStatus giroStatus) {
 		this.giroStatus = giroStatus;
+	}
+
+	public Date getBatalDate() {
+		return batalDate;
+	}
+
+	public void setBatalDate(Date batalDate) {
+		this.batalDate = batalDate;
+	}
+
+	public String getBatalNote() {
+		return batalNote;
+	}
+
+	public void setBatalNote(String batalNote) {
+		this.batalNote = batalNote;
 	}
 
 

@@ -112,6 +112,13 @@ public class GiroListInfoControl extends GFCBaseController {
 		
 		giroCount = getGiroList().size();
 		
+		totalAmount = BigDecimal.ZERO;
+		getGiroList().forEach(giro -> {
+			if (giro.getGiroStatus().equals(DocumentStatus.NORMAL)) {
+				totalAmount = totalAmount.add(giro.getGiroAmount());
+			}
+		});
+		
 		displayList();		
 	}
 
@@ -119,6 +126,13 @@ public class GiroListInfoControl extends GFCBaseController {
 		setGiroList(getGiroDao().findAllGiro_OrderBy_PaidGiroDate(true, paidStatus));
 
 		giroCount = getGiroList().size();
+
+		totalAmount = BigDecimal.ZERO;
+		getGiroList().forEach(giro -> {
+			if (giro.getGiroStatus().equals(DocumentStatus.NORMAL)) {
+				totalAmount = totalAmount.add(giro.getGiroAmount());
+			}
+		});
 		
 		displayList();		
 	}
@@ -127,6 +141,13 @@ public class GiroListInfoControl extends GFCBaseController {
 		setGiroList(getGiroDao().findGiro_By_DueGiroDate(startDate, endDate, paidStatus));
 		
 		giroCount = getGiroList().size();
+
+		totalAmount = BigDecimal.ZERO;
+		getGiroList().forEach(giro -> {
+			if (giro.getGiroStatus().equals(DocumentStatus.NORMAL)) {
+				totalAmount = totalAmount.add(giro.getGiroAmount());
+			}
+		});
 		
 		displayList();
 	}
@@ -138,9 +159,7 @@ public class GiroListInfoControl extends GFCBaseController {
 	}
 	
 	private ListitemRenderer<Giro> getGiroListitemRenderer() {
-		
-		totalAmount = BigDecimal.ZERO;
-		
+				
 		return new ListitemRenderer<Giro>() {
 						
 			@Override
@@ -189,16 +208,18 @@ public class GiroListInfoControl extends GFCBaseController {
 				lc = initVoucherGiroReceipt(new Listcell(), giro);
 				lc.setParent(item);
 				
+				// Status
+				lc = initGiroStatus(new Listcell(), giro);
+				lc.setParent(item);
+				
 				// Edit Giro
 				lc = initGiroEdit(new Listcell(), giro);
 				lc.setParent(item);
 				
-				totalAmount = totalAmount.add(giro.getGiroAmount());
-
 				// if the status of giro is 'BATAL', change the backgroud color to red
-				if (giro.getGiroStatus().equals(DocumentStatus.BATAL)) {
-					item.setClass("red-background");
-				}
+				// if (giro.getGiroStatus().equals(DocumentStatus.BATAL)) {
+				//	item.setClass("red-background");
+				// }
 			}
 			
 			private Listcell initVoucherPaymentPosting(Listcell listcell, Giro giro) throws Exception {
@@ -351,6 +372,18 @@ public class GiroListInfoControl extends GFCBaseController {
 				return listcell;
 			}
 
+			private Listcell initGiroStatus(Listcell listcell, Giro giro) {
+				if (giro.getGiroStatus().equals(DocumentStatus.BATAL)) {
+					Label label = new Label();
+					label.setValue("Batal");
+					label.setSclass("badge badge-red");
+					label.setParent(listcell);
+				}
+
+				return listcell;
+			}
+			
+			
 			private Listcell initGiroEdit(Listcell listcell, Giro giro) {
 				Button editButton = new Button();
 				editButton.setLabel("...");
