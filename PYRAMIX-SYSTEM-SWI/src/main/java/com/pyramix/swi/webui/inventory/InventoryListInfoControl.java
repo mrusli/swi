@@ -846,16 +846,16 @@ public class InventoryListInfoControl extends GFCBaseController {
 			totalKg = totalKg.add(qtyKg);
 			totalItem = totalItem + 1;
 			
-			log.info(inventory.getInventoryCode().getProductCode()+" "+
-					inventory.getThickness()+"x"+inventory.getWidth()+"x"+inventory.getLength()+" "+
-					inventory.getWeightQuantity()+" Kg.");
+			// log.info(inventory.getInventoryCode().getProductCode()+" "+
+			//		inventory.getThickness()+"x"+inventory.getWidth()+"x"+inventory.getLength()+" "+
+			//		inventory.getWeightQuantity()+" Kg.");
 		}
 		
-		log.info("Total: "+totalKg+" Kg.");
+		// log.info("Total: "+totalKg+" Kg.");
 		
 		// '29/11 - need exact total "###.###.###,00"
 		BigDecimal totalMT = totalKg.divide(new BigDecimal(1000), 3, RoundingMode.CEILING);
-		log.info("Total: "+totalMT+" MT");
+		// log.info("Total: "+totalMT+" MT");
 		
 		infoResultlabel.setValue("Total: "+String.valueOf(totalItem)+" item - "+
 				toLocalFormatWithDecimal(totalMT, 3, "###.###.###,000")+"MT");

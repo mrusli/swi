@@ -1,6 +1,7 @@
 package com.pyramix.swi.domain.organization;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.pyramix.swi.domain.common.IdBasedObject;
 import com.pyramix.swi.domain.common.SchemaUtil;
@@ -47,7 +50,16 @@ public class EmployeeCommissions extends IdBasedObject {
 	// commission_status int(11)
 	@Column(name = "commission_status")
 	private DocumentStatus commissionStatus;
+
+	//	batal_date date
+	@Column(name = "batal_date")
+	@Temporal(TemporalType.DATE)
+	private Date batalDate;
 	
+	//	batal_note varchar(255)
+	@Column(name = "batal_note")
+	private String batalNote;
+
 	@Override
 	public String toString() {
 		return "EmployeeCommissions [id="+getId()+
@@ -96,6 +108,22 @@ public class EmployeeCommissions extends IdBasedObject {
 
 	public void setCommissionStatus(DocumentStatus commissionStatus) {
 		this.commissionStatus = commissionStatus;
+	}
+
+	public Date getBatalDate() {
+		return batalDate;
+	}
+
+	public void setBatalDate(Date batalDate) {
+		this.batalDate = batalDate;
+	}
+
+	public String getBatalNote() {
+		return batalNote;
+	}
+
+	public void setBatalNote(String batalNote) {
+		this.batalNote = batalNote;
 	}
 	
 }

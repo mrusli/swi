@@ -81,7 +81,7 @@ public class EmployeeDialogControl extends GFCBaseController {
 		commissionPercentDecimalbox.setLocale(getLocale());
 		
 		// making textbox responds to "Enter" key
-		setEmployeeNameTextboxEventListener();
+		// setEmployeeNameTextboxEventListener();
 		
 		switch (getPageMode()) {
 		case EDIT:
@@ -144,7 +144,8 @@ public class EmployeeDialogControl extends GFCBaseController {
 		}
 	}
 
-	private void setEmployeeNameTextboxEventListener() throws Exception {
+	@SuppressWarnings("unused")
+	private void setEmployeeNameTextboxEventListene() throws Exception {
 		// when user press the 'tab' key to go to the next component
 		employeeNameTextbox.addEventListener(Events.ON_BLUR, new EventListener<Event>() {
 

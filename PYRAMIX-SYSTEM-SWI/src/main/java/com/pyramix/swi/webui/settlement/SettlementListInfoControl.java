@@ -63,7 +63,6 @@ public class SettlementListInfoControl extends GFCBaseController {
 	
 	private List<Settlement> settlementList;
 	private List<Customer> customerList;
-	private BigDecimal totalSettlementVal;
 	private int settlementCount;
 	private User loginUser;
 	
@@ -142,13 +141,13 @@ public class SettlementListInfoControl extends GFCBaseController {
 	
 	private void settlementCount_and_Total() {
 		settlementCount = getSettlementList().size();
-		totalSettlementVal = BigDecimal.ZERO;
-		getSettlementList().forEach(settlement -> {
-			// count totalPaid
-			if (settlement.getSettlementStatus().equals(DocumentStatus.NORMAL)) {
-				totalSettlementVal = totalSettlementVal.add(settlement.getAmountPaid());
-			}
-		});
+		// totalSettlementVal = BigDecimal.ZERO;
+		// getSettlementList().forEach(settlement -> {
+			 // count totalPaid
+		//	 if (settlement.getSettlementStatus().equals(DocumentStatus.NORMAL)) {
+		//		totalSettlementVal = totalSettlementVal.add(settlement.getAmountPaid());
+		//	 }
+		// });
 	}
 
 	private void settlementCustomer() throws Exception {
@@ -637,8 +636,8 @@ public class SettlementListInfoControl extends GFCBaseController {
 	}
 
 	public void onAfterRender$settlementListbox(Event event) throws Exception {
-		infoResultlabel.setValue("Total: "+getFormatedInteger(settlementCount)+
-				" settlement - Rp."+toLocalFormat(totalSettlementVal));
+		infoResultlabel.setValue("Total: "+getFormatedInteger(settlementCount)+" Settlement");
+		//		" settlement - Rp."+toLocalFormat(totalSettlementVal));
 	}
 	
 	public void onSelect$settlementListbox(Event event) throws Exception {
@@ -815,6 +814,16 @@ public class SettlementListInfoControl extends GFCBaseController {
 			
 			Window settlementBatalWin = 
 					(Window) Executions.createComponents("/settlement/SettlementDialogBatal.zul", null, args);
+			
+			settlementBatalWin.addEventListener(Events.ON_OK, new EventListener<Event>() {
+
+				@Override
+				public void onEvent(Event event) throws Exception {
+					int selIndex = settlementPeriodTabbox.getSelectedIndex();
+					
+					listBySelection(selIndex);					
+				}
+			});
 			
 			settlementBatalWin.doModal();
 		}

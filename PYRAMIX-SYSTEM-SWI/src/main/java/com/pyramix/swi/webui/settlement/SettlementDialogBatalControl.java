@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Datebox;
@@ -593,7 +594,8 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 			List<VoucherGiroReceiptDebitCredit> reverseDbCrList = null;
 			
 			if (status.equals(DocumentStatus.BATAL)) {
-				pembatalanVoucherCatatanTextbox.setValue(
+				String userEntry = pembatalanVoucherCatatanTextbox.getValue();
+				pembatalanVoucherCatatanTextbox.setValue(userEntry + " " +
 						"Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+
 						" ("+voucherGiroReceipt.getTransactionDescription()+")");
 
@@ -602,12 +604,12 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 				
 				for (VoucherGiroReceiptDebitCredit dbcr : voucherGiroReceipt.getVoucherGiroReceiptDebitCredits()) {
 					
-					String dbcrDescription = dbcr.getDbcrDescription() + 
-							" (Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+")";
+					// String dbcrDescription = dbcr.getDbcrDescription() + 
+					//		" (Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+")";
 					
 					VoucherGiroReceiptDebitCredit reverseDbCr = new VoucherGiroReceiptDebitCredit();
 					reverseDbCr.setMasterCoa(dbcr.getMasterCoa());
-					reverseDbCr.setDbcrDescription(dbcrDescription);
+					reverseDbCr.setDbcrDescription(pembatalanVoucherCatatanTextbox.getValue());
 					
 					
 					if (dbcr.getDebitAmount().compareTo(BigDecimal.ZERO)==0) {
@@ -870,7 +872,9 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 
 		if (status.equals(DocumentStatus.BATAL)) {			
 			statusGiroPaymentCombobox.setStyle("color: red;");
-			giroPaymentPembatalanCatatanTextbox.setValue("Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+
+			String userEntry = giroPaymentPembatalanCatatanTextbox.getValue();
+			giroPaymentPembatalanCatatanTextbox.setValue(userEntry + " " +
+					"Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+
 					" ("+voucherPaymentByGiro.getTransactionDescription()+")");	
 			
 			reverseDbCrList =
@@ -878,12 +882,12 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 			
 			for (VoucherPaymentDebitCredit dbcr : voucherPaymentByGiro.getVoucherPaymentDebitCredits()) {
 				
-				String dbcrDescription = dbcr.getDbcrDescription() +
-						" (Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+")";
+				// String dbcrDescription = dbcr.getDbcrDescription() +
+				// 		" (Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+")";
 				
 				VoucherPaymentDebitCredit reverseDbCr = new VoucherPaymentDebitCredit();
 				reverseDbCr.setMasterCoa(dbcr.getMasterCoa());
-				reverseDbCr.setDbcrDescription(dbcrDescription);
+				reverseDbCr.setDbcrDescription(giroPaymentPembatalanCatatanTextbox.getValue());
 				
 				if (dbcr.getDebitAmount().compareTo(BigDecimal.ZERO)==0) {
 					reverseDbCr.setDebitAmount(dbcr.getCreditAmount());
@@ -1079,8 +1083,9 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 			if (glList!=null) {
 				// get the 1st index
 				GeneralLedger glMetaInfo = glList.get(0);
-				glPembatalanCatatanTextbox.setValue(
-						"Pembatalan Settlment No:"+getSettlement().getSettlementNumber().getSerialComp()+
+				String userEntry = glPembatalanCatatanTextbox.getValue();				
+				glPembatalanCatatanTextbox.setValue(userEntry + " " +
+						"Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+
 						" ("+glMetaInfo.getTransactionDescription()+")");					
 			}
 			
@@ -1088,8 +1093,8 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 					new ArrayList<GeneralLedger>(glList);
 			
 			for (GeneralLedger gl : glList) {
-				String dbcrDescriptionString = gl.getDbcrDescription() +
-						" (Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+")";
+				// String dbcrDescription = gl.getDbcrDescription() +
+				//		" (Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+")";
 				
 				GeneralLedger reverseGL = new GeneralLedger();
 				reverseGL.setPostingDate(gl.getPostingDate());
@@ -1101,7 +1106,7 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 				reverseGL.setTransactionDate(gl.getTransactionDate());
 				
 				reverseGL.setMasterCoa(gl.getMasterCoa());
-				reverseGL.setDbcrDescription(dbcrDescriptionString);
+				reverseGL.setDbcrDescription(glPembatalanCatatanTextbox.getValue());
 				
 				if (gl.getDebitAmount().compareTo(BigDecimal.ZERO)==0) {
 					reverseGL.setDebitAmount(gl.getCreditAmount());
@@ -1224,25 +1229,26 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 	public void onSelect$statusGLPaymentCombobox(Event event) throws Exception {
 		DocumentStatus status = statusGLPaymentCombobox.getSelectedItem().getValue();
 		List<GeneralLedger> reverseDbCrList = null;
+		Settlement settlement = 
+				getSettlementDao().findVoucherGiroReceiptByProxy(getSettlement().getId());
+		VoucherGiroReceipt voucherGiroReceipt =
+				settlement.getVoucherGiroReceipt();
+		Giro giro = 
+				getGiroDao().findVoucherPaymentByProxy(voucherGiroReceipt.getId());
+		VoucherPayment voucherPayment =
+				giro.getVoucherPayment();
+		VoucherPayment voucherPaymentGLByProxy =
+				getVoucherPaymentDao().findGeneralLedgerByProxy(voucherPayment.getId());
+		List<GeneralLedger> glList = 
+				voucherPaymentGLByProxy.getGeneralLedgers();
 		
 		if (status.equals(DocumentStatus.BATAL)) {
 			statusGLPaymentCombobox.setStyle("color:red;");
-			Settlement settlement = 
-					getSettlementDao().findVoucherGiroReceiptByProxy(getSettlement().getId());
-			VoucherGiroReceipt voucherGiroReceipt =
-					settlement.getVoucherGiroReceipt();
-			Giro giro = 
-					getGiroDao().findVoucherPaymentByProxy(voucherGiroReceipt.getId());
-			VoucherPayment voucherPayment =
-					giro.getVoucherPayment();
-			VoucherPayment voucherPaymentGLByProxy =
-					getVoucherPaymentDao().findGeneralLedgerByProxy(voucherPayment.getId());
-			List<GeneralLedger> glList = 
-					voucherPaymentGLByProxy.getGeneralLedgers();
 			if (glList!=null) {
 				// get the 1st index
 				GeneralLedger glMetaInfo = glList.get(0);
-				glGiroPaymentPembatalanCatatanTextbox.setValue(
+				String userEntry = glGiroPaymentPembatalanCatatanTextbox.getValue();
+				glGiroPaymentPembatalanCatatanTextbox.setValue(userEntry + " " +
 						"Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+
 						" ("+glMetaInfo.getTransactionDescription()+")");					
 			}
@@ -1251,8 +1257,8 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 					new ArrayList<GeneralLedger>(glList);
 			
 			for (GeneralLedger gl : glList) {
-				String dbcrDescriptionString = gl.getDbcrDescription() +
-						" (Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+")";
+				// String dbcrDescriptionString = gl.getDbcrDescription() +
+				//		" (Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+")";
 				
 				GeneralLedger reverseGL = new GeneralLedger();
 				reverseGL.setPostingDate(gl.getPostingDate());
@@ -1264,7 +1270,7 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 				reverseGL.setTransactionDate(gl.getTransactionDate());
 				
 				reverseGL.setMasterCoa(gl.getMasterCoa());
-				reverseGL.setDbcrDescription(dbcrDescriptionString);
+				reverseGL.setDbcrDescription(glGiroPaymentPembatalanCatatanTextbox.getValue());
 				
 				if (gl.getDebitAmount().compareTo(BigDecimal.ZERO)==0) {
 					reverseGL.setDebitAmount(gl.getCreditAmount());
@@ -1280,7 +1286,9 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 		} else {
 			statusGLPaymentCombobox.setStyle("color:red;");
 			glGiroPaymentPembatalanCatatanTextbox.setValue("");
-
+			
+			reverseDbCrList = 
+					new ArrayList<GeneralLedger>(glList);
 		}
 		
 		// sort by MasterCOA
@@ -1471,8 +1479,13 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 				vbox = new Vbox();
 				vbox.setParent(lc);
 				label = new Label();
-				label.setValue(activity.getPaymentDate()==null? " - " :
+				if (activity.getReceivableStatus().equals(DocumentStatus.BATAL)) {
+					label.setValue(" - ");
+					label.setStyle("color:red;");
+				} else {
+					label.setValue(activity.getPaymentDate()==null? " - " :
 						dateToStringDisplay(asLocalDate(activity.getPaymentDate()), getShortDateFormat()));
+				}
 				label.setParent(vbox);
 				if (activity.getActivityType().compareTo(ActivityType.PENJUALAN)==0) {
 					// title: harga(rp.)
@@ -1566,7 +1579,7 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 				vbox.setParent(lc);
 				label = new Label();
 				if (activity.getReceivableStatus().equals(DocumentStatus.BATAL)) {
-					label.setValue("BATAL");
+					label.setValue(" - ");
 					label.setStyle("color:red;");
 				} else {
 					label.setValue(activity.isPaymentComplete() ? "Lunas" : " - ");
@@ -1609,7 +1622,8 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 
 		if (status.equals(DocumentStatus.BATAL)) {
 			statusPiutangCombobox.setStyle("color:red;");
-			piutangPembatalanCatatanTextbox.setValue(
+			String userEntry = piutangPembatalanCatatanTextbox.getValue();
+			piutangPembatalanCatatanTextbox.setValue(userEntry + " " +
 					"Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp());
 			
 			for (CustomerReceivableActivity activity : activityHolderList) {
@@ -1679,6 +1693,8 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 		
 		// update
 		updatePembatalan(activeTabs);
+		
+		Events.sendEvent(Events.ON_OK, settlementDialogBatalWin, null);
 		
 		settlementDialogBatalWin.detach();
 	}
@@ -1872,6 +1888,7 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 		VoucherGiroReceipt modVoucherGiroReceipt = settlement.getVoucherGiroReceipt();
 		
 		modVoucherGiroReceipt.setVoucherStatus(statusVoucherCombobox.getSelectedItem().getValue());
+		modVoucherGiroReceipt.setPostingDate(pembatalanVoucherDatebox.getValue());
 		modVoucherGiroReceipt.setBatalDate(pembatalanVoucherDatebox.getValue());
 		modVoucherGiroReceipt.setBatalNote(pembatalanVoucherCatatanTextbox.getValue());
 		
@@ -1900,6 +1917,7 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 		VoucherPayment modVoucherPayment = settlement.getVoucherPayment();
 		
 		modVoucherPayment.setVoucherStatus(statusVoucherCombobox.getSelectedItem().getValue());
+		modVoucherPayment.setPostingDate(pembatalanVoucherDatebox.getValue());
 		modVoucherPayment.setBatalDate(pembatalanVoucherDatebox.getValue());
 		modVoucherPayment.setBatalNote(pembatalanVoucherCatatanTextbox.getValue());
 
@@ -1950,6 +1968,7 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 		VoucherPayment modVoucherPayment = giroVoucherPaymentByProxyGiro.getVoucherPayment();
 		
 		modVoucherPayment.setVoucherStatus(statusGiroPaymentCombobox.getSelectedItem().getValue());
+		modVoucherPayment.setPostingDate(pembatalanGiroPaymentDatebox.getValue());
 		modVoucherPayment.setBatalDate(pembatalanGiroPaymentDatebox.getValue());
 		modVoucherPayment.setBatalNote(giroPaymentPembatalanCatatanTextbox.getValue());
 		
@@ -1983,7 +2002,7 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 			GeneralLedger gl = item.getValue();
 			
 			GeneralLedger reverseGL = new GeneralLedger();
-			reverseGL.setPostingDate(gl.getPostingDate());
+			reverseGL.setPostingDate(glPembatalanDatebox.getValue());
 			reverseGL.setPostingVoucherNumber(gl.getPostingVoucherNumber());
 			reverseGL.setVoucherNumber(gl.getVoucherNumber());
 			reverseGL.setVoucherType(gl.getVoucherType());
@@ -2015,7 +2034,7 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 			GeneralLedger gl = item.getValue();
 			
 			GeneralLedger reverseGL = new GeneralLedger();
-			reverseGL.setPostingDate(gl.getPostingDate());
+			reverseGL.setPostingDate(glPembatalanDatebox.getValue());
 			reverseGL.setPostingVoucherNumber(gl.getPostingVoucherNumber());
 			reverseGL.setVoucherNumber(gl.getVoucherNumber());
 			reverseGL.setVoucherType(gl.getVoucherType());
@@ -2052,7 +2071,7 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 			GeneralLedger gl = item.getValue();
 			
 			GeneralLedger reverseGL = new GeneralLedger();
-			reverseGL.setPostingDate(gl.getPostingDate());
+			reverseGL.setPostingDate(glGiroPaymentPembatalanDatebox.getValue());
 			reverseGL.setPostingVoucherNumber(gl.getPostingVoucherNumber());
 			reverseGL.setVoucherNumber(gl.getVoucherNumber());
 			reverseGL.setVoucherType(gl.getVoucherType());
@@ -2088,9 +2107,8 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 					receivableActivity.setAmountPaidPpn(BigDecimal.ZERO);
 					receivableActivity.setPaymentComplete(false);
 					receivableActivity.setRemainingAmount(BigDecimal.ZERO);
-					receivableActivity.setPaymentDescription("Pembatalan Settlement No.:"+
-							getSettlement().getSettlementNumber().getSerialComp());
-					
+					receivableActivity.setBatalDate(piutangPembatalanDatebox.getValue());
+					receivableActivity.setBatalNote(piutangPembatalanCatatanTextbox.getValue());
 					break;
 				}
 				

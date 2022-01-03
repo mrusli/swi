@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -131,6 +132,12 @@ public class Inventory extends IdBasedObject {
 			joinColumns = @JoinColumn(name = "id_inventory"),
 			inverseJoinColumns = @JoinColumn(name = "id_transfer"))
 	private InventoryTransfer inventoryTransfer;
+	
+	@Transient
+	private int postSheetQuantity;
+	
+	@Transient
+	private BigDecimal postWeightQuantity;
 	
 	@Override
 	public String toString() {
@@ -304,5 +311,21 @@ public class Inventory extends IdBasedObject {
 
 	public void setInventoryTransfer(InventoryTransfer inventoryTransfer) {
 		this.inventoryTransfer = inventoryTransfer;
+	}
+
+	public BigDecimal getPostWeightQuantity() {
+		return postWeightQuantity;
+	}
+
+	public void setPostWeightQuantity(BigDecimal postWeightQuantity) {
+		this.postWeightQuantity = postWeightQuantity;
+	}
+
+	public int getPostSheetQuantity() {
+		return postSheetQuantity;
+	}
+
+	public void setPostSheetQuantity(int postSheetQuantity) {
+		this.postSheetQuantity = postSheetQuantity;
 	}
 }

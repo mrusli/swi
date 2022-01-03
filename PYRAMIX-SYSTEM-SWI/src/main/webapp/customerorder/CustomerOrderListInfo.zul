@@ -45,7 +45,7 @@
 					<listheader label="Order-No." width="100px"/>
 					<listheader label="Customer" width="180px"/>
 					<listheader label="Pembayaran" width="100px"/>
-					<listheader label="Total Order" width="100px" align="right"/>
+					<listheader label="Total Order (Rp.)" width="100px" align="right"/>
 					<listheader label="Sales" width="100px"/>
 					<listheader label="Posting/Voucher" width="170px"/>
 					<listheader label="Settlement" width="80px" align="right"/>

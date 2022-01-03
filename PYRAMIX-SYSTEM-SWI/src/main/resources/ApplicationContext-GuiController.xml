@@ -292,6 +292,19 @@
 		<property name="generalLedgerDao" ref="generalLedgerDao"></property>
 	</bean>
 
+	<bean id="customerOrderDialogBatalControl02" class="com.pyramix.swi.webui.customerorder.CustomerOrderDialogBatalControl02" scope="prototype" parent="basisController">
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
+		<property name="customerOrderProductDao" ref="customerOrderProductDao"></property>
+		<property name="employeeCommissionsDao" ref="employeeCommissionsDao"></property>
+		<property name="suratJalanDao" ref="suratJalanDao"></property>
+		<property name="deliveryOrderDao" ref="deliveryOrderDao"></property>
+		<property name="fakturDao" ref="fakturDao"></property>
+		<property name="voucherSalesDao" ref="voucherSalesDao"></property>
+		<property name="customerReceivableDao" ref="customerReceivableDao"></property>
+		<property name="generalLedgerDao" ref="generalLedgerDao"></property>
+		<property name="inventoryDao" ref="inventoryDao"></property>
+	</bean>
+
 	<bean id="customerOrderDialogBatalReceivableControl" class="com.pyramix.swi.webui.customerorder.CustomerOrderDialogBatalReceivableControl" scope="prototype" parent="basisController">
 		<property name="customerOrderDao" ref="customerOrderDao"></property>
 	</bean>
@@ -398,6 +411,8 @@
 	</bean>
 
 	<bean id="employeeCommissionsDialogControl" class="com.pyramix.swi.webui.employeecommissions.EmployeeCommissionsDialogControl" scope="prototype" parent="basisController">
+		<property name="employeeCommissionsDao" ref="employeeCommissionsDao"></property>
+		<property name="customerOrderDao" ref="customerOrderDao"></property>
 		
 	</bean>
 
