@@ -67,7 +67,7 @@ public class SettlementListInfoControl extends GFCBaseController {
 	private User loginUser;
 	
 	private final int WORK_DAY_WEEK 	= 6;
-	private final int DEFAULT_TAB_INDEX = 0;
+	private final int DEFAULT_TAB_INDEX = 1;
 	
 	private static final Logger log = Logger.getLogger(SettlementListInfoControl.class);
 	
