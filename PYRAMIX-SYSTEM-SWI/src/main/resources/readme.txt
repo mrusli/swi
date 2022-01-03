@@ -1,3 +1,14 @@
+3.7.22-SWI - 06/12/2021
+- Replace the InventoryListInfoByType tab list using InventoryType instead of InventoryCode (prior to version 3.7.21-SWI)
+- InventoryTypes in the tabs are sorted with WeightQuantity (heaviest on the leftmost tab)
+- InventoryTypes with no Inventory are not in the tab
+
+3.7.21-SWI - 01/12/2021
+- Fix the Weight quantity result with exact number in InventoryListInfo and InventoryListInfoByType
+- Replace the InventoryListInfoByType tab list using InventoryCode instead of InventoryType
+- InventoryCodes in the tab are sorted with the most WeightQuantity
+- InventoryCodes with no inventory are not in the tab
+
 3.7.20-SWI - 27/11/2021
 - Add edit capability for Giro in 'Voucher: ... Daftar Giro Gantung' (Informasi Giro)
 
