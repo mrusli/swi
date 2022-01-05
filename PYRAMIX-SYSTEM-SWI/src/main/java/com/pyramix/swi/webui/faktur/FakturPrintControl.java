@@ -87,7 +87,11 @@ public class FakturPrintControl extends GFCBaseController {
 			customerCityLabel.setValue(customerByProxy.getCity());
 			customerTelephoneLabel.setValue(customerByProxy.getPhone().isEmpty() ? "" : "Tel: "+customerByProxy.getPhone());
 			customerFaxLabel.setValue(customerByProxy.getFax().isEmpty() ? "" : "Fax:"+customerByProxy.getFax());
-			customerPurchaseOrderLabel.setValue(getFaktur().getNote().isEmpty() ? "" : "PO No.: "+getFaktur().getNote());
+			if (getFaktur().getFakturStatus().equals(DocumentStatus.BATAL)) {
+				customerPurchaseOrderLabel.setValue(getFaktur().getNote());				
+			} else {
+				customerPurchaseOrderLabel.setValue(getFaktur().getNote().isEmpty() ? "" : "PO No.: "+getFaktur().getNote());
+			}
 		}
 		
 		customerPaymentLabel.setValue(getFaktur().getPaymentType().compareTo(PaymentType.tunai)==0 ?
