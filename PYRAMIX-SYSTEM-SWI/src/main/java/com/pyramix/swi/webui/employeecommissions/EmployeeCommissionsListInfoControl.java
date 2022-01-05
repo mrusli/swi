@@ -1,12 +1,12 @@
 package com.pyramix.swi.webui.employeecommissions;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -57,7 +57,10 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 	private List<Employee> employeeList;
 	private Date defaultStartDate, defaultEndDate;
 	
+	private static Logger log = Logger.getLogger(EmployeeCommissionsListInfoControl.class);
+	
 	public void onCreate$employeeCommissionsListInfoWin(Event event) throws Exception {
+		log.info("Creating employeeCommissionsListInfoWin");
 		formTitleLabel.setValue("Penjualan Karyawan Sales");
 		
 		// datebox
@@ -82,9 +85,7 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 		setEmployeeCommissionsList(
 				// getEmployeeCommissionsDao().findAllEmployeeCommissions());
 				getEmployeeCommissionsDao().findAllEmployeeCommissions_OrderBy_CustomerOrderDate(decendingOrder));
-		
-		// setup unique customer list
-		setupCustomerList();
+				
 		// setup date range
 		setupDateRange();
 		// calc total sales
@@ -93,53 +94,16 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 		defaultStartDate = startDatebox.getValue(); 
 		defaultEndDate = endDatebox.getValue();
 		
+		// setup unique customer list
+		setupCustomerList(null, defaultStartDate, defaultEndDate);
+		
 		// list
 		employeeCommissionsListInfo();
 	}
 
-	private void setupCustomerList() throws Exception {		
-		boolean unique = true;
-		List<Customer> uniqueCustList = new ArrayList<Customer>();
-
-		for (EmployeeCommissions commissions : getEmployeeCommissionsList()) {
-			EmployeeCommissions commissionsCustomerOrderByProxy =
-					getEmployeeCommissionsDao().findCustomerOrderByProxy(commissions.getId());
-			CustomerOrder customerOrder = 
-					commissionsCustomerOrderByProxy.getCustomerOrder();
-			CustomerOrder customerOrderCustomerByProxy =
-					getCustomerOrderDao().findCustomerByProxy(customerOrder.getId());
-			Customer customer = customerOrderCustomerByProxy.getCustomer();
-			
-			if (uniqueCustList.isEmpty()) {
-				// add
-				if (customer!=null) {
-					uniqueCustList.add(customer);
-					unique = false;
-				}
-			} else {
-				unique = true;
-				if (customer==null) {
-					continue;
-				}
-				// go through the list
-				for (Customer uniqueCust : uniqueCustList) {
-					if (uniqueCust.getId().compareTo(customer.getId())==0) {
-						unique = false;
-						break;
-					}
-				}
-			}
-			if (unique) {
-				// add
-				if (customer!=null) {
-					uniqueCustList.add(customer);
-				}
-			}
-		}
-		// sort
-		uniqueCustList.sort((o1,o2) -> {
-			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
-		});
+	private void setupCustomerList(Employee employeeSales, Date startDate, Date endDate) throws Exception {
+		List<Customer> uniqueCustList = 
+				getEmployeeCommissionsDao().findUniqueCustomer_By_Date(employeeSales, startDate, endDate);
 		// check
 		customerCombobox.setDisabled(uniqueCustList.isEmpty());
 		// clear items
@@ -176,7 +140,9 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 					getEmployeeCommissionsDao().findCustomerOrderByProxy(commissions.getId());
 			CustomerOrder customerOrder = 
 					commissionsCustomerOrderByProxy.getCustomerOrder();
-			totalSales = totalSales.add(customerOrder.getTotalOrder());
+			if (customerOrder.getOrderStatus().equals(DocumentStatus.NORMAL)) {
+				totalSales = totalSales.add(customerOrder.getTotalOrder());				
+			}
 		}
 		totalEmployeeSalesLabel.setValue("Total Penjualan (Rp.): "+toLocalFormat(totalSales));
 	}	
@@ -222,8 +188,6 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 					getEmployeeCommissionsDao().findAllEmployeeCommissions_By_EmployeeId(
 							employeeSales.getId(), decendingOrder));			
 		}
-		// setup unique customer list
-		setupCustomerList();
 		// setup date range
 		setupDateRange();
 		// calc total sales
@@ -232,6 +196,8 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 		defaultStartDate = startDatebox.getValue(); 
 		defaultEndDate = endDatebox.getValue();
 
+		// setup unique customer list
+		setupCustomerList(employeeSales, defaultStartDate, defaultEndDate);
 		// list
 		employeeCommissionsListInfo();		
 	}
@@ -258,7 +224,7 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 							startDatebox.getValue(),
 							endDatebox.getValue()));				
 				// setup unique customer list
-				setupCustomerList();
+				setupCustomerList(null, startDatebox.getValue(), endDatebox.getValue());
 			} else {
 				// list
 				setEmployeeCommissionsList(
@@ -283,7 +249,7 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 								endDatebox.getValue(),
 								descendingOrder));							
 				// setup unique customer list
-				setupCustomerList();
+				setupCustomerList(null, startDatebox.getValue(), endDatebox.getValue());
 			} else {
 				setEmployeeCommissionsList(
 						getEmployeeCommissionsDao().
@@ -320,7 +286,7 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 					getEmployeeCommissionsDao().
 						findAllEmployeeCommissions_OrderBy_CustomerOrderDate(decendingOrder));				
 			// setup unique customer list
-			setupCustomerList();
+			setupCustomerList(employeeSales, startDatebox.getValue(), endDatebox.getValue());
 			// setup date range
 			setupDateRange();			
 		} else {
@@ -333,7 +299,7 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 					getEmployeeCommissionsDao().findAllEmployeeCommissions_By_EmployeeId(
 							employeeSales.getId(), decendingOrder));							
 			// setup unique customer list
-			setupCustomerList();
+			setupCustomerList(employeeSales, startDatebox.getValue(), endDatebox.getValue());
 			// setup date range
 			setupDateRange();
 		}

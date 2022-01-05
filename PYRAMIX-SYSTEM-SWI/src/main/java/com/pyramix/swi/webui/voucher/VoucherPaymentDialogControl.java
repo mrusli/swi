@@ -644,6 +644,12 @@ public class VoucherPaymentDialogControl extends GFCBaseController {
 				VoucherType voucherType =
 						(VoucherType) voucherTypeLabel.getAttribute("voucherType");
 				
+				if (getPageMode().equals(PageMode.VIEW)) {
+					listcell.setLabel(voucherDbCr.getMasterCoa().getMasterCoaComp());
+					
+					return listcell;
+				}
+				
 				if (index==0) {
 					Comboitem comboitem = new Comboitem();
 					comboitem.setValue(voucherDbCr.getMasterCoa());
@@ -841,6 +847,12 @@ public class VoucherPaymentDialogControl extends GFCBaseController {
 			}
 			
 			private Listcell initDescription(Listcell listcell, VoucherPaymentDebitCredit voucherDbCr) throws Exception {
+				if (getPageMode().equals(PageMode.VIEW)) {
+					listcell.setLabel(voucherDbCr.getDbcrDescription());
+					
+					return listcell;
+				}
+				
 				Textbox textbox = new Textbox();
 				textbox.setWidth("310px");
 				textbox.setValue(voucherDbCr.getDbcrDescription());
@@ -857,6 +869,10 @@ public class VoucherPaymentDialogControl extends GFCBaseController {
 				textbox.setStyle("text-align: right");
 				textbox.setDisabled(true);
 				textbox.setParent(listcell);
+				if (getPageMode().equals(PageMode.VIEW)) {
+					
+					return listcell;
+				}				
 				
 				Button button = new Button();
 				button.setWidth("25px");
@@ -899,7 +915,11 @@ public class VoucherPaymentDialogControl extends GFCBaseController {
 				textbox.setStyle("text-align: right");
 				textbox.setDisabled(true);
 				textbox.setParent(listcell);
-				
+				if (getPageMode().equals(PageMode.VIEW)) {
+					
+					return listcell;
+				}
+
 				Button button = new Button();
 				button.setWidth("25px");
 				button.setLabel("...");
@@ -934,6 +954,12 @@ public class VoucherPaymentDialogControl extends GFCBaseController {
 			}
 			
 			private Listcell initRemoveRow(Listcell listcell, VoucherPaymentDebitCredit voucherDbCr, int index) throws Exception {
+				if (getPageMode().equals(PageMode.VIEW)) {
+
+					return listcell;
+				}
+				
+				
 				Button button = new Button();
 				button.setLabel("-");
 				button.setWidth("25px");
@@ -963,6 +989,11 @@ public class VoucherPaymentDialogControl extends GFCBaseController {
 			}
 			
 			private Listcell initAddRow(Listcell listcell, VoucherPaymentDebitCredit voucherDbCr, int index) {
+				if (getPageMode().equals(PageMode.VIEW)) {
+
+					return listcell;
+				}
+				
 				Button button = new Button();
 				button.setLabel("+");
 				button.setWidth("25px");

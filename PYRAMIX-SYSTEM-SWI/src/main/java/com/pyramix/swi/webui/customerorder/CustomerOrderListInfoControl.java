@@ -166,15 +166,16 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 		case 0: // Semua			
 			// list all
 			listAllCustomerOrder(checkTransaction, usePpn);
-
-			// find all customer in the customer order - all
-			listCustomerInCustomerOrder();
 			
 			// find starting date and ending date from customer order
 			CustomerOrder customerOrderLatest = getCustomerOrderList().get(0);
 			int lastIndex = getCustomerOrderList().size()-1;
 			CustomerOrder customerOrderEarliest = getCustomerOrderList().get(lastIndex);
 			
+			// find all customer in the customer order - all
+			listCustomerInCustomerOrder(checkTransaction, usePpn, customerOrderEarliest.getOrderDate(), 
+					customerOrderLatest.getOrderDate());			
+
 			startDatebox.setValue(customerOrderEarliest.getOrderDate());
 			endDatebox.setValue(customerOrderLatest.getOrderDate());
 			
@@ -189,7 +190,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			listCustomerOrderByDate(startDate, endDate, checkTransaction, usePpn);
 			
 			// find all customer in the customer order - today
-			listCustomerInCustomerOrder();
+			listCustomerInCustomerOrder(checkTransaction, usePpn, startDate, endDate);
 			
 			// assign startDate and endDate to date component - disable date component			
 			startDatebox.setValue(startDate);
@@ -206,7 +207,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			listCustomerOrderByDate(startDate, endDate, checkTransaction, usePpn);
 			
 			// find all customer in the customer order - this week
-			listCustomerInCustomerOrder();
+			listCustomerInCustomerOrder(checkTransaction, usePpn, startDate, endDate);
 			
 			// assign startDate and endDate to date component - disable date component			
 			startDatebox.setValue(startDate);
@@ -223,7 +224,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			listCustomerOrderByDate(startDate, endDate, checkTransaction, usePpn);
 
 			// find all customer in the customer order - this month
-			listCustomerInCustomerOrder();
+			listCustomerInCustomerOrder(checkTransaction, usePpn, startDate, endDate);
 			
 			// assign startDate and endDate to date component - disable date component			
 			startDatebox.setValue(startDate);
@@ -261,56 +262,11 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 		batalButton.setDisabled(orderCount==0);
 	}
 	
-	private void listCustomerInCustomerOrder() throws Exception {
-		if (getCustomerOrderList().isEmpty()) {
-			customerCombobox.setDisabled(true);
-			
-			return;
-		} else {
-			customerCombobox.setDisabled(false);
-		}
+	private void listCustomerInCustomerOrder(boolean checkTransaction, boolean usePpn, Date startDate, Date endDate) throws Exception {
+		customerCombobox.getItems().clear();
 		
-		boolean unique = true;
-		List<Customer> uniqueCustList = new ArrayList<Customer>();
-		for (CustomerOrder customerOrder : customerOrderList) {
-			Customer customer = getCustomerByProxy(customerOrder.getId());
-			if (uniqueCustList.isEmpty()) {
-				// add
-				// log.info("list is empty: add: "+customer.getCompanyLegalName());
-				if (customer!=null) {
-					uniqueCustList.add(customer);
-					unique = false;
-				}
-			} else {
-				unique = true;
-				if (customer==null) {
-					continue;
-				}
-				// go through the list
-				for (Customer uniqueCust : uniqueCustList) {
-					// log.info(customer.getCompanyLegalName());
-					if (uniqueCust.getId().compareTo(customer.getId())==0) {
-						unique = false;
-						break;
-					}
-				}
-			}
-			if (unique) {
-				// add
-				if (customer!=null) {
-					// log.info("add:"+customer.getCompanyLegalName());
-					uniqueCustList.add(customer);
-				}
-			}
-		}
-		
-		// uniqueCustList.forEach(cust->log.info(cust.getCompanyLegalName()));
-		uniqueCustList.sort((o1,o2) -> {
-			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
-		});
-		// log.info("Sort Ascending:");
-		// uniqueCustList.forEach(cust->log.info(cust.getCompanyLegalName()));
-		
+		List<Customer> uniqueCustList = 
+				getCustomerOrderDao().findUniqueCustomer(checkTransaction, usePpn, startDate, endDate);
 		// populate customerCombobox
 		Comboitem comboitem = null;
 		// all customer
@@ -1140,6 +1096,12 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 		infoResultlabel.setValue("");
 	}
 	
+	public void onSelect$customerOrderListbox(Event event) throws Exception {
+		CustomerOrder customerOrder = customerOrderListbox.getSelectedItem().getValue();
+		
+		batalButton.setDisabled(customerOrder.getOrderStatus().equals(DocumentStatus.BATAL));
+	}
+	
 	public void onClick$addButton(Event event) throws Exception {
 		CustomerOrderData data = new CustomerOrderData();
 		data.setPageMode(PageMode.NEW);
@@ -1304,17 +1266,13 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 	
 	
 	public void onClick$batalButton(Event event) throws Exception {
-		CustomerOrder selCustomerOrder = customerOrderListbox.getSelectedItem().getValue();
+		Listitem item = customerOrderListbox.getSelectedItem();
 		
-		if (selCustomerOrder==null) {
-			throw new Exception("Belum memilih Customer Order untuk dibatalkan.");			
+		if (item==null) {
+			throw new SuppressedException("Belum memilih Customer Order untuk dibatalkan.", true);			
 		} else {
 			CustomerOrder customerOrder = customerOrderListbox.getSelectedItem().getValue();
-		
-			if (customerOrder.getOrderStatus().compareTo(DocumentStatus.BATAL)==0) {
-				throw new SuppressedException("Sudah Dibatalkan", true);
-			}
-			
+					
 			if (customerOrder.isPaymentComplete()) {
 				throw new SuppressedException("Batalkan Settlement terlebih dahulu sebelum membatalkan Customer Order", true);
 			}

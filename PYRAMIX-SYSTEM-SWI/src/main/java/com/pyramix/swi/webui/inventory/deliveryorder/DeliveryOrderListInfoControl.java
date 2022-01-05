@@ -233,6 +233,7 @@ public class DeliveryOrderListInfoControl extends GFCBaseController {
 				
 				// Catatan
 				lc = new Listcell(deliveryOrder.getNote());
+				lc.setStyle("white-space: nowrap;");
 				lc.setParent(item);
 				
 				// User

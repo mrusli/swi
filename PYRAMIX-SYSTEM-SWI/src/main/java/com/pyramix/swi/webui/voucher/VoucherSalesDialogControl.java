@@ -263,7 +263,7 @@ public class VoucherSalesDialogControl extends GFCBaseController {
 			
 		} else {
 			idLabel.setValue(getVoucherSales().getId()==Long.MIN_VALUE ? 
-					"" : String.valueOf(getVoucherSales().getId()));
+					"" : "id:#"+getVoucherSales().getId());
 			voucherNoCompTextbox.setValue(getVoucherSales().getVoucherNumber().getSerialComp());
 			voucherNoPostTextbox.setValue(null);
 			

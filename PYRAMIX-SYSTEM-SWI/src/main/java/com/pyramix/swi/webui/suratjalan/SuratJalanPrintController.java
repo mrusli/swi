@@ -16,6 +16,7 @@ import com.pyramix.swi.domain.customerorder.PaymentType;
 import com.pyramix.swi.domain.deliveryorder.DeliveryOrder;
 import com.pyramix.swi.domain.organization.Company;
 import com.pyramix.swi.domain.organization.Customer;
+import com.pyramix.swi.domain.serial.DocumentStatus;
 import com.pyramix.swi.domain.settings.Settings;
 import com.pyramix.swi.domain.suratjalan.SuratJalan;
 import com.pyramix.swi.domain.suratjalan.SuratJalanProduct;
@@ -90,17 +91,26 @@ public class SuratJalanPrintController extends GFCBaseController {
 				asLocalDate(getSuratJalan().getSuratJalanDate()), getLongDateFormat()));
 		deliveryDateLabel.setValue("Tgl.Kirim:"+dateToStringDisplay(
 				asLocalDate(getSuratJalan().getDeliveryDate()), getLongDateFormat()));
+		if (getSuratJalan().getSuratJalanStatus().equals(DocumentStatus.BATAL)) {
+			suratJalanNumberLabel.setValue(getSuratJalan().isUsePpn() ? 
+					"SURAT JALAN NO: P"+getSuratJalan().getSuratJalanNumber().getSerialComp()+" - BATAL" :
+						"SURAT JALAN NO: "+getSuratJalan().getSuratJalanNumber().getSerialComp()+" - BATAL");			
+		} else {
+			suratJalanNumberLabel.setValue(getSuratJalan().isUsePpn() ? 
+					"SURAT JALAN NO: P"+getSuratJalan().getSuratJalanNumber().getSerialComp() :
+						"SURAT JALAN NO: "+getSuratJalan().getSuratJalanNumber().getSerialComp());
+			
+			customerPaymentLabel.setValue(getSuratJalan().getPaymentType().compareTo(PaymentType.tunai)==0 ?
+					"Pembayaran: Tunai" :
+						"Pembayaran: "+getSuratJalan().getPaymentType().toString()+"-"+
+						getSuratJalan().getJumlahHari()+" Hari");
+		}
 		
-		suratJalanNumberLabel.setValue(getSuratJalan().isUsePpn() ? 
-				"SURAT JALAN NO: P"+getSuratJalan().getSuratJalanNumber().getSerialComp() :
-					"SURAT JALAN NO: "+getSuratJalan().getSuratJalanNumber().getSerialComp());
-		
-		customerPaymentLabel.setValue(getSuratJalan().getPaymentType().compareTo(PaymentType.tunai)==0 ?
-				"Pembayaran: Tunai" :
-					"Pembayaran: "+getSuratJalan().getPaymentType().toString()+"-"+
-					getSuratJalan().getJumlahHari()+" Hari");
-		
-		customerPurchaseOrderLabel.setValue(getSuratJalan().getNote().isEmpty()? "" : "PO No.: "+getSuratJalan().getNote());
+		if (getSuratJalan().getSuratJalanStatus().equals(DocumentStatus.BATAL)) {
+			customerPurchaseOrderLabel.setValue(getSuratJalan().getNote());
+		} else {
+			customerPurchaseOrderLabel.setValue(getSuratJalan().getNote().isEmpty()? "" : "PO No.: "+getSuratJalan().getNote());
+		}
 		
 		suratJalanProductGrid.setModel(
 				new ListModelList<SuratJalanProduct>(getSuratJalan().getSuratJalanProducts()));

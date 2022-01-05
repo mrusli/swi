@@ -9,8 +9,10 @@ import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.ResultTransformer;
 
 import com.pyramix.swi.domain.customerorder.CustomerOrder;
 import com.pyramix.swi.domain.customerorder.CustomerOrderProduct;
@@ -135,6 +137,72 @@ public class CustomerOrderHibernate extends DaoHibernate implements CustomerOrde
 		}
 	}
 
+	@SuppressWarnings({ "serial", "unchecked" })
+	@Override
+	public List<Customer> findUniqueCustomer(boolean checkTransaction, boolean usePpn, Date startDate, Date endDate) throws Exception {
+		Session session = super.getSessionFactory().openSession();
+
+		ProjectionList projectionList = Projections.projectionList();
+		projectionList.add(Projections.distinct(Projections.property("customer")));
+
+		Criteria criteria = session.createCriteria(CustomerOrder.class);
+		if (checkTransaction) {
+			criteria.add(Restrictions.eq("usePpn", usePpn));
+		}
+		criteria.add(Restrictions.between("orderDate", startDate, endDate));
+		criteria.setProjection(projectionList);
+		criteria.createAlias("customer", "customer");
+		criteria.addOrder(Order.asc(("customer.companyLegalName")));
+		criteria.setResultTransformer(new ResultTransformer() {
+			
+			@Override
+			public Object transformTuple(Object[] tuple, String[] aliases) {
+				Customer customerObject = (Customer) tuple[0];
+				
+				Customer customer = new Customer();
+				customer.setId(customerObject.getId());
+				customer.setVersion(customerObject.getVersion());
+				customer.setCompanyType(customerObject.getCompanyType());
+				customer.setCompanyLegalName(customerObject.getCompanyLegalName());
+				customer.setCompanyDisplayName(customerObject.getCompanyDisplayName());				
+				customer.setContactPerson(customerObject.getContactPerson());
+				customer.setAddress01(customerObject.getAddress01());
+				customer.setAddress02(customerObject.getAddress02());
+				customer.setCity(customerObject.getCity());
+				customer.setPostalCode(customerObject.getPostalCode());
+				customer.setPhone(customerObject.getPhone());
+				customer.setExtension(customerObject.getExtension());
+				customer.setEmail(customerObject.getEmail());
+				customer.setFax(customerObject.getFax());
+				customer.setNote(customerObject.getNote());
+				customer.setActive(customerObject.isActive());
+				customer.setCustomerReceivable(customerObject.getCustomerReceivable());
+				
+				return customer;
+			}
+			
+			@SuppressWarnings({ "rawtypes" })
+			@Override
+			public List<Customer> transformList(List collection) {
+				
+				return collection;
+			}
+		});
+		
+		try {
+			
+			return criteria.list();
+
+		} catch (Exception e) {
+			throw e;
+			
+		} finally {
+			session.close();
+			
+		}
+
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<CustomerOrder> findCustomerOrder_By_OrderDate(Date startDate, Date endDate, boolean desc, boolean checkTransaction, boolean usePpn)

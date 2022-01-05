@@ -40,4 +40,6 @@ public interface SettlementDao {
 	public Settlement findCustomerReceivableByProxy(long id) throws Exception;
 	
 	public SettlementDetail findSettlementFromSettlementDetailByProxy(long id) throws Exception;
+
+	public List<Customer> findUniqueCustomer_By_Date(Date startDate, Date endDate) throws Exception;
 }

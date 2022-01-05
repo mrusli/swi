@@ -12,6 +12,7 @@ import org.zkoss.zul.Vbox;
 import com.pyramix.swi.domain.deliveryorder.DeliveryOrder;
 import com.pyramix.swi.domain.deliveryorder.DeliveryOrderProduct;
 import com.pyramix.swi.domain.organization.Company;
+import com.pyramix.swi.domain.serial.DocumentStatus;
 import com.pyramix.swi.domain.settings.Settings;
 import com.pyramix.swi.persistence.deliveryorder.dao.DeliveryOrderDao;
 import com.pyramix.swi.persistence.settings.dao.SettingsDao;
@@ -55,8 +56,13 @@ public class DeliveryOrderPrintControl extends GFCBaseController {
 		
 		deliveryOrderDateLabel.setValue(dateToStringDisplay(
 				asLocalDate(getDeliveryOrder().getDeliveryOrderDate()), getLongDateFormat()));
-		deliveryOrderNumberLabel.setValue(
-				getDeliveryOrder().getDeliveryOrderNumber().getSerialComp());
+		if (getDeliveryOrder().getDeliveryOrderStatus().equals(DocumentStatus.BATAL)) {
+			deliveryOrderNumberLabel.setValue(
+					getDeliveryOrder().getDeliveryOrderNumber().getSerialComp()+" - BATAL");
+		} else {
+			deliveryOrderNumberLabel.setValue(
+					getDeliveryOrder().getDeliveryOrderNumber().getSerialComp());
+		}
 		
 		Company companyByProxy = getCompanyByProxy(getDeliveryOrder().getId());
 		companyNameLabel.setValue(companyByProxy.getCompanyType()+". "+
@@ -94,12 +100,14 @@ public class DeliveryOrderPrintControl extends GFCBaseController {
 			}
 		});
 		
-		noteLabel.setValue(getDeliveryOrder().getNote());
+		noteLabel.setValue("Note: "+getDeliveryOrder().getNote());
+		
 		if (getDeliveryOrderData().getSuratJalan()==null) {
 			referensiSuratJalanLabel.setValue(" ");
 		} else {
 			referensiSuratJalanLabel.setValue(
-					"D/O sesuai dengan SuratJalan No.:"+getDeliveryOrderData().getSuratJalan().getSuratJalanNumber().getSerialComp());
+					"D/O sesuai dengan SuratJalan No.:"+
+							getDeliveryOrderData().getSuratJalan().getSuratJalanNumber().getSerialComp());
 		}
 		
 		companyLabel.setValue(company.getCompanyType()+". "+

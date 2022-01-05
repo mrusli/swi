@@ -23,8 +23,8 @@
 				</tabs>
 			</tabbox>
 			<hlayout style="padding: 10px;" valign="middle">
-				<label id="infoVoucherSaleslabel" value="Total: 8 orders - Rp.450.329.112,-" style="color: silver;"></label>
-				<button id="addButton" label="Tambah" sclass="modButton" disabled="true"></button>
+				<label id="infoVoucherSaleslabel" style="color: black;"></label>
+				<button id="addButton" label="Tambah" sclass="modButton" visible="false"></button>
 				<button id="batalButton" label="Batal" sclass="modButton" visible="false"></button>							
 			</hlayout>
 			<listbox id="voucherSalesListbox" mold="paging" pageSize="15" height="540px">

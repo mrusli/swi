@@ -1,6 +1,5 @@
 package com.pyramix.swi.webui.voucher;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +49,7 @@ public class VoucherSalesControl extends GFCBaseController {
 	
 	private List<VoucherSales> voucherSalesList;
 	private int voucherSalesCount;
-	private BigDecimal totalVoucherSalesValue;
+	// private BigDecimal totalVoucherSalesValue;
 	
 	// display / list today's VoucherSales
 	private final int DEFAULT_TAB_INDEX = 1;
@@ -171,7 +170,7 @@ public class VoucherSalesControl extends GFCBaseController {
 
 	private ListitemRenderer<VoucherSales> getVoucherListitemRenderer() {
 
-		totalVoucherSalesValue = BigDecimal.ZERO;
+		// totalVoucherSalesValue = BigDecimal.ZERO;
 		
 		return new ListitemRenderer<VoucherSales>() {
 			
@@ -229,9 +228,9 @@ public class VoucherSalesControl extends GFCBaseController {
 				lc = initEditButton(new Listcell(), voucherSales);
 				lc.setParent(item);
 
-				if (voucherSales.getVoucherStatus().equals(DocumentStatus.NORMAL)) {
-					totalVoucherSalesValue = totalVoucherSalesValue.add(voucherSales.getTheSumOf());
-				}
+				// if (voucherSales.getVoucherStatus().equals(DocumentStatus.NORMAL)) {
+				//	totalVoucherSalesValue = totalVoucherSalesValue.add(voucherSales.getTheSumOf());
+				// }
 				
 				item.setValue(voucherSales);
 				
@@ -334,7 +333,8 @@ public class VoucherSalesControl extends GFCBaseController {
 	}
 	
 	public void onAfterRender$voucherSalesListbox(Event event) throws Exception {
-		infoVoucherSaleslabel.setValue("Total: "+voucherSalesCount+" voucher - Rp."+toLocalFormat(totalVoucherSalesValue));
+		infoVoucherSaleslabel.setValue("Total: "+voucherSalesCount+" voucher");
+			// +" voucher - Rp."+toLocalFormat(totalVoucherSalesValue));
 	}
 
 	public void onClick$batalButton(Event event) throws Exception {

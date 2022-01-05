@@ -196,6 +196,7 @@ public class SuratJalanListInfoControl extends GFCBaseController {
 				
 				// Catatan
 				lc = new Listcell(suratJalan.getNote());
+				lc.setStyle("white-space: nowrap;");
 				lc.setParent(item);
 				
 				// edit

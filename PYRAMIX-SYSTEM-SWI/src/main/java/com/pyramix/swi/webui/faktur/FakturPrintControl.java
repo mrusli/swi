@@ -17,6 +17,7 @@ import com.pyramix.swi.domain.faktur.Faktur;
 import com.pyramix.swi.domain.faktur.FakturProduct;
 import com.pyramix.swi.domain.organization.Company;
 import com.pyramix.swi.domain.organization.Customer;
+import com.pyramix.swi.domain.serial.DocumentStatus;
 import com.pyramix.swi.domain.settings.Settings;
 import com.pyramix.swi.persistence.faktur.dao.FakturDao;
 import com.pyramix.swi.persistence.settings.dao.SettingsDao;
@@ -37,7 +38,8 @@ public class FakturPrintControl extends GFCBaseController {
 		customerAddress01Label, customerAddress02Label, customerCityLabel,
 		customerPaymentLabel, customerTelephoneLabel, customerFaxLabel,
 		subTotalLabel, ppnTotalLabel, fakturTotalLabel, suratJalanNumberLabel,
-		suratJalanDateLabel, companyLabel, bankAccountlabel, customerPurchaseOrderLabel;
+		suratJalanDateLabel, companyLabel, bankAccountlabel, customerPurchaseOrderLabel,
+		fakturNoteLabel;
 	private Grid fakturProductGrid;
 	private Vbox printVbox;
 	
@@ -62,7 +64,11 @@ public class FakturPrintControl extends GFCBaseController {
 		
 		fakturDateLabel.setValue(dateToStringDisplay(
 				asLocalDate(getFaktur().getFakturDate()), getLongDateFormat()));
-		fakturNumberLabel.setValue(getFaktur().getFakturNumber().getSerialComp());
+		if (getFaktur().getFakturStatus().equals(DocumentStatus.BATAL)) {
+			fakturNumberLabel.setValue(getFaktur().getFakturNumber().getSerialComp()+" - BATAL");			
+		} else {
+			fakturNumberLabel.setValue(getFaktur().getFakturNumber().getSerialComp());
+		}
 		
 		Customer customerByProxy = getCustomerByProxy(getFaktur().getId());
 		if (customerByProxy==null) {
@@ -124,10 +130,11 @@ public class FakturPrintControl extends GFCBaseController {
 
 		if (getFakturData().getSuratJalan()!=null) {
 			suratJalanNumberLabel.setValue(
-					"Sesuai Menurut SuratJalan No.: "+
+					"Faktur sesuai dengan SuratJalan No.: "+
 							getFakturData().getSuratJalan().getSuratJalanNumber().getSerialComp());
 			suratJalanDateLabel.setValue("Tgl:"+dateToStringDisplay(
-					asLocalDate(getFakturData().getSuratJalan().getSuratJalanDate()), getShortDateFormat()));			
+					asLocalDate(getFakturData().getSuratJalan().getSuratJalanDate()), getShortDateFormat()));
+			fakturNoteLabel.setValue(getFaktur().getNote());
 		}
 
 		if (getFaktur().isUsePpn()) {

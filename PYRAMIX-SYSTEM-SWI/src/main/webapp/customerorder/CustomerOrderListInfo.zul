@@ -27,7 +27,7 @@
 			<hlayout style="padding: 10px;" valign="middle">
 				<label id="infoResultlabel" style="font-weight: bold;"></label>
 				<button id="addButton" label="Tambah" sclass="modButton"></button>
-				<button id="batalButton" label="Batal" sclass="modButton"></button>							
+				<button id="batalButton" label="Batal" sclass="modButtonRed"></button>							
 				<label value="Transaksi:"></label>
 				<combobox id="ppnTransactionCombobox" sclass="z-combobox-listinfo"></combobox>
 				<label value="Customer:"></label>

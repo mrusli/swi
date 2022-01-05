@@ -19,6 +19,7 @@ import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Grid;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
@@ -61,16 +62,18 @@ public class CustomerOrderDialogControl extends GFCBaseController{
 	private CustomerOrderProductDao customerOrderProductDao;
 	
 	private Window customerOrderDialogWin;
-	private Datebox orderDatebox;
+	private Datebox orderDatebox, pembatalanCustomerOrderDatebox;
 	private Listbox productListbox;
 	private Combobox pembayaranCombobox, salesPersonCombobox;
 	private Intbox jumlahHariIntbox;
 	private Textbox orderNoTextbox, customerTextbox, totalOrderTextbox, 
-		noteTextbox, subTotalTextbox, ppnTextbox, totalTextbox;
+		noteTextbox, subTotalTextbox, ppnTextbox, totalTextbox,
+		pembatalanCatatanCustomerOrderTextbox;
 	private Button customerButton, addInventoryButton,
 		checkButton, saveButton, cancelButton;
 	private Checkbox usePpn;
-	private Label infoOrderlabel;
+	private Label infoOrderlabel, customerOrderStatusLabel;
+	private Grid customerOrderBatalGrid;
 		
 	private CustomerOrderData customerOrderData;
 	private PageMode pageMode;
@@ -100,6 +103,9 @@ public class CustomerOrderDialogControl extends GFCBaseController{
 		// set datebox format
 		orderDatebox.setLocale(getLocale());
 		orderDatebox.setFormat(getLongDateFormat());
+		// pembatalan
+		pembatalanCustomerOrderDatebox.setLocale(getLocale());
+		pembatalanCustomerOrderDatebox.setFormat(getLongDateFormat());
 		
 		// init selectedInventoryList
 		setSelectedInventoryList(new ArrayList<Inventory>());
@@ -245,6 +251,11 @@ public class CustomerOrderDialogControl extends GFCBaseController{
 		} else if (getPageMode().compareTo(PageMode.VIEW)==0) {
 			// VIEW - load the info from the listinfo listitem
 			CustomerOrder order = getCustomerOrderData().getCustomerOrder();
+
+			customerOrderBatalGrid.setVisible(order.getOrderStatus().equals(DocumentStatus.BATAL));
+			customerOrderStatusLabel.setValue(order.getOrderStatus().toString());
+			pembatalanCustomerOrderDatebox.setValue(order.getBatalDate());
+			pembatalanCatatanCustomerOrderTextbox.setValue(order.getBatalNote());
 			
 			// generated orderNo
 			orderNoTextbox.setValue(order.getDocumentSerialNumber().getSerialComp());

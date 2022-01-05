@@ -1,9 +1,33 @@
 <?page title="Customer Order" contentType="text/html;charset=UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk>
-<window width="1150px" height="680px" title="Customer Order" border="normal"
+<window width="1150px" height="690px" title="Customer Order" border="normal"
 	id="customerOrderDialogWin" apply="${customerOrderDialogControl}">
 	<vbox>
+		<grid id="customerOrderBatalGrid" visible="false">
+			<rows>
+				<row>
+					<cell width="11%">
+						Status:
+					</cell>
+					<cell width="15%">
+						<label id="customerOrderStatusLabel" style="color: red;"></label>
+					</cell>
+					<cell width="12%">
+						Tgl Pembatalan:
+					</cell>
+					<cell width="22%">
+						<datebox id="pembatalanCustomerOrderDatebox" width="230px" readonly="true" disabled="true"></datebox>
+					</cell>
+					<cell width="10%">
+						Catatan:
+					</cell>
+					<cell>
+						<textbox id="pembatalanCatatanCustomerOrderTextbox" width="230px" readonly="true"></textbox>
+					</cell>					
+				</row>
+			</rows>
+		</grid>	
 		<grid>
 			<rows>
 				<row>

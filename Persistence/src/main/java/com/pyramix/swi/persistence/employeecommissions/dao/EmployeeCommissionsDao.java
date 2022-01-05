@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.pyramix.swi.domain.organization.Customer;
+import com.pyramix.swi.domain.organization.Employee;
 import com.pyramix.swi.domain.organization.EmployeeCommissions;
 
 public interface EmployeeCommissionsDao {
@@ -63,6 +64,10 @@ public interface EmployeeCommissionsDao {
 	 */
 	public List<EmployeeCommissions> findAllEmployeeCommissions_By_Date_OrderBy_CustomerOrderDate(
 			boolean descending, Date startDate, Date endDate) throws Exception;	
+	
+	
+	public List<Customer> findUniqueCustomer_By_Date(Employee employeeSales, Date startDate, Date endDate) throws Exception;
+	
 	
 	// proxy
 	

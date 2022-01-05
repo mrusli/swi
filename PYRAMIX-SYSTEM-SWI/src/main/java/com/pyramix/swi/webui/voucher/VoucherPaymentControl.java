@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -47,6 +48,8 @@ public class VoucherPaymentControl extends GFCBaseController {
 	
 	private final int WORK_DAY_WEEK 	= 6;
 	private final int DEFAULT_TAB_INDEX = 1;
+	
+	private final Logger log = Logger.getLogger(VoucherPaymentControl.class);
 	
 	public void onCreate$voucherPaymentListInfoWin(Event event) throws Exception {
 		formTitleLabel.setValue("Voucher Payment / Pembayaran");
@@ -215,27 +218,19 @@ public class VoucherPaymentControl extends GFCBaseController {
 					Button postingButton = new Button();
 					postingButton.setLabel("...");
 					postingButton.setClass("inventoryEditButton");
+					postingButton.setParent(listcell);
 					postingButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
 						@Override
 						public void onEvent(Event event) throws Exception {
-							
-							
+							VoucherPayment voucherPaymentGiroByProxy = 
+									getVoucherPaymentDao().findGiroByProxy(payment.getId());
+							Giro giro = voucherPaymentGiroByProxy.getGiro();
+							log.info(giro.toString());						
 						}
 
 					});
-					postingButton.setParent(listcell);
-				} else if (payment.getSettlement() != null) {
-					// Settlement settlementByProxy = getSettlementByProxy(payment.getId());
 
-					postingLabel.setValue(payment.getPaidBy().toString());
-					postingLabel.setStyle("font-size: 1em; padding-right: 5px");
-					postingLabel.setParent(listcell);
-
-					Button postingButton = new Button();
-					postingButton.setLabel("...");
-					postingButton.setClass("inventoryEditButton");
-					postingButton.setParent(listcell);
 				} else {
 					postingLabel.setValue("no ref");
 					postingLabel.setWidth("60px");

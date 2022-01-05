@@ -192,6 +192,7 @@ public class FakturListInfoControl extends GFCBaseController {
 				
 				// Catatan
 				lc = new Listcell(faktur.getNote());
+				lc.setStyle("white-space: nowrap;");
 				lc.setParent(item);
 				
 				// User

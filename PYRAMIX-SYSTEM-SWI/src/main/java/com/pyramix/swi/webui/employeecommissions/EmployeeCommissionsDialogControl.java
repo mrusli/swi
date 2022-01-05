@@ -6,12 +6,15 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Grid;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.pyramix.swi.domain.customerorder.CustomerOrder;
 import com.pyramix.swi.domain.organization.Customer;
 import com.pyramix.swi.domain.organization.EmployeeCommissions;
+import com.pyramix.swi.domain.serial.DocumentStatus;
 import com.pyramix.swi.persistence.customerorder.dao.CustomerOrderDao;
 import com.pyramix.swi.persistence.employeecommissions.dao.EmployeeCommissionsDao;
 import com.pyramix.swi.webui.common.GFCBaseController;
@@ -29,10 +32,12 @@ public class EmployeeCommissionsDialogControl extends GFCBaseController {
 	private Window employeeCommissionsDialogWin;
 	private Textbox customerOrderNoTextbox, customerOrderCustomerTextbox,
 		totalSalesTextbox, commissionPercentTextbox,
-		commissionTotalTextbox;
-	private Datebox customerOrderDatebox;
+		commissionTotalTextbox, batalTextbox;
+	private Datebox customerOrderDatebox, batalDatebox;
 	private Combobox employeeNameCombobox;
 	private EmployeeCommissions employeeCommissions;
+	private Label idLabel, batalStatusLabel;
+	private Grid batalGrid;
 	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -48,11 +53,21 @@ public class EmployeeCommissionsDialogControl extends GFCBaseController {
 		// set locale and format for datebox
 		customerOrderDatebox.setLocale(getLocale());
 		customerOrderDatebox.setFormat(getLongDateFormat());
+		// batal
+		batalDatebox.setLocale(getLocale());
+		batalDatebox.setFormat(getLongDateFormat());
 		
 		setEmployeeCommissionsInfo();
 	}
 	
 	private void setEmployeeCommissionsInfo() throws Exception {
+		idLabel.setValue("id:#"+getEmployeeCommissions().getId());
+		
+		batalGrid.setVisible(getEmployeeCommissions().getCommissionStatus().equals(DocumentStatus.BATAL));
+		batalStatusLabel.setValue(getEmployeeCommissions().getCommissionStatus().toString());
+		batalDatebox.setValue(getEmployeeCommissions().getBatalDate());
+		batalTextbox.setValue(getEmployeeCommissions().getBatalNote());
+		
 		EmployeeCommissions employeeCommissionsCustomerOrderByProxy = 
 				getEmployeeCommissionsDao().findCustomerOrderByProxy(getEmployeeCommissions().getId());
 		CustomerOrder customerOrder = 

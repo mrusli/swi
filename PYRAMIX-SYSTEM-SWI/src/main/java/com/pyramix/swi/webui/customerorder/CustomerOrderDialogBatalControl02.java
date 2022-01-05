@@ -1772,6 +1772,7 @@ public class CustomerOrderDialogBatalControl02 extends GFCBaseController {
 		SuratJalan modSuratJalan = customerOrderSuratJalanByProxy.getSuratJalan();
 		
 		modSuratJalan.setSuratJalanStatus(statusSuratJalanCombobox.getSelectedItem().getValue());
+		modSuratJalan.setNote(pembatalanCatatanSuratJalanTextbox.getValue());
 		modSuratJalan.setBatalDate(pembatalanSuratJalanDatebox.getValue());
 		modSuratJalan.setBatalNote(pembatalanCatatanSuratJalanTextbox.getValue());
 		
@@ -1787,8 +1788,9 @@ public class CustomerOrderDialogBatalControl02 extends GFCBaseController {
 		DeliveryOrder modDeliveryOrder = suratJalanDeliveryOrderByProxy.getDeliveryOrder();
 
 		modDeliveryOrder.setDeliveryOrderStatus(statusDeliveryOrderCombobox.getSelectedItem().getValue());
-		modDeliveryOrder.setBatalDate(pembatalanDeliveryOrderDatebox.getValue());
 		modDeliveryOrder.setNote(pembatalanCatatanDeliveryOrderTextbox.getValue());
+		modDeliveryOrder.setBatalDate(pembatalanDeliveryOrderDatebox.getValue());
+		modDeliveryOrder.setBatalNote(pembatalanCatatanDeliveryOrderTextbox.getValue());
 		
 		return modDeliveryOrder;
 	}
@@ -1802,6 +1804,7 @@ public class CustomerOrderDialogBatalControl02 extends GFCBaseController {
 		Faktur modFaktur = suratJalanFakturByProxy.getFaktur();
 
 		modFaktur.setFakturStatus(statusFakturCombobox.getSelectedItem().getValue());
+		modFaktur.setNote(pembatalanCatatanFakturTextbox.getValue());
 		modFaktur.setBatalDate(pembatalanFakturDatebox.getValue());
 		modFaktur.setBatalNote(pembatalanCatatanFakturTextbox.getValue());
 		

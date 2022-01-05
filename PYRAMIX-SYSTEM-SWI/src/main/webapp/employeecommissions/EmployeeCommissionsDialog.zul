@@ -1,10 +1,34 @@
 <?page title="Commissions" contentType="text/html;charset=UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk>
-<window width="1150px" height="240px" title="Employee" border="normal"
+<window width="1150px" height="300px" title="Employee" border="normal"
 	id="employeeCommissionsDialogWin" apply="${employeeCommissionsDialogControl}">
 	<vbox>
 		<label id="idLabel" style="font-size:1em;"/>
+		<grid id="batalGrid" visible="false">
+			<rows>
+				<row>
+					<cell width="11%">
+						Status:
+					</cell>
+					<cell width="15%">
+						<label id="batalStatusLabel" style="color: red;"></label>
+					</cell>
+					<cell width="12%">
+						Tgl Pembatalan:
+					</cell>
+					<cell width="22%">
+						<datebox id="batalDatebox" width="230px" readonly="true" disabled="true"></datebox>
+					</cell>
+					<cell width="10%">
+						Catatan:
+					</cell>
+					<cell>
+						<textbox id="batalTextbox" width="230px" readonly="true"></textbox>
+					</cell>					
+				</row>
+			</rows>
+		</grid>		
 		<grid>
 			<rows>
 				<row>

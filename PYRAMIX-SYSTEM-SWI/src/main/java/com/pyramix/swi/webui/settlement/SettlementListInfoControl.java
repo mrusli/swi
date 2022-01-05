@@ -15,6 +15,7 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
+import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -60,6 +61,7 @@ public class SettlementListInfoControl extends GFCBaseController {
 	private Tabbox settlementPeriodTabbox;
 	private Button batalButton;
 	private Combobox customerCombobox;
+	private Datebox startDatebox, endDatebox;
 	
 	private List<Settlement> settlementList;
 	private List<Customer> customerList;
@@ -74,24 +76,18 @@ public class SettlementListInfoControl extends GFCBaseController {
 	public void onCreate$settlementListInfoWin(Event event) throws Exception {
 		// loginUser is User object
 		setLoginUser(getUserDao().findUserByUsername(getLoginUsername()));
-
-		// System.out.println(getLoginUsername());		
 		
 		formTitleLabel.setValue("Settlement");
-		
 		settlementListbox.setEmptyMessage("Tidak ada");
-		
-		// set tabbox
 		settlementPeriodTabbox.setSelectedIndex(DEFAULT_TAB_INDEX);
-		
+		// datebox
+		startDatebox.setLocale(getLocale()); 
+		startDatebox.setFormat(getLongDateFormat());
+		endDatebox.setLocale(getLocale());
+		endDatebox.setFormat(getLongDateFormat());
 		// list
 		listBySelection(DEFAULT_TAB_INDEX);
 		
-		// load
-		// listAllSettlement();
-		
-		// display
-		// displaySettlementListInfo();
 	}
 
 	public void onSelect$settlementPeriodTabbox(Event event) throws Exception {
@@ -150,19 +146,27 @@ public class SettlementListInfoControl extends GFCBaseController {
 		// });
 	}
 
-	private void settlementCustomer() throws Exception {
-		setCustomerList(findUniqueCustomerList());
-
-		loadCustomerCombobox();
+	private void settlementCustomer(Date startDate, Date endDate) throws Exception {
+		List<Customer> customerList =
+				getSettlementDao().findUniqueCustomer_By_Date(startDate, endDate);
+		
+		loadCustomerCombobox(customerList);
 	}
 
 	private void listAllSettlement() throws Exception {
 		setSettlementList(
 				getSettlementDao().findAllSettlement_OrderBy_SettlementDate(true));
 				
+		Date endDate = getSettlementList().get(0).getSettlementDate();
+		int lastIndex = getSettlementList().size()-1;
+		Date startDate = getSettlementList().get(lastIndex).getSettlementDate();
+		
+		startDatebox.setValue(startDate);
+		endDatebox.setValue(endDate);
+		
 		settlementCount_and_Total();
 		
-		settlementCustomer();
+		settlementCustomer(startDate, endDate);
 		
 		batalButton.setDisabled(settlementCount==0);
 	}
@@ -171,10 +175,16 @@ public class SettlementListInfoControl extends GFCBaseController {
 		setSettlementList(
 				getSettlementDao().findAllSettlement_By_Customer_OrderBy_SettlementDate(true, customer));
 
+		Date endDate = getSettlementList().get(0).getSettlementDate();
+		int lastIndex = getSettlementList().size()-1;
+		Date startDate = getSettlementList().get(lastIndex).getSettlementDate();
+		
+		startDatebox.setValue(startDate);
+		endDatebox.setValue(endDate);
+
 		settlementCount_and_Total();
 		
 		batalButton.setDisabled(settlementCount==0);
-		
 	}
 	
 	private void listSettlementByDate(Date startDate, Date endDate) throws Exception {
@@ -183,7 +193,7 @@ public class SettlementListInfoControl extends GFCBaseController {
 		
 		settlementCount_and_Total();
 		
-		settlementCustomer();
+		settlementCustomer(startDate, endDate);
 		
 		batalButton.setDisabled(settlementCount==0);
 	}
@@ -192,42 +202,19 @@ public class SettlementListInfoControl extends GFCBaseController {
 		setSettlementList(
 				getSettlementDao().findSettlement_By_Customer_By_SettlementDate(true, customer, startDate, endDate));
 
+		Date endDateSettlement = getSettlementList().get(0).getSettlementDate();
+		int lastIndex = getSettlementList().size()-1;
+		Date startDateSettlement = getSettlementList().get(lastIndex).getSettlementDate();
+		
+		startDatebox.setValue(startDateSettlement);
+		endDatebox.setValue(endDateSettlement);
+
 		settlementCount_and_Total();
 		
 		batalButton.setDisabled(settlementCount==0);
 	}
-	
-	private List<Customer> findUniqueCustomerList() throws Exception {
-		List<Customer> uniqueCustList = new ArrayList<Customer>();
-		boolean unique = true;
-		for (Settlement settlement : getSettlementList()) {
-			Settlement settlementCustomerByProxy = 
-					getSettlementDao().findCustomerByProxy(settlement.getId());
-			if (uniqueCustList.isEmpty()) {
-				uniqueCustList.add(settlementCustomerByProxy.getCustomer());
-				unique = false;
-			} else {
-				unique = true;
-				for (Customer uniqueCust : uniqueCustList) {
-					if (uniqueCust.getId().compareTo(settlementCustomerByProxy.getCustomer().getId())==0) {
-						unique = false;
-						break;
-					}
-				}
-			}
-			if (unique) {
-				uniqueCustList.add(settlementCustomerByProxy.getCustomer());
-			}
-		}
-	
-		uniqueCustList.sort((o1, o2) -> {
-			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
-		});
 		
-		return uniqueCustList;
-	}
-	
-	private void loadCustomerCombobox() {
+	private void loadCustomerCombobox(List<Customer> customerList) {
 		customerCombobox.getItems().clear();
 		
 		Comboitem comboitem;
@@ -237,7 +224,7 @@ public class SettlementListInfoControl extends GFCBaseController {
 		comboitem.setValue(null);
 		comboitem.setParent(customerCombobox);		
 		
-		for (Customer customer : getCustomerList()) {
+		for (Customer customer : customerList) {
 			comboitem = new Comboitem();
 			comboitem.setLabel(customer.getCompanyType()+"."+customer.getCompanyLegalName());
 			comboitem.setValue(customer);
@@ -703,6 +690,14 @@ public class SettlementListInfoControl extends GFCBaseController {
 		}
 	}
 	
+	public void onClick$resetButton(Event event) throws Exception {
+		int selIndex = settlementPeriodTabbox.getSelectedIndex();
+		
+		// rest to 'Semua'
+		customerCombobox.setSelectedIndex(0);
+		
+		listBySelection(selIndex);		
+	}
 	
 	public void onClick$addButton(Event event) throws Exception {
 		Window settlementDialogWin = (Window) Executions.createComponents("/settlement/SettlementDialog.zul", null, null);

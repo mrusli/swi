@@ -131,7 +131,8 @@
 		</grid>
 		<hlayout>
 			<label id="suratJalanNumberLabel" value="Sesuai Menurut SuratJalan No.: " sclass="pre-print-label" style="padding-right: 40px"></label>
-			<label id="suratJalanDateLabel" value="Tgl:" sclass="pre-print-label"></label>
+			<label id="suratJalanDateLabel" value="Tgl:" sclass="pre-print-label" style="padding-right: 40px"></label>
+			<label id="fakturNoteLabel" sclass="pre-print-label"></label>
 		</hlayout>
 		<grid sclass="pre-print-grid">
 			<rows>

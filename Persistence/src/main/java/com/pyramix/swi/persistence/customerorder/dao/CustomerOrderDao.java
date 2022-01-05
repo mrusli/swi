@@ -27,6 +27,8 @@ public interface CustomerOrderDao {
 	 */
 	public List<CustomerOrder> findAllCustomerOrder_OrderBy_OrderDate(boolean desc, boolean checkTransaction, boolean usePpn) throws Exception;
 	
+	public List<Customer> findUniqueCustomer(boolean checkTransaction, boolean usePpn, Date startDate, Date endDate) throws Exception;
+	
 	/**
 	 * select CustomerOrder by startDate and endDate (date range) on orderDate attribute.
 	 * 
