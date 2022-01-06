@@ -13,7 +13,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.ResultTransformer;
 
-import com.pyramix.swi.domain.customerorder.CustomerOrder;
 import com.pyramix.swi.domain.organization.Customer;
 import com.pyramix.swi.domain.organization.Employee;
 import com.pyramix.swi.domain.organization.EmployeeCommissions;
