@@ -1,4 +1,8 @@
-3.8.0 - 03/01/2022
+3.8.1 - 07/01/2022
+- EmployeeCommissions not using the hibernate function to retrieve the customer due to limitations in the production database
+- Currently using java routine to populate a unique customer list and then sorted
+
+3.8.0 - 06/01/2022
 - Upgrade 'Batal' for the Settlement and CustomerOrder
 - Save 'Batal' date and note in database tables 
 - Change 'Batal' indicator in VoucherGiroReceipt, Giro, VoucherPayment, Settlement, CustomerReceivable

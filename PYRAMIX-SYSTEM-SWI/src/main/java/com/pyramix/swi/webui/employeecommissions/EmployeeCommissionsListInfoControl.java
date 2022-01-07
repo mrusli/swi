@@ -1,6 +1,7 @@
 package com.pyramix.swi.webui.employeecommissions;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -95,16 +96,51 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 		defaultEndDate = endDatebox.getValue();
 		
 		// setup unique customer list
-		// setupCustomerList(null, defaultStartDate, defaultEndDate);
+		setupCustomerList();
 		
 		// list
 		employeeCommissionsListInfo();
 	}
 
-	@SuppressWarnings("unused")
-	private void setupCustomerList(Employee employeeSales, Date startDate, Date endDate) throws Exception {
-		List<Customer> uniqueCustList = 
-				getEmployeeCommissionsDao().findUniqueCustomer_By_Date(employeeSales, startDate, endDate);
+	private void setupCustomerList() throws Exception {
+		List<Customer> uniqueCustList = new ArrayList<Customer>();
+		// can't use this due limitations in production database
+		// 		getEmployeeCommissionsDao().findUniqueCustomer_By_Date(employeeSales, startDate, endDate);
+		boolean unique = false;
+		for (EmployeeCommissions employeeCommissions : getEmployeeCommissionsList()) {
+			EmployeeCommissions employeeCommissionsCustomerOrderByProxy =
+				getEmployeeCommissionsDao().findCustomerOrderByProxy(employeeCommissions.getId());
+			CustomerOrder customerOrder = 
+				employeeCommissionsCustomerOrderByProxy.getCustomerOrder();
+			CustomerOrder customerOrderCustomerByProxy =
+				getCustomerOrderDao().findCustomerByProxy(customerOrder.getId());
+			Customer customer = customerOrderCustomerByProxy.getCustomer();
+			if (uniqueCustList.isEmpty()) {
+				// add
+				if (customer!=null) {
+					uniqueCustList.add(customer);
+					unique = false;
+				}
+			} else {
+				unique = true;
+				if (customer==null) {
+					continue;
+				}
+				// go through the unique list
+				for (Customer uniqueCust : uniqueCustList) {
+					if (uniqueCust.getId().compareTo(customer.getId())==0) {
+						unique = false;
+						break;
+					}
+				}
+			}
+			if (unique) {
+				// add
+				if (customer!=null) {
+					uniqueCustList.add(customer);
+				}
+			}
+		}
 		uniqueCustList.sort((o1,o2) -> {
 			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
 		});
@@ -201,7 +237,7 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 		defaultEndDate = endDatebox.getValue();
 
 		// setup unique customer list
-		// setupCustomerList(employeeSales, defaultStartDate, defaultEndDate);
+		setupCustomerList();
 		// list
 		employeeCommissionsListInfo();		
 	}
@@ -215,7 +251,6 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 	public void onClick$filterButton(Event event) throws Exception {
 		Employee employeeSales = employeeCommissionsTabbox.getSelectedTab().getValue();
 
-		// list EmployeeCommissions Order By CustomerOrderDate in descending order
 		boolean descendingOrder = true;
 
 		if (employeeSales == null) {
