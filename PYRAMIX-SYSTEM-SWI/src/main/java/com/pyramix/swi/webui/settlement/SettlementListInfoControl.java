@@ -148,7 +148,9 @@ public class SettlementListInfoControl extends GFCBaseController {
 	private void settlementCustomer(Date startDate, Date endDate) throws Exception {
 		List<Customer> customerList =
 				getSettlementDao().findUniqueCustomer_By_Date(startDate, endDate);
-		
+		customerList.sort((o1,o2) -> {
+			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
+		});
 		loadCustomerCombobox(customerList);
 	}
 

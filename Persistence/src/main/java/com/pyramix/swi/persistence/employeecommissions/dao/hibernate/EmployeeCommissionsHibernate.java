@@ -131,8 +131,8 @@ public class EmployeeCommissionsHibernate extends DaoHibernate implements Employ
 		}
 		criteria.createAlias("customerOrder", "customerOrder");
 		criteria.add(Restrictions.between("customerOrder.orderDate", startDate, endDate));
-		criteria.createAlias("customerOrder.customer", "customer");
-		criteria.addOrder(Order.asc(("customer.companyLegalName")));
+		// criteria.createAlias("customerOrder.customer", "customer");
+		// criteria.addOrder(Order.asc(("customer.companyLegalName")));
 		criteria.setResultTransformer(new ResultTransformer() {
 			
 			@Override

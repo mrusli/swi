@@ -489,9 +489,9 @@ public class SettlementDialogBatalControl extends GFCBaseController {
 			paidByCombobox.setValue(voucherPayment.getPaidBy().toString());
 			paidByInfoTextbox.setValue(voucherPayment.getPaidByNote());
 
-			pembatalanVoucherCatatanTextbox.setValue(
-					"Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+
-					" ("+voucherPayment.getTransactionDescription()+")");			
+			// pembatalanVoucherCatatanTextbox.setValue(
+			//		"Pembatalan Settlement No:"+getSettlement().getSettlementNumber().getSerialComp()+
+			//		" ("+voucherPayment.getTransactionDescription()+")");			
 			
 			displayVoucherPaymentDbCr(voucherPayment.getVoucherPaymentDebitCredits());
 		}

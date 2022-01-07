@@ -95,15 +95,19 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 		defaultEndDate = endDatebox.getValue();
 		
 		// setup unique customer list
-		setupCustomerList(null, defaultStartDate, defaultEndDate);
+		// setupCustomerList(null, defaultStartDate, defaultEndDate);
 		
 		// list
 		employeeCommissionsListInfo();
 	}
 
+	@SuppressWarnings("unused")
 	private void setupCustomerList(Employee employeeSales, Date startDate, Date endDate) throws Exception {
 		List<Customer> uniqueCustList = 
 				getEmployeeCommissionsDao().findUniqueCustomer_By_Date(employeeSales, startDate, endDate);
+		uniqueCustList.sort((o1,o2) -> {
+			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
+		});
 		// check
 		customerCombobox.setDisabled(uniqueCustList.isEmpty());
 		// clear items
@@ -197,7 +201,7 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 		defaultEndDate = endDatebox.getValue();
 
 		// setup unique customer list
-		setupCustomerList(employeeSales, defaultStartDate, defaultEndDate);
+		// setupCustomerList(employeeSales, defaultStartDate, defaultEndDate);
 		// list
 		employeeCommissionsListInfo();		
 	}
@@ -224,7 +228,7 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 							startDatebox.getValue(),
 							endDatebox.getValue()));				
 				// setup unique customer list
-				setupCustomerList(null, startDatebox.getValue(), endDatebox.getValue());
+				// setupCustomerList(null, startDatebox.getValue(), endDatebox.getValue());
 			} else {
 				// list
 				setEmployeeCommissionsList(
@@ -249,7 +253,7 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 								endDatebox.getValue(),
 								descendingOrder));							
 				// setup unique customer list
-				setupCustomerList(null, startDatebox.getValue(), endDatebox.getValue());
+				// setupCustomerList(null, startDatebox.getValue(), endDatebox.getValue());
 			} else {
 				setEmployeeCommissionsList(
 						getEmployeeCommissionsDao().
@@ -286,7 +290,7 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 					getEmployeeCommissionsDao().
 						findAllEmployeeCommissions_OrderBy_CustomerOrderDate(decendingOrder));				
 			// setup unique customer list
-			setupCustomerList(employeeSales, startDatebox.getValue(), endDatebox.getValue());
+			// setupCustomerList(employeeSales, startDatebox.getValue(), endDatebox.getValue());
 			// setup date range
 			setupDateRange();			
 		} else {
@@ -299,7 +303,7 @@ public class EmployeeCommissionsListInfoControl extends GFCBaseController {
 					getEmployeeCommissionsDao().findAllEmployeeCommissions_By_EmployeeId(
 							employeeSales.getId(), decendingOrder));							
 			// setup unique customer list
-			setupCustomerList(employeeSales, startDatebox.getValue(), endDatebox.getValue());
+			// setupCustomerList(employeeSales, startDatebox.getValue(), endDatebox.getValue());
 			// setup date range
 			setupDateRange();
 		}
