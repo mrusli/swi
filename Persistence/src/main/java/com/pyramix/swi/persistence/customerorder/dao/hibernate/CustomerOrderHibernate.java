@@ -152,7 +152,7 @@ public class CustomerOrderHibernate extends DaoHibernate implements CustomerOrde
 		criteria.add(Restrictions.between("orderDate", startDate, endDate));
 		criteria.setProjection(projectionList);
 		criteria.createAlias("customer", "customer");
-		criteria.addOrder(Order.asc(("customer.companyLegalName")));
+		// criteria.addOrder(Order.asc(("customer.companyLegalName")));
 		criteria.setResultTransformer(new ResultTransformer() {
 			
 			@Override

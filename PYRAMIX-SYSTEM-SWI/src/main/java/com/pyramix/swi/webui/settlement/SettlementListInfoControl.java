@@ -1,7 +1,6 @@
 package com.pyramix.swi.webui.settlement;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -149,7 +148,9 @@ public class SettlementListInfoControl extends GFCBaseController {
 	private void settlementCustomer(Date startDate, Date endDate) throws Exception {
 		List<Customer> customerList =
 				getSettlementDao().findUniqueCustomer_By_Date(startDate, endDate);
-		
+		customerList.sort((o1,o2) -> {
+			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
+		});
 		loadCustomerCombobox(customerList);
 	}
 

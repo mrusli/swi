@@ -267,6 +267,9 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 		
 		List<Customer> uniqueCustList = 
 				getCustomerOrderDao().findUniqueCustomer(checkTransaction, usePpn, startDate, endDate);
+		uniqueCustList.sort((o1, o2) ->{
+			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
+		});
 		// populate customerCombobox
 		Comboitem comboitem = null;
 		// all customer

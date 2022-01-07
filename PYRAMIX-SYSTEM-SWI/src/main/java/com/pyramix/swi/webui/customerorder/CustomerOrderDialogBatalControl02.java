@@ -1096,12 +1096,15 @@ public class CustomerOrderDialogBatalControl02 extends GFCBaseController {
 	private void glTab() throws Exception {
 		CustomerOrder customerOrderVoucherSalesByProxy =
 				getCustomerOrderDao().findVoucherSalesByProxy(getCustomerOrder().getId());
-		VoucherSales voucherSales = customerOrderVoucherSalesByProxy.getVoucherSales();		
+		VoucherSales voucherSales = customerOrderVoucherSalesByProxy.getVoucherSales();
+		boolean visible = voucherSales != null;
+		glTab.setVisible(visible);
+		if (!visible) {
+			return;
+		}
 		VoucherSales voucherSalesGLByProxy = 
 				getVoucherSalesDao().findGeneralLedgerByProxy(voucherSales.getId());
 		List<GeneralLedger> glList = voucherSalesGLByProxy.getGeneralLedgers();
-		boolean visible = glList != null;
-		glTab.setVisible(visible);
 		glList.forEach(gl -> {
 			log.info(gl.toString());
 		});
@@ -1262,6 +1265,15 @@ public class CustomerOrderDialogBatalControl02 extends GFCBaseController {
 		activityHolderList.forEach(activity -> {
 			log.info(activity.toString());
 		});
+		
+		visible = !activityHolderList.isEmpty();
+		piutangTab.setVisible(visible);
+		log.info("PiutangTab: visible: "+visible);
+		if (!visible) {
+			log.info("CustomerReceivableActivity List is Empty");
+			
+			return;
+		}
 		
 		// statusPiutangCombobox
 		Comboitem comboitem;

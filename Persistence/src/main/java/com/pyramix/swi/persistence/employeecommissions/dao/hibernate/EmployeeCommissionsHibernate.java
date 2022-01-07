@@ -13,7 +13,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.ResultTransformer;
 
-import com.pyramix.swi.domain.customerorder.CustomerOrder;
 import com.pyramix.swi.domain.organization.Customer;
 import com.pyramix.swi.domain.organization.Employee;
 import com.pyramix.swi.domain.organization.EmployeeCommissions;
@@ -132,8 +131,8 @@ public class EmployeeCommissionsHibernate extends DaoHibernate implements Employ
 		}
 		criteria.createAlias("customerOrder", "customerOrder");
 		criteria.add(Restrictions.between("customerOrder.orderDate", startDate, endDate));
-		criteria.createAlias("customerOrder.customer", "customer");
-		criteria.addOrder(Order.asc(("customer.companyLegalName")));
+		// criteria.createAlias("customerOrder.customer", "customer");
+		// criteria.addOrder(Order.asc(("customer.companyLegalName")));
 		criteria.setResultTransformer(new ResultTransformer() {
 			
 			@Override
