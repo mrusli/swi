@@ -1,6 +1,7 @@
 package com.pyramix.swi.webui.settlement;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -145,13 +146,43 @@ public class SettlementListInfoControl extends GFCBaseController {
 		// });
 	}
 
-	private void settlementCustomer(Date startDate, Date endDate) throws Exception {
-		List<Customer> customerList =
-				getSettlementDao().findUniqueCustomer_By_Date(startDate, endDate);
-		customerList.sort((o1,o2) -> {
+	private void settlementCustomer() throws Exception {
+		 List<Customer> uniqueCustomerList = new ArrayList<Customer>();
+		 		// 11/01/2022 - can't use the hibernate query due to limitations in DB production
+				// getSettlementDao().findUniqueCustomer_By_Date(startDate, endDate);
+		 boolean unique = false;
+		 for (Settlement settlement : getSettlementList()) {
+			 Settlement settlementCustomerByProxy = 
+				getSettlementDao().findCustomerByProxy(settlement.getId());
+			 Customer customer = settlementCustomerByProxy.getCustomer();
+			 if (uniqueCustomerList.isEmpty()) {
+				 // add
+				 if (customer!=null) {
+					uniqueCustomerList.add(customer);
+					unique = false;
+				}
+			} else {
+				unique = true;
+				if (customer==null) {
+					continue;
+				}
+				// go through the list
+				for (Customer uniqueCustomer : uniqueCustomerList) {
+					if (uniqueCustomer.getId().compareTo(customer.getId())==0) {
+						unique = false;
+						break;
+					}
+				}
+			}
+			if (unique) {
+				// add
+				uniqueCustomerList.add(customer);
+			}
+		 }
+		 uniqueCustomerList.sort((o1,o2) -> {
 			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
 		});
-		loadCustomerCombobox(customerList);
+		loadCustomerCombobox(uniqueCustomerList);
 	}
 
 	private void listAllSettlement() throws Exception {
@@ -167,7 +198,7 @@ public class SettlementListInfoControl extends GFCBaseController {
 		
 		settlementCount_and_Total();
 		
-		settlementCustomer(startDate, endDate);
+		settlementCustomer();
 		
 		batalButton.setDisabled(settlementCount==0);
 	}
@@ -194,7 +225,7 @@ public class SettlementListInfoControl extends GFCBaseController {
 		
 		settlementCount_and_Total();
 		
-		settlementCustomer(startDate, endDate);
+		settlementCustomer();
 		
 		batalButton.setDisabled(settlementCount==0);
 	}

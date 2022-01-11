@@ -173,8 +173,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			CustomerOrder customerOrderEarliest = getCustomerOrderList().get(lastIndex);
 			
 			// find all customer in the customer order - all
-			listCustomerInCustomerOrder(checkTransaction, usePpn, customerOrderEarliest.getOrderDate(), 
-					customerOrderLatest.getOrderDate());			
+			listCustomerInCustomerOrder();			
 
 			startDatebox.setValue(customerOrderEarliest.getOrderDate());
 			endDatebox.setValue(customerOrderLatest.getOrderDate());
@@ -190,7 +189,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			listCustomerOrderByDate(startDate, endDate, checkTransaction, usePpn);
 			
 			// find all customer in the customer order - today
-			listCustomerInCustomerOrder(checkTransaction, usePpn, startDate, endDate);
+			listCustomerInCustomerOrder();
 			
 			// assign startDate and endDate to date component - disable date component			
 			startDatebox.setValue(startDate);
@@ -207,7 +206,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			listCustomerOrderByDate(startDate, endDate, checkTransaction, usePpn);
 			
 			// find all customer in the customer order - this week
-			listCustomerInCustomerOrder(checkTransaction, usePpn, startDate, endDate);
+			listCustomerInCustomerOrder();
 			
 			// assign startDate and endDate to date component - disable date component			
 			startDatebox.setValue(startDate);
@@ -224,7 +223,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			listCustomerOrderByDate(startDate, endDate, checkTransaction, usePpn);
 
 			// find all customer in the customer order - this month
-			listCustomerInCustomerOrder(checkTransaction, usePpn, startDate, endDate);
+			listCustomerInCustomerOrder();
 			
 			// assign startDate and endDate to date component - disable date component			
 			startDatebox.setValue(startDate);
@@ -262,14 +261,50 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 		batalButton.setDisabled(orderCount==0);
 	}
 	
-	private void listCustomerInCustomerOrder(boolean checkTransaction, boolean usePpn, Date startDate, Date endDate) throws Exception {
-		customerCombobox.getItems().clear();
-		
-		List<Customer> uniqueCustList = 
-				getCustomerOrderDao().findUniqueCustomer(checkTransaction, usePpn, startDate, endDate);
+	private void listCustomerInCustomerOrder() throws Exception {
+		List<Customer> uniqueCustList = new ArrayList<Customer>();
+				// 11/01/2022 - can't use the hibernate query due to limitations in DB production
+				// getCustomerOrderDao().findUniqueCustomer(checkTransaction, usePpn, startDate, endDate);
+		boolean unique = true;
+		for (CustomerOrder customerOrder : getCustomerOrderList()) {
+			CustomerOrder customerOrderCustomerByProxy = 
+					getCustomerOrderDao().findCustomerByProxy(customerOrder.getId());
+			Customer customer = customerOrderCustomerByProxy.getCustomer();
+			if (uniqueCustList.isEmpty()) {
+				// add
+				if (customer!=null) {
+					uniqueCustList.add(customer);
+					unique = false;
+				}
+			} else {
+				unique = true;
+				if (customer==null) {
+					continue;
+				}
+				// go through the list
+				for (Customer uniqueCustomer : uniqueCustList) {
+					if (uniqueCustomer.getId().compareTo(customer.getId())==0) {
+						unique = false;
+						break;
+					}
+				}
+			}
+			if (unique) {
+				// add
+				if (customer!=null) {
+					uniqueCustList.add(customer);
+				}				
+			}
+		}
 		uniqueCustList.sort((o1, o2) ->{
 			return o1.getCompanyLegalName().compareTo(o2.getCompanyLegalName());
 		});
+		loadCustomerCombobox(uniqueCustList);
+	}
+
+	private void loadCustomerCombobox(List<Customer> uniqueCustList) {
+		customerCombobox.getItems().clear();
+
 		// populate customerCombobox
 		Comboitem comboitem = null;
 		// all customer

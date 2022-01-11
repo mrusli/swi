@@ -1,3 +1,8 @@
+3.8.2 - 11/01/2022
+- SettlementListInfo not using the hibernate function to retrieve the customer due to limitations in the production database
+- CustomerOrderListInfo not using the hibernate function to retrieve the customer due to limitations in the production database
+- Currently using java routine to populate a unique customer list and then sorted
+
 3.8.1 - 07/01/2022
 - EmployeeCommissions not using the hibernate function to retrieve the customer due to limitations in the production database
 - Currently using java routine to populate a unique customer list and then sorted
