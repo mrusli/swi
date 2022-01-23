@@ -1159,9 +1159,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 				// get the data				
 				CustomerOrder customerOrder = (CustomerOrder) event.getData();
 				// customer object needed for the note in the inventory sold
-				CustomerOrder customerOrderCustomerByProxy = 
-						getCustomerOrderDao().findCustomerByProxy(customerOrder.getId());
-				Customer customer = customerOrderCustomerByProxy.getCustomer();
+				Customer customer = customerOrder.getCustomer();
 				
 				// update the inventory
 				log.info("Updating Inventory using CustomerOrderProduct...");
