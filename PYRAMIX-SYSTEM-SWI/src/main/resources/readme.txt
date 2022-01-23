@@ -1,3 +1,6 @@
+3.8.3 - 23/01/2022
+- Put the customer name in the inventory note before customer order is saved
+
 3.8.2 - 11/01/2022
 - SettlementListInfo not using the hibernate function to retrieve the customer due to limitations in the production database
 - CustomerOrderListInfo not using the hibernate function to retrieve the customer due to limitations in the production database

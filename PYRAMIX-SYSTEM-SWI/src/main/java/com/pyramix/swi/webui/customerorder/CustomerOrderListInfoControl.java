@@ -1158,6 +1158,10 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 			public void onEvent(Event event) throws Exception {
 				// get the data				
 				CustomerOrder customerOrder = (CustomerOrder) event.getData();
+				// customer object needed for the note in the inventory sold
+				CustomerOrder customerOrderCustomerByProxy = 
+						getCustomerOrderDao().findCustomerByProxy(customerOrder.getId());
+				Customer customer = customerOrderCustomerByProxy.getCustomer();
 				
 				// update the inventory
 				log.info("Updating Inventory using CustomerOrderProduct...");
@@ -1187,9 +1191,12 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 						log.info("InventoryPacking is: "+product.getInventoryPacking().toString());
 
 						product.getInventory().setInventoryStatus(InventoryStatus.sold);
-						product.getInventory().setNote(customerOrder.getDocumentSerialNumber().getSerialComp());
+						// product.getInventory().setNote(customerOrder.getDocumentSerialNumber().getSerialComp());
+						// 21/01/2022 - change to customer name
+						product.getInventory().setNote(
+								customer.getCompanyType()+"."+customer.getCompanyLegalName());
 						
-						log.info("Reset Inventory Petian/Coil status to: "+
+						log.info("Set Inventory Petian/Coil status to: "+
 								product.getInventory().getInventoryStatus().toString());						
 					}
 					
@@ -1221,12 +1228,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 				
 				// list
 				listBySelection(selTabIndex, checkTransaction, usePpn);
-				
-				// load
-				// loadCustomerOrderList();
 			}
-
-
 		});
 		
 		customerOrderDialogWin.doModal();

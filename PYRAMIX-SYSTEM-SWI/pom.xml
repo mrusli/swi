@@ -11,11 +11,11 @@
   
 	<groupId>com.pyramix.swi.webui</groupId>
 	<artifactId>PYRAMIX-SYSTEM-SWI</artifactId>
-	<version>3.8.2</version>
+	<version>3.8.3</version>
 	
 	<packaging>war</packaging>
   
-	<name>PYRAMIX-SYSTEM-SWI Maven Webapp</name>
+	<name>PYRAMIX-SYSTEM-SWI Maven Webapp</name> 
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
