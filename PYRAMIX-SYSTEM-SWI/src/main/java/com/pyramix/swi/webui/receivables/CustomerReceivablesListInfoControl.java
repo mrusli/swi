@@ -2,6 +2,7 @@ package com.pyramix.swi.webui.receivables;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -42,12 +43,9 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 	
 	private Label formTitleLabel, companyName;
 	private Listbox customerReceivablesListbox, receivableActivityListbox;
-	private Listfooter totalPiutangListfooter, totalPiutangLanggananListfooter,
-		totalPembelianListfooter, totalPembayaranListfooter;
+	private Listfooter totalPiutangLanggananListfooter, totalPiutangListfooter;
 	
 	private List<CustomerReceivable> customerReceivableList;
-	private CustomerReceivable selectedReceivable;
-	// private BigDecimal totalPiutangLangganan;
 
 	private final Logger log = Logger.getLogger(CustomerReceivablesListInfoControl.class);
 	
@@ -55,75 +53,55 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 		log.info("Opening CustomerReceivableListInfo");
 		
 		formTitleLabel.setValue("Piutang Langganan (Customer)");
-
-		log.info("Getting all the customer receivables where the latest due date is not null");
+		// all receivables
 		setCustomerReceivableList(
-				getCustomerReceivableDao().findCustomerReceivablePendingPayment());
+				getCustomerReceivableDao().findAllCustomerReceivable());
 		
-		log.info("Updating customer receivables from the receivable activities");
+		List<CustomerReceivable> customerReceivables = new ArrayList<CustomerReceivable>();
 		
-		// update customerReceivable -- calculate the totalReceivable
-		// -- NEED TO DO THIS : everytime user opens this page, the totalReceivable MUST BE UPDATED
-		for (CustomerReceivable receivable : getCustomerReceivableList()) {
-			Customer customer = getCustomerByProxy(receivable.getId());
-			
-			log.info("Updating Receivable for: "+
-					customer.getCompanyType().toString()+"."+
-					customer.getCompanyLegalName());
-			
-			BigDecimal totalOrder = // getTotalOrder(receivable.getCustomerReceivableActivities());
-					getTotalOrder(receivable.getCustomer());
-			log.info("Total Order: "+toLocalFormat(totalOrder));
-			
-			BigDecimal totalPayment = // getTotalPayment(receivable.getCustomerReceivableActivities());
-					getTotalPayment(receivable.getCustomer());
-			log.info("Total Payment: "+toLocalFormat(totalPayment));
-			
-			BigDecimal piutangLangganan = totalOrder.subtract(totalPayment);
-			log.info("Total Receivable: "+toLocalFormat(piutangLangganan));
-			
-			if (receivable.getTotalReceivable().compareTo(piutangLangganan)==0) {
-				// no changes to receivable activities. no need to update
-				log.info("No changes to receivable activies.  No need to update into database.");
-			} else {				
-				// setTotalReceivable
-				receivable.setTotalReceivable(piutangLangganan);
-				// update
-				log.info("Update into database");
-				getCustomerReceivableDao().update(receivable);
+		// only receivables that're not fully paid
+		BigDecimal totalReceivable = BigDecimal.ZERO;
+		for(CustomerReceivable receivable : getCustomerReceivableList()) {
+			BigDecimal amountOwed = getTotalOwing(receivable.getCustomerReceivableActivities());
+			if (amountOwed.compareTo(BigDecimal.ZERO)==1) {
+				customerReceivables.add(receivable);
 			}
 			
+			totalReceivable = totalReceivable.add(amountOwed);
 		}
-		
-		// clear the CustomerReceivable list
-		getCustomerReceivableList().clear();
-		
-		log.info("Getting customer receivables where totalReceivable is greater than zero");
-		setCustomerReceivableList(
-				getCustomerReceivableDao().findCustomerReceivableWithNonZeroTotalReceivable());
-		
-		log.info("List customer receivables");
-		customerReceivableListInfo();
+		customerReceivables.sort((o1, o2) -> {
+			Customer o1_customer = null, o2_customer = null;
+			try {
+				CustomerReceivable o1_receivable = getCustomerReceivableDao().findCustomerByProxy(o1.getId());
+				o1_customer = o1_receivable.getCustomer();
+				CustomerReceivable o2_receivable = getCustomerReceivableDao().findCustomerByProxy(o2.getId());
+				o2_customer = o2_receivable.getCustomer();
 
-		log.info("Getting the total customer receivables");
-		BigDecimal totalReceivable = getCustomerReceivableDao().sumTotalReceivables();
-		
-		log.info("Total Receivable: "+toLocalFormat(totalReceivable));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return o1_customer.getCompanyLegalName().compareTo(o2_customer.getCompanyLegalName());
+			
+		});
+		// list all receivables
+		customerReceivableListInfo(customerReceivables);
+		// display total receivables to date
 		totalPiutangLanggananListfooter.setLabel(toLocalFormat(totalReceivable));
-		
-		customerReceivableActityListInfo(0);
+		// display activities
+		if (customerReceivables.isEmpty()) {
+			return;
+		}
+		customerReceivableActityListInfo(customerReceivables.get(0));
 	}
 
-	private void customerReceivableListInfo() {
+	private void customerReceivableListInfo(List<CustomerReceivable> customerReceivables) {
 		customerReceivablesListbox.setModel(
-				new ListModelList<CustomerReceivable>(getCustomerReceivableList()));
+				new ListModelList<CustomerReceivable>(customerReceivables));
 		customerReceivablesListbox.setItemRenderer(
 				getCustomerReceivablesListitemRenderer());
 	}
 
 	private ListitemRenderer<CustomerReceivable> getCustomerReceivablesListitemRenderer() {
-		
-		// totalPiutangLangganan = BigDecimal.ZERO;
 		
 		return new ListitemRenderer<CustomerReceivable>() {
 			
@@ -131,7 +109,8 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 			public void render(Listitem item, CustomerReceivable receivable, int index) throws Exception {
 				Listcell lc;
 				
-				Customer customer = getCustomerByProxy(receivable.getId());
+				CustomerReceivable receivableCustomerByProxy = getCustomerReceivableDao().findCustomerByProxy(receivable.getId());
+				Customer customer = receivableCustomerByProxy.getCustomer();
 				
 				// nama perusahaan
 				lc = new Listcell(customer.getCompanyType().toString()+". "+
@@ -139,89 +118,60 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 				lc.setStyle("white-space: nowrap;");
 				lc.setParent(item);
 				
-				BigDecimal totalOrder = // getTotalOrder(receivable.getCustomerReceivableActivities());
-						getTotalOrder(customer);
-				BigDecimal totalPayment = // getTotalPayment(receivable.getCustomerReceivableActivities());
-						getTotalPayment(customer);
-				BigDecimal piutangLangganan = totalOrder.subtract(totalPayment);
+				BigDecimal piutangLangganan =
+						getTotalOwing(receivable.getCustomerReceivableActivities());				
 				
 				// total piutang
 				lc = new Listcell(toLocalFormat(piutangLangganan));
 				lc.setParent(item);
 				
-				// totalPiutangLangganan = totalPiutangLangganan.add(piutangLangganan);
+				log.info(customer.getCompanyType().toString()+". "+
+						customer.getCompanyLegalName()+" - Piutang: "+
+						toLocalFormat(piutangLangganan));
+
+				item.setValue(receivable);
 			}
 		};
 	}
-	
-	private void customerReceivableActityListInfo(int index) throws Exception {
-		// CustomerReceivable selectedReceivable = getCustomerReceivableList().get(index);
-		log.info("CustomerReceivable list size :"+getCustomerReceivableList().size());
+
+	public void onSelect$customerReceivablesListbox(Event event) throws Exception {	
+		CustomerReceivable selReceivable = customerReceivablesListbox.getSelectedItem().getValue();
 		
-		if (getCustomerReceivableList().size()>0) {
-			CustomerReceivable customerRecivable = getCustomerReceivableList().get(index);
-			
-			setSelectedReceivable(customerRecivable);
-			
-			// display the company name
-			Customer customerByProxy = getCustomerByProxy(getSelectedReceivable().getId());
-			log.info("Set the Selected Receivable for :"+
-					customerByProxy.getCompanyType().toString()+"."+
-					customerByProxy.getCompanyLegalName());
+		customerReceivableActityListInfo(selReceivable);
+	}
 
-			companyName.setValue("NP-"+formatTo4DigitWithLeadingZeo(getSelectedReceivable().getId().intValue())+" : "+
-					customerByProxy.getCompanyType()+". "+
-					customerByProxy.getCompanyLegalName());
-			
-			List<CustomerReceivableActivity> receivableActivities = getSelectedReceivable().getCustomerReceivableActivities();
-			// using lambda expression
-			// ref: https://stackoverflow.com/questions/33326657/sorting-multiple-attribute-with-lambda-expressions
-			// sort according to transaction as it happened in CustomerOrder - 05/10/2021 - Mnt Setting nomor muda di paling atas
-			receivableActivities.sort((o1, o2) -> {
-				int cmp = Long.compare(o1.getCustomerOrderId(), o2.getCustomerOrderId());
-				
-				return cmp;
-			});
-			// reverse order - latest paymentDueDate first
-			// ref: https://stackoverflow.com/questions/5894818/how-to-sort-arraylistlong-in-decreasing-order
-			// Collections.reverse(receivableActivities);
-			receivableActivityListbox.setModel(
-					new ListModelList<CustomerReceivableActivity>(receivableActivities));
-			receivableActivityListbox.setItemRenderer(
-					getReceivableActivityListitemRenderer());
-						
-			log.info("Sum of AmountSales");
-			BigDecimal totalOrder = // getCustomerReceivableDao().sumAmountSalesReceivableActivities(getSelectedReceivable().getCustomer());
-					getTotalOrder(getSelectedReceivable().getCustomer());
-			BigDecimal totalOrderPpn =
-					getTotalorderPpn(getSelectedReceivable().getCustomer());
-			log.info("Total AmountSales for :"+
-					customerByProxy.getCompanyType().toString()+"."+
-					customerByProxy.getCompanyLegalName()+
-					" = "+
-					toLocalFormat(totalOrder));
-			log.info("Total AmountSales PPN for :"+
-					customerByProxy.getCompanyType().toString()+"."+
-					customerByProxy.getCompanyLegalName()+
-					" = "+
-					toLocalFormat(totalOrderPpn));
-			
-			log.info("Sum of AmountPaid");
-			BigDecimal totalPayment = // getCustomerReceivableDao().sumAmountPaymentReceivableActivities(getSelectedReceivable().getCustomer());
-					getTotalPayment(getSelectedReceivable().getCustomer());
-			log.info("Total AmountPaid for :"+
-					customerByProxy.getCompanyType().toString()+"."+
-					customerByProxy.getCompanyLegalName()+
-					" = "+
-					toLocalFormat(totalPayment));
+	private void customerReceivableActityListInfo(CustomerReceivable receivable) throws Exception {		
+		CustomerReceivable receivableCustomerByProxy = getCustomerReceivableDao().findCustomerByProxy(receivable.getId());
+		Customer customer = receivableCustomerByProxy.getCustomer();
+		log.info("Set the Selected Receivable for :"+
+				customer.getCompanyType().toString()+"."+
+				customer.getCompanyLegalName());
 
-			BigDecimal totalOwing = getTotalOwing(receivableActivities); 
-			log.info("TotalOwing="+toLocalFormat(totalOwing));
+		// display the company name
+		companyName.setValue("NP-"+formatTo4DigitWithLeadingZeo(receivable.getId().intValue())+" : "+
+				customer.getCompanyType()+". "+
+				customer.getCompanyLegalName());
+
+		List<CustomerReceivableActivity> receivableActivities = receivable.getCustomerReceivableActivities();
+		// using lambda expression
+		// ref: https://stackoverflow.com/questions/33326657/sorting-multiple-attribute-with-lambda-expressions
+		// sort according to transaction as it happened in CustomerOrder - 05/10/2021 - Mnt Setting nomor muda di paling atas
+		receivableActivities.sort((o1, o2) -> {
+			int cmp = Long.compare(o1.getCustomerOrderId(), o2.getCustomerOrderId());
 			
-			totalPembelianListfooter.setLabel(toLocalFormat(totalOrder));
-			totalPembayaranListfooter.setLabel(toLocalFormat(totalPayment));
-			totalPiutangListfooter.setLabel(toLocalFormat(totalOwing));
-		}
+			return cmp;
+		});
+		// list activities
+		receivableActivityListbox.setModel(
+				new ListModelList<CustomerReceivableActivity>(receivableActivities));
+		receivableActivityListbox.setItemRenderer(
+				getReceivableActivityListitemRenderer());
+	
+		BigDecimal totalOwing = getTotalOwing(receivableActivities); 
+		log.info("TotalOwing="+toLocalFormat(totalOwing));
+		
+		// display total receivable
+		totalPiutangListfooter.setLabel(toLocalFormat(totalOwing));
 	}
 
 	private BigDecimal getTotalOwing(List<CustomerReceivableActivity> receivableActivities) {
@@ -238,57 +188,7 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 		return totalOwing;
 	}
 	
-	private BigDecimal getTotalOrder(Customer customerReceivable) throws Exception {		
-		BigDecimal total = 
-				getCustomerReceivableDao().sumAmountSalesReceivableActivities(customerReceivable);
-		
-		return total;
-	}
 
-	private BigDecimal getTotalorderPpn(Customer customerReceivable) throws Exception {
-		BigDecimal total =
-				getCustomerReceivableDao().sumAmountSalesPpnReceivableActivities(customerReceivable);
-		
-		return total;
-	}
-	
-/*	private BigDecimal getTotalOrder(List<CustomerReceivableActivity> receivableActivities) {
-		
-		BigDecimal total = BigDecimal.ZERO;
-		
-		for (CustomerReceivableActivity activity : receivableActivities) {
-			
-			if (activity.getReceivableStatus().equals(DocumentStatus.NORMAL)) {
-				total = total.add(activity.getAmountSales());				
-			}
-		}
-		
-		return total;
-	}
-*/
-
-	private BigDecimal getTotalPayment(Customer customerReceivable) throws Exception {
-		
-		BigDecimal total =
-				getCustomerReceivableDao().sumAmountPaymentReceivableActivities(customerReceivable);
-		
-		return total;
-	}
-	
-/*	private BigDecimal getTotalPaymen(List<CustomerReceivableActivity> receivableActivities) {
-
-		BigDecimal total = BigDecimal.ZERO;
-		
-		for (CustomerReceivableActivity activity : receivableActivities) {
-			
-			if (activity.getReceivableStatus().equals(DocumentStatus.NORMAL)) {
-				total = total.add(activity.getAmountPaid());				
-			}
-		}
-		
-		return total;
-	}
-*/	
 	
 	private ListitemRenderer<CustomerReceivableActivity> getReceivableActivityListitemRenderer() {
 		
@@ -515,26 +415,15 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 					label.setParent(vbox);
 				}
 
-				// if the status of receivableActivity is 'BATAL', change the backgroud color to red
-				// if (activity.getReceivableStatus().equals(DocumentStatus.BATAL)) {
-				// 	item.setClass("red-background");
-				// }
 			}
 		};
 	}
 
-	public void onSelect$customerReceivablesListbox(Event event) throws Exception {
-		// System.out.println(customerReceivablesListbox.getSelectedIndex());
-		
-		int selIndex = customerReceivablesListbox.getSelectedIndex();
-		
-		customerReceivableActityListInfo(selIndex);
-	}
-
 	public void onClick$printCompanyReceivableButton(Event event) throws Exception {
-		
+		CustomerReceivable selReceivable = customerReceivablesListbox.getSelectedItem().getValue();
+
 		Map<String, CustomerReceivable> arg = 
-				Collections.singletonMap("selectedReceivable", getSelectedReceivable());
+				Collections.singletonMap("selectedReceivable", selReceivable);
 		
 		Window reportReceivablesPrintWin = 
 				(Window) Executions.createComponents("/receivables/print/CustomerReceivablesPrint.zul", null, arg);
@@ -571,14 +460,6 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 
 	public void setCustomerOrderDao(CustomerOrderDao customerOrderDao) {
 		this.customerOrderDao = customerOrderDao;
-	}
-
-	public CustomerReceivable getSelectedReceivable() {
-		return selectedReceivable;
-	}
-
-	public void setSelectedReceivable(CustomerReceivable selectedReceivable) {
-		this.selectedReceivable = selectedReceivable;
 	}
 	
 }

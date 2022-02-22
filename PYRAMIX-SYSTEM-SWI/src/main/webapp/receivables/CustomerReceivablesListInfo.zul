@@ -16,19 +16,19 @@
 	</north>
 	<west width="380px" border="normal">
 		<div>
-			<grid height="50px">
+			<grid height="40px">
 				<rows>
 					<row>
 						<cell width="75%">
-							<textbox id="searchCustomer" width="270px"></textbox>						
+													
 						</cell>
 						<cell>
-							<button id="searchButton" label="Cari"></button>						
+													
 						</cell>
 					</row>
 				</rows>
 			</grid>
-			<listbox id="customerReceivablesListbox" mold="paging" pageSize="15" height="540px">
+			<listbox id="customerReceivablesListbox" mold="paging" pageSize="15" height="550px">
 				<listhead>
 					<listheader label="Nama Perusahaan" width="240px"/>
 					<listheader label="Total Piutang" width="120px" align="right"></listheader>
@@ -42,7 +42,7 @@
 	</west>	
 	<center border="normal">
 		<div>
-			<grid height="50px">
+			<grid height="40px">
 				<rows>
 					<row>
 						<cell>
@@ -51,7 +51,7 @@
 					</row>
 				</rows>
 			</grid>
-			<listbox id="receivableActivityListbox" mold="paging" pageSize="15" height="540px">
+			<listbox id="receivableActivityListbox" mold="paging" pageSize="15" height="550px">
 				<listhead>
 					<listheader label="Order-No." width="140px"></listheader>
 					<listheader label="Tgl.Order" width="120px"></listheader>
@@ -63,16 +63,16 @@
 					<listheader label="Status" width="80px"></listheader>
 				</listhead>
 				<listfoot>
-					<listfooter label="Pembelian:"></listfooter>
+					<listfooter label="Pembelian:" visible="false"></listfooter>
 					<listfooter id="totalPembelianListfooter" align="right"></listfooter>
-					<listfooter label="Pembayaran:"></listfooter>
+					<listfooter label="Pembayaran:" visible="false"></listfooter>
 					<listfooter id="totalPembayaranListfooter" align="right"></listfooter>				
 					<listfooter label="Piutang:"></listfooter>
 					<listfooter id="totalPiutangListfooter" align="right"></listfooter>
 				</listfoot>
 			</listbox>
 			<hlayout style="padding-left: 5px; padding-top: 5px;">
-				<button id="printCompanyReceivableButton" label="Print"></button>
+				<button id="printCompanyReceivableButton" label="Print" iconSclass="z-icon-print" sclass="modButton"></button>				
 			</hlayout>
 		</div>
 	</center>

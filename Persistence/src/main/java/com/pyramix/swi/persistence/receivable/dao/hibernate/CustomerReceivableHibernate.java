@@ -1,7 +1,6 @@
 package com.pyramix.swi.persistence.receivable.dao.hibernate;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -29,7 +28,7 @@ public class CustomerReceivableHibernate extends DaoHibernate implements Custome
 	@Override
 	public List<CustomerReceivable> findAllCustomerReceivable() throws Exception {
 
-		return new ArrayList<CustomerReceivable>(super.findAll(CustomerReceivable.class));
+		return super.findAll(CustomerReceivable.class);
 	}
 
 	@Override
