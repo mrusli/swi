@@ -411,7 +411,7 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 					label.setSclass("badge badge-red");
 					label.setParent(vbox);					
 				} else {
-					label.setValue(activity.isPaymentComplete() ? "Lunas" : " - ");
+					label.setValue(activity.getId()+(activity.isPaymentComplete() ? " Lunas" : "  - "));
 					label.setParent(vbox);
 				}
 
