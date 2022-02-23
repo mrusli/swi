@@ -750,9 +750,14 @@ public class SettlementListInfoControl extends GFCBaseController {
 						getCustomerReceivableFromCustomerByProxy(customer.getId()); 
 				List<CustomerReceivableActivity> activityList = 
 						receivable.getCustomerReceivableActivities();
-												
+				
+				/**
+				 * if payment not complete (1st payment) - User klik Cicilan: system calc the 'remaining_amount' and
+				 * 'payment_complete' set 'F'
+				 * 
+				 */
 				for (SettlementDetail detail : settlement.getSettlementDetails()) {
-					boolean installment = false;
+					boolean installment = false;					
 					CustomerReceivableActivity selectedActivity = null;
 					
 					for (CustomerReceivableActivity activity : activityList) {
@@ -763,11 +768,21 @@ public class SettlementListInfoControl extends GFCBaseController {
 							
 							selectedActivity = activity;
 							
-							break;
+							// 23/02/2022 - cannot break / stop on the first occurance,
+							// must get the last activity to find the remaining amount
+							// break;
+
+							// log.info("Payment Complete : "+detail.getCustomerOrder().isPaymentComplete());
+							// 23/02/2022 - in the SettlementDialog, if the payment is complete,
+							// all previous settlements must be set to complete (paymentComplete set to 'true')
+							if (detail.getCustomerOrder().isPaymentComplete()) {
+								activity.setPaymentComplete(true);
+							}
 						}
 					}
 					
 					if (installment) {
+						
 						// add new												
 						activityList.add(getCustomerReceivableActivity(
 								detail, new CustomerReceivableActivity(), settlementDate));
@@ -776,6 +791,7 @@ public class SettlementListInfoControl extends GFCBaseController {
 						getCustomerReceivableActivity(detail, selectedActivity, settlementDate);						
 					}
 				}
+				
 				
 				// assign receivable
 				settlement.setCustomerReceivable(receivable);

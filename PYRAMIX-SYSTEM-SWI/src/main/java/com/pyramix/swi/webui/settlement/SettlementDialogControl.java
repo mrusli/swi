@@ -366,7 +366,9 @@ public class SettlementDialogControl extends GFCBaseController {
 		int lastIndex = settlementDetailListbox.getItemCount()-1;
 		
 		for (SettlementDetail detail : getSettlementDetailList()) {
-			amountToSettle = detail.getAmountToSettle();
+			amountToSettle = detail.getRemainingAmountToSettle();
+					// 23/02/2022 - not using amountToSettle
+					// detail.getAmountToSettle();
 
 			// Jumlah Pembayaran
 			Listitem item = settlementDetailListbox.getItemAtIndex(index);

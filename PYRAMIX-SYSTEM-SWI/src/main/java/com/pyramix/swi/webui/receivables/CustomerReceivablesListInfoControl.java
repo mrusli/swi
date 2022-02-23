@@ -181,8 +181,8 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 			if (activity.getReceivableStatus().compareTo(DocumentStatus.BATAL)==0) {
 				continue;
 			}
-			if (activity.getPaymentDate()==null) {
-				totalOwing = totalOwing.add(activity.getAmountSales());
+			if (!activity.isPaymentComplete()) {
+				totalOwing = totalOwing.add(activity.getAmountSales().subtract(activity.getAmountPaid()));
 			}
 		}
 		return totalOwing;
@@ -411,7 +411,7 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 					label.setSclass("badge badge-red");
 					label.setParent(vbox);					
 				} else {
-					label.setValue(activity.isPaymentComplete() ? " Lunas" : "  - ");
+					label.setValue(activity.getId()+(activity.isPaymentComplete() ? "Lunas" : "-"));
 					label.setParent(vbox);
 				}
 
