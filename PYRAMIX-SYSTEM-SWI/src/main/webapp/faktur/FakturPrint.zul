@@ -107,7 +107,7 @@
 				</row>
 				<row>
 					<cell>
-						<label value="PPN = 10%" sclass="pre-print-label"></label>		
+						<label value="PPN = 11%" sclass="pre-print-label"></label>		
 					</cell>
 					<cell align="right">
 						<label id="ppnTotalLabel" value="0,-" sclass="pre-print-label"></label>

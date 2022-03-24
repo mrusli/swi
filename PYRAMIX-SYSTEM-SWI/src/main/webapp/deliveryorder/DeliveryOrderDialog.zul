@@ -1,7 +1,7 @@
 <?page title="Delivery Order" contentType="text/html;charset=UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk>
-<window width="1150px" height="680px" title="Delivery Order" border="normal"
+<window width="1150px" height="540px" title="Delivery Order" border="normal"
 	id="deliveryOrderDialogWin" apply="${deliveryOrderDialogControl}">
 	<vbox>
 		<grid>

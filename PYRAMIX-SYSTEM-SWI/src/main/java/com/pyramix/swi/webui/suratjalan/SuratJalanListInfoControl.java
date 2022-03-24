@@ -316,7 +316,7 @@ public class SuratJalanListInfoControl extends GFCBaseController {
 			private Listcell initEditButton(Listcell listcell, SuratJalan suratJalan) {
 				Button editButton = new Button();
 
-				editButton.setLabel("Edit");
+				editButton.setLabel(suratJalan.getSuratJalanStatus().equals(DocumentStatus.BATAL) ? "View" : "Edit");
 				editButton.setClass("inventoryEditButton");
 				editButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
@@ -325,7 +325,7 @@ public class SuratJalanListInfoControl extends GFCBaseController {
 						SuratJalanData suratJalanData = new SuratJalanData();
 						suratJalanData.setCustomerOrder(null);
 						suratJalanData.setSuratJalan(suratJalan);
-						suratJalanData.setPageMode(PageMode.EDIT);
+						suratJalanData.setPageMode(suratJalan.getSuratJalanStatus().equals(DocumentStatus.BATAL) ? PageMode.VIEW : PageMode.EDIT);
 						suratJalanData.setRequestPath(
 								Executions.getCurrent().getDesktop().getRequestPath());
 						

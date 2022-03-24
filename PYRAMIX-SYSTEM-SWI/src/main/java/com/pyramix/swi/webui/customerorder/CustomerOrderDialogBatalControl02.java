@@ -607,8 +607,12 @@ public class CustomerOrderDialogBatalControl02 extends GFCBaseController {
 		SuratJalan suratJalanCustomerByProxy =
 				getSuratJalanDao().findCustomerByProxy(suratJalan.getId());
 		Customer customer = suratJalanCustomerByProxy.getCustomer();
-		customerSuratJalanTextbox.setValue(customer.getCompanyType()+"."+
-				customer.getCompanyLegalName());
+		if (customer==null) {
+			customerSuratJalanTextbox.setValue("-");
+		} else {
+			customerSuratJalanTextbox.setValue(customer.getCompanyType()+"."+
+					customer.getCompanyLegalName());
+		}
 		deliverySuratJalanDatebox.setValue(suratJalan.getDeliveryDate());
 		noteSuratJalanTextbox.setValue(suratJalan.getNote());
 		
@@ -831,8 +835,12 @@ public class CustomerOrderDialogBatalControl02 extends GFCBaseController {
 		Faktur fakturCustomerByProxy = 
 				getFakturDao().findCustomerByProxy(faktur.getId());
 		Customer customer = fakturCustomerByProxy.getCustomer();
-		customerFakturTextbox.setValue(customer.getCompanyType()+"."+
-				customer.getCompanyLegalName());
+		if (customer==null) {
+			customerFakturTextbox.setValue("-");
+		} else {
+			customerFakturTextbox.setValue(customer.getCompanyType()+"."+
+					customer.getCompanyLegalName());
+		}
 		pembayaranFakturCombobox.setValue(faktur.getPaymentType().toString());
 		jumlahHariFakturIntbox.setValue(faktur.getJumlahHari());
 		ppnFakturCheckbox.setChecked(faktur.isUsePpn());
@@ -971,8 +979,12 @@ public class CustomerOrderDialogBatalControl02 extends GFCBaseController {
 		VoucherSales voucherSalesCustomerByProxy = 
 				getVoucherSalesDao().findCustomerByProxy(voucherSales.getId());
 		Customer customer = voucherSalesCustomerByProxy.getCustomer();
-		customerVoucherSalesTextbox.setValue(customer.getCompanyType()+"."+
-				customer.getCompanyLegalName());
+		if (customer==null) {
+			customerVoucherSalesTextbox.setValue("-");
+		} else {
+			customerVoucherSalesTextbox.setValue(customer.getCompanyType()+"."+
+					customer.getCompanyLegalName());
+		}
 		theSumOfVoucherSalesTextbox.setValue(toLocalFormat(voucherSales.getTheSumOf()));
 		usePpnVoucherSalesCheckbox.setChecked(voucherSales.isUsePpn());
 		ppnAmountVoucherSalesTextbox.setValue(toLocalFormat(voucherSales.getPpnAmount()));

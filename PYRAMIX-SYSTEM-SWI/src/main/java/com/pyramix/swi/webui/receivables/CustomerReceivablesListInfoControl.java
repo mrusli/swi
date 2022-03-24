@@ -188,8 +188,6 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 		return totalOwing;
 	}
 	
-
-	
 	private ListitemRenderer<CustomerReceivableActivity> getReceivableActivityListitemRenderer() {
 		
 		return new ListitemRenderer<CustomerReceivableActivity>() {

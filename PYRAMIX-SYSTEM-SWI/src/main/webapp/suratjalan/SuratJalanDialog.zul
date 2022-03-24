@@ -1,7 +1,7 @@
 <?page title="Surat Jalan" contentType="text/html;charset=UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk>
-<window width="1150px" height="680px" title="Surat Jalan" border="normal"
+<window width="1150px" height="540px" title="Surat Jalan" border="normal"
 	id="suratJalanDialogWin" apply="${suratJalanDialogControl}">
 	<vbox>
 		<grid>

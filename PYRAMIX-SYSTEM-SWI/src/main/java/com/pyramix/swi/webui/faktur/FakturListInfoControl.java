@@ -272,7 +272,7 @@ public class FakturListInfoControl extends GFCBaseController {
 			private Listcell initEdit(Listcell listcell, Faktur faktur) {
 				Button editButton = new Button();
 				
-				editButton.setLabel("Edit");
+				editButton.setLabel(faktur.getFakturStatus().equals(DocumentStatus.BATAL) ? "View" : "Edit");
 				editButton.setClass("inventoryEditButton");
 				editButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
@@ -284,7 +284,7 @@ public class FakturListInfoControl extends GFCBaseController {
 						FakturData fakturData = new FakturData();
 						fakturData.setFaktur(faktur);
 						fakturData.setSuratJalan(null);
-						fakturData.setPageMode(PageMode.EDIT);
+						fakturData.setPageMode(faktur.getFakturStatus().equals(DocumentStatus.BATAL) ? PageMode.VIEW : PageMode.EDIT);
 						
 						Map<String, FakturData> arg = Collections.singletonMap("fakturData", fakturData);
 						

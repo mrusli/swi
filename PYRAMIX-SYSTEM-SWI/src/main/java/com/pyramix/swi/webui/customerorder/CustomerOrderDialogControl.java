@@ -89,6 +89,8 @@ public class CustomerOrderDialogControl extends GFCBaseController{
 	private final DocumentType NON_PPN_ORDER 			= DocumentType.NON_PPN_ORDER;
 	private final DocumentStatus STATUS					= DocumentStatus.NORMAL;
 	
+	private final BigDecimal PPN = new BigDecimal(0.11);
+	
 	private final Logger log = Logger.getLogger(CustomerOrderDialogControl.class);
 	
 	@Override
@@ -557,9 +559,17 @@ public class CustomerOrderDialogControl extends GFCBaseController{
 	}
 	
 	public void updateProductTotalInfo() {
+		log.info("updateProductTotalInfo()");
+		log.info("SubTotal: "+toLocalFormat(accSubTotal));
+		log.info("Per 01 April 2022 PPN is 11%: "+PPN);		
+
 		BigDecimal ppnValue 	= usePpn.isChecked() ? 
-				accSubTotal.multiply(new BigDecimal(0.1)) : BigDecimal.ZERO;
+				accSubTotal.multiply(PPN) : BigDecimal.ZERO;
+				// accSubTotal.multiply(new BigDecimal(0.1)) : BigDecimal.ZERO;
+		log.info("PPN 11%: "+toLocalFormat(ppnValue));
+		
 		BigDecimal totalOrder 	= accSubTotal.add(ppnValue);
+		log.info("Total: "+toLocalFormat(totalOrder));
 		
 		subTotalTextbox.setValue(toLocalFormat(accSubTotal));
 		ppnTextbox.setValue(toLocalFormat(ppnValue));
@@ -754,27 +764,29 @@ public class CustomerOrderDialogControl extends GFCBaseController{
 				throw new Exception("Klik Edit di setiap item untuk mendapatkan subtotal.");
 			}
 			
-			// System.out.println(product.getSellingSubTotal().setScale(0, RoundingMode.HALF_EVEN));
-			
 			accSubTotal = accSubTotal.add(product.getSellingSubTotal().setScale(0, RoundingMode.HALF_EVEN));			
 		}
 		
 		subTotalTextbox.setValue(toLocalFormat(accSubTotal));
 		subTotalTextbox.setAttribute("subTotal", accSubTotal);
+
+		log.info("SubTotal: "+toLocalFormat(accSubTotal));
+		log.info("Per 01 April 2022 PPN is 11%: "+PPN);
 		
-		// System.out.println(accSubTotal);
-		
-		BigDecimal ppnValue = usePpn.isChecked() ? 
-				accSubTotal.multiply(new BigDecimal(0.1)) : BigDecimal.ZERO;	
+		BigDecimal ppnValue = usePpn.isChecked() ?
+				accSubTotal.multiply(PPN) : BigDecimal.ZERO;
+				// accSubTotal.multiply(new BigDecimal(0.1)) : BigDecimal.ZERO;	
 		ppnTextbox.setValue(toLocalFormat(ppnValue));
 		ppnTextbox.setAttribute("ppnTotal", ppnValue.setScale(0, RoundingMode.HALF_EVEN));
 		
+		log.info("PPN: "+toLocalFormat(ppnValue));
 		// System.out.println(ppnValue.setScale(0, RoundingMode.HALF_EVEN));
 		
 		BigDecimal totalValue = accSubTotal.add(ppnValue);
 		totalTextbox.setValue(toLocalFormat(totalValue));
 		totalTextbox.setAttribute("orderTotal", totalValue.setScale(0, RoundingMode.HALF_EVEN));
 		
+		log.info("Total: "+toLocalFormat(totalValue));
 		// System.out.println(totalValue.setScale(0, RoundingMode.HALF_EVEN));
 		
 		totalOrderTextbox.setValue(toLocalFormat(totalValue));

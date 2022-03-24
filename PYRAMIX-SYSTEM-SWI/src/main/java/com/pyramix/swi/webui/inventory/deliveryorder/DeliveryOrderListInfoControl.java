@@ -320,7 +320,7 @@ public class DeliveryOrderListInfoControl extends GFCBaseController {
 			private Listcell initEdit(Listcell listcell, DeliveryOrder deliveryOrder) {
 				Button editButton = new Button();
 
-				editButton.setLabel("Edit");
+				editButton.setLabel(deliveryOrder.getDeliveryOrderStatus().equals(DocumentStatus.BATAL) ? "View" : "Edit");
 				editButton.setClass("inventoryEditButton");
 				editButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
@@ -328,7 +328,7 @@ public class DeliveryOrderListInfoControl extends GFCBaseController {
 					public void onEvent(Event event) throws Exception {
 						DeliveryOrderData deliveryOrderData = new DeliveryOrderData();
 						deliveryOrderData.setDeliveryOrder(deliveryOrder);
-						deliveryOrderData.setPageMode(PageMode.EDIT);
+						deliveryOrderData.setPageMode(deliveryOrder.getDeliveryOrderStatus().equals(DocumentStatus.BATAL) ? PageMode.VIEW : PageMode.EDIT);
 						
 						Map<String, DeliveryOrderData> arg = 
 								Collections.singletonMap("deliveryOrderData", deliveryOrderData);
