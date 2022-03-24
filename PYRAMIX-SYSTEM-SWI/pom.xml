@@ -11,7 +11,7 @@
   
 	<groupId>com.pyramix.swi.webui</groupId>
 	<artifactId>PYRAMIX-SYSTEM-SWI</artifactId>
-	<version>3.8.5</version>
+	<version>3.8.6</version>
 	
 	<packaging>war</packaging>
   

@@ -1,3 +1,12 @@
+3.8.6 - 24/03/2022 - 01/04/2022 - Deployed to Production
+- CustomerOrderDialog
+	- Define a PPN constant value of 0,11% (11%)
+	- Modify the PPN calc using the PPN constant value in onClick$Check() and updateProductTotalInfo() functions
+	- Modify the zul with 11% PPN
+- CustomerOrderListInfoControl
+	- Remove the 'View' button for VoucherSales, SuratJalan, DeliveryOrder, Faktur
+	- Instead, use the Label to view (change font color to blue and bold - clickable event)
+
 3.8.5 - 24/02/2022
 - CustomerReceivable 
 	- checks whether the payment is complete.  
