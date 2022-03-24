@@ -527,7 +527,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 					if (customerOrder.getSuratJalan()==null) {
 						postingLabel.setValue("-");
 						postingLabel.setWidth("100px");
-						postingLabel.setStyle("color: black; font-size: 1em; padding-right: 10px");
+						postingLabel.setStyle("font-size: 1em; padding-right: 10px");
 						postingLabel.setParent(listcell);						
 					} else {
 						SuratJalan suratJalanByProxy = getSuratJalanByProxy(customerOrder.getId()); 
@@ -606,26 +606,33 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 					
 					postingLabel.setValue(suratJalanNumber.getSerialComp());
 					postingLabel.setWidth("100px");
-					postingLabel.setStyle("font-size: 1em; padding-right: 5px");
+					postingLabel.setStyle("color:blue; font-weight:bold; font-size: 1em; padding-right: 5px");
 					postingLabel.setParent(listcell);
-
-					postingButton.setLabel("Print");
-					postingButton.setWidth("50px");
-					postingButton.setClass("inventoryEditButton");
-					postingButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+					postingLabel.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
 						@Override
-						public void onEvent(Event arg0) throws Exception {
+						public void onEvent(Event event) throws Exception {
 							Map<String, SuratJalan> arg = 
 									Collections.singletonMap("suratJalan", suratJalanByProxy);
 																					
 							Window printWindow =
 									(Window) Executions.createComponents("/suratjalan/SuratJalanPrint.zul", null, arg);
 							
-							printWindow.doModal();
+							printWindow.doModal();							
 						}
 					});
-					postingButton.setParent(listcell);
+					
+					// postingButton.setLabel("Print");
+					// postingButton.setWidth("50px");
+					// postingButton.setClass("inventoryEditButton");
+					// postingButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+
+					//	@Override
+					//	public void onEvent(Event arg0) throws Exception {
+
+					//	}
+					// });
+					// postingButton.setParent(listcell);
 				}
 				
 				return listcell;
@@ -680,7 +687,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 
 			private Listcell initVoucherSalesPosting(Listcell listcell, CustomerOrder customerOrder) throws Exception {
 				// consist of label and button
-				Label 	postingLabel 	= new Label();
+				Label 	postingLabel 	= new Label();				
 				Button 	postingButton 	= new Button();
 
 				if (customerOrder.getVoucherSales()==null) {
@@ -832,16 +839,13 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 					
 					postingLabel.setValue(voucherSerNum.getSerialComp());
 					postingLabel.setWidth("100px");
-					postingLabel.setStyle("font-size: 1em; padding-right: 5px");
+					postingLabel.setStyle("color:blue;font-weight:bold;font-size: 1em; padding-right: 5px");
 					postingLabel.setParent(listcell);
+					postingLabel.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
-					postingButton.setLabel("View");
-					postingButton.setWidth("60px");
-					postingButton.setClass("inventoryEditButton");
-					postingButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
-						
 						@Override
 						public void onEvent(Event event) throws Exception {
+							log.info("Voucher Number Label Clicked...");
 							VoucherSalesData data = new VoucherSalesData();
 							data.setPageMode(PageMode.VIEW);
 							data.setVoucherSales(getVoucherSalesByProxy(customerOrder.getId()));
@@ -853,11 +857,21 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 							Window voucherSalesDialogWin = 
 									(Window) Executions.createComponents("/voucher/VoucherSalesDialog.zul", null, arg);
 							
-							voucherSalesDialogWin.doModal();							
-							
+							voucherSalesDialogWin.doModal();													
 						}
 					});
-					postingButton.setParent(listcell);
+
+					// postingButton.setLabel("View");
+					// postingButton.setWidth("60px");
+					// postingButton.setClass("inventoryEditButton");
+					// postingButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+						
+					//	@Override
+					//	public void onEvent(Event event) throws Exception {
+							
+					//	}
+					// });
+					// postingButton.setParent(listcell);
 				}
 				
 				return listcell;
@@ -886,22 +900,19 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 					} else {
 
 						Label postingLabel 		= new Label();
-						Button postingButton 	= new Button();
+						// Button postingButton 	= new Button();
 						
 						DeliveryOrder deliveryOrderByProxy = 
 								getDeliveryOrderFromSuratJalan_ByProxy(suratJalanByProxy.getId());
 
 						postingLabel.setValue(
 								deliveryOrderByProxy.getDeliveryOrderNumber().getSerialComp());
-						postingLabel.setStyle("font-size: 1em; padding-right: 5px");
+						postingLabel.setStyle("color:blue; font-weight:bold; font-size: 1em; padding-right: 5px");
 						postingLabel.setParent(listcell);
-
-						postingButton.setLabel("Print");
-						postingButton.setClass("inventoryEditButton");
-						postingButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+						postingLabel.addEventListener(Events.ON_OK, new EventListener<Event>() {
 
 							@Override
-							public void onEvent(Event arg0) throws Exception {
+							public void onEvent(Event event) throws Exception {
 								DeliveryOrderData deliveryOrderData = new DeliveryOrderData();
 								deliveryOrderData.setDeliveryOrder(deliveryOrderByProxy);
 								deliveryOrderData.setSuratJalan(suratJalanByProxy);
@@ -912,11 +923,20 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 								Window deliveryOrderPrintWin = 
 										(Window) Executions.createComponents("/deliveryorder/DeliveryOrderPrint.zul", null, arg);
 								
-								deliveryOrderPrintWin.doModal();
-								
+								deliveryOrderPrintWin.doModal();								
 							}
 						});
-						postingButton.setParent(listcell);
+						
+						// postingButton.setLabel("Print");
+						// postingButton.setClass("inventoryEditButton");
+						// postingButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+
+						//	@Override
+						//	public void onEvent(Event arg0) throws Exception {
+								
+						//	}
+						// });
+						// postingButton.setParent(listcell);
 					}
 
 				}
@@ -947,22 +967,19 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 						listcell.setLabel("-");
 					} else {
 						Label postingLabel = new Label();
-						Button postingButton = new Button();
+						// Button postingButton = new Button();
 						
 						Faktur fakturByProxy =
 								getFakturFromSuratJalan_ByProxy(suratJalanByProxy.getId());
 
 						postingLabel.setValue(
 								fakturByProxy.getFakturNumber().getSerialComp());
-						postingLabel.setStyle("font-size: 1em; padding-right: 5px");
+						postingLabel.setStyle("color:blue; font-weight:bold; font-size: 1em; padding-right: 5px");
 						postingLabel.setParent(listcell);
-
-						postingButton.setLabel("Print");
-						postingButton.setClass("inventoryEditButton");
-						postingButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+						postingLabel.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
 							@Override
-							public void onEvent(Event arg0) throws Exception {
+							public void onEvent(Event event) throws Exception {
 								FakturData fakturData = new FakturData();
 								fakturData.setFaktur(fakturByProxy);
 								fakturData.setSuratJalan(suratJalanByProxy);
@@ -973,11 +990,21 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 								Window fakturPrintWin = 
 										(Window) Executions.createComponents("/faktur/FakturPrint.zul", null, arg);
 								
-								fakturPrintWin.doModal();
+								fakturPrintWin.doModal();								
 							}
-
 						});
-						postingButton.setParent(listcell);
+						
+						// postingButton.setLabel("Print");
+						// postingButton.setClass("inventoryEditButton");
+						// postingButton.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+
+						//	@Override
+						//	public void onEvent(Event arg0) throws Exception {
+								
+						//	}
+
+						// });
+						// postingButton.setParent(listcell);
 					}
 
 				}

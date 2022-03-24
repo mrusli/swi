@@ -94,7 +94,7 @@
 					<cell></cell>
 					<cell></cell>
 					<cell></cell>
-					<cell>PPN (Rp.)</cell>
+					<cell>PPN 11% (Rp.)</cell>
 					<cell><textbox id="ppnTextbox" value="0,-" width="150px" readonly="true" style="text-align: right;"></textbox></cell>			
 				</row>
 				<row>
