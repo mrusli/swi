@@ -1,3 +1,22 @@
+3.8.5 - 24/02/2022
+- CustomerReceivable 
+	- checks whether the payment is complete.  
+	- If it's not complete will be treated as receivables
+	- Amount receivables is calculated by using the amountSales substracting the amountPaid
+- For the above logic to work, the settlement must be fixed as follows:
+	- In the SettlementDialog, the remaining amount to settle is used, instead of current amountToSettle
+	- The above corrected the remainingAmount in the CustomerReceivableActivity
+	- When the settlement reaches zero (meaning payment is complete), settlement will notify the CustomerOrder
+	- The CustomerReceivableActivity will check whether the CustomerOrder payment is complete
+	- If it's complete, it will set every CustomerReceivableActivity's paymentComplete to true
+	
+NOTE: found bugs when Settlement is Cancel.  If you have multiple payments, and one of them is canceled (batal),
+how do you handle the remaining amount?
+
+3.8.4 - 22/02/2022
+- Change the customer receivables to make it simpler
+- Update the paymentComplete in the receivable_activity table manually whenever there's an installment
+
 3.8.3 - 23/01/2022
 - Put the customer name in the inventory note before customer order is saved
 
