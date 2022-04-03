@@ -1,5 +1,7 @@
 package com.pyramix.swi.webui.receivables.print;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +39,8 @@ public class CustomerReceivablesPrintControl extends GFCBaseController {
 	private CustomerReceivable customerReceivable;
 	private PageHandler handler = new PageHandler();
 		
+	private static final LocalDate END_OF_MARCH_2022 = LocalDate.of(2022, Month.MARCH, 31);	
+	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
@@ -124,11 +128,14 @@ public class CustomerReceivablesPrintControl extends GFCBaseController {
 			if (customerOrder.isUsePpn()) {
 				// add a ppn row
 				CustomerReceivableDetail detail = new CustomerReceivableDetail();
-				
 				detail.setSheetQuantity("");
 				detail.setWeightQuantity("");
 				detail.setInventoryCode("");
-				detail.setDescription("PPN 10%");
+				if (customerOrder.getOrderDate().before(asDate(END_OF_MARCH_2022))) {
+					detail.setDescription("PPN 10%");					
+				} else {
+					detail.setDescription("PPN 11%");										
+				}
 				detail.setSellingPrice("");
 				detail.setSellingSubTotal(toLocalFormat(customerOrder.getTotalPpn()));
 				detail.setQuantityUnit("");

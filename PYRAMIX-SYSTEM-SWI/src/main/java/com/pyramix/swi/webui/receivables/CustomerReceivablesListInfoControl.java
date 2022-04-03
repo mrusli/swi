@@ -2,6 +2,7 @@ package com.pyramix.swi.webui.receivables;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +48,8 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 	
 	private List<CustomerReceivable> customerReceivableList;
 
+	private static final LocalDate END_OF_MARCH_2022 = LocalDate.of(2022, Month.MARCH, 31);
+	
 	private final Logger log = Logger.getLogger(CustomerReceivablesListInfoControl.class);
 	
 	public void onCreate$customerReceivablesListInfoWin(Event event) throws Exception {
@@ -333,7 +336,11 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 					label.setParent(vbox);
 					// ppn
 					label = new Label();
-					label.setValue("PPN 10%");
+					if (customerOrder.getOrderDate().before(asDate(END_OF_MARCH_2022))) {
+						label.setValue("PPN 10%");						
+					} else {
+						label.setValue("PPN 11%");
+					}
 					label.setParent(vbox);					
 					// total
 					label = new Label();
@@ -372,7 +379,7 @@ public class CustomerReceivablesListInfoControl extends GFCBaseController {
 					label.setStyle("border-top: 2px dotted red;float:right;");
 					label.setValue(toLocalFormat(subTotal)); // "999.999.999,-"
 					label.setParent(vbox);
-					ppn = subTotal.multiply(new BigDecimal(0.1));
+					ppn = subTotal.multiply(new BigDecimal(0.11));
 					// ppn
 					label = new Label();
 					label.setValue(customerOrder.isUsePpn()? toLocalFormat(ppn):"-");
