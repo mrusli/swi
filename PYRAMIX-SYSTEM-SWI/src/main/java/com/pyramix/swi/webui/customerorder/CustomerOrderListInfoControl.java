@@ -887,7 +887,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 						listcell.setLabel("-");
 					} else if (customerOrder.getOrderStatus().compareTo(DocumentStatus.BATAL)==0) {
 						// CustomerOrder BATAL
-						Label postingLabel 		= new Label();
+						Label postingLabel = new Label();
 						
 						DeliveryOrder deliveryOrderByProxy = 
 								getDeliveryOrderFromSuratJalan_ByProxy(suratJalanByProxy.getId());
@@ -898,10 +898,8 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 						postingLabel.setParent(listcell);
 						
 					} else {
+						Label postingLabel = new Label();
 
-						Label postingLabel 		= new Label();
-						// Button postingButton 	= new Button();
-						
 						DeliveryOrder deliveryOrderByProxy = 
 								getDeliveryOrderFromSuratJalan_ByProxy(suratJalanByProxy.getId());
 
@@ -909,7 +907,7 @@ public class CustomerOrderListInfoControl extends GFCBaseController {
 								deliveryOrderByProxy.getDeliveryOrderNumber().getSerialComp());
 						postingLabel.setStyle("color:blue; font-weight:bold; font-size: 1em; padding-right: 5px");
 						postingLabel.setParent(listcell);
-						postingLabel.addEventListener(Events.ON_OK, new EventListener<Event>() {
+						postingLabel.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
 							@Override
 							public void onEvent(Event event) throws Exception {
