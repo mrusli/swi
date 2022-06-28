@@ -1,4 +1,11 @@
+/target/
+*/target/**
+**/META-INF/
+
 # Compiled class file
 *.class
 
+# Eclipse project file
 *.project
+
+*/.settings/**
