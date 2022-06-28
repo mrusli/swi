@@ -6,6 +6,6 @@
 *.class
 
 # Eclipse project file
-*.project
+*/.project
 
 */.settings/**
